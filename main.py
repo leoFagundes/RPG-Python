@@ -194,6 +194,7 @@ while vida > 0:
 
     if escolha == -1:
         status()
+        input()
 
     elif escolha == 0:
         print("""
