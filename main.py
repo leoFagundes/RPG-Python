@@ -1,6 +1,6 @@
 import random
 
-#(dano, vida, velAtaque, ouroDropado, chanceFuga)
+#(forca, vida, velAtaque, ouroDropado, chanceFuga)
 monstrosDG1 = {"Aranha": [4, 1, 20, 0, 55], 
                "Cobra": [4, 2, 40, 0, 55],
                "Lobo": [6, 3, 8, 0, 40],
@@ -9,14 +9,17 @@ monstrosDG1 = {"Aranha": [4, 1, 20, 0, 55],
 bossDG1 = {"Bad Wolf": [5, 8, 500, 0]}
 
 
-#()
+#(forca, vida, velAtaque)
 itensBossDG1 = {"Armadura Bad Wolfão (lendário)": [0, 0, 0],
                 "Espada Bad Wolfiado (lendário)": [0, 0, 0],
                 "Adaga de presa de lobo (raro)": [0, 0, 0],
                 "Espada quebrada (comum)": [0, 0, 0],
                 "Armadura furada (comum)": [0, 0, 0]}
 
-forca = 1
+#testando sistema de itens
+statusItens = [0, 0, 0]
+
+forca = 1 
 vida = 100
 ouro = 0
 velAtaque = 10
@@ -100,7 +103,7 @@ def batalha(vidas, monstrosDG):
                     vidas -= monstrosDG1[monstroAtual[0]][0]
                     if vidas <= 0:
                         print("Você morreu, tente novamente em uma próxima vida.")
-                        break
+                        exit()
                     print(f"\033[mSua vida atual: \033[32m{vidas}\033[m\n")
 
                     input("\033[1mPróximo turno\033[m\n")
@@ -135,7 +138,7 @@ def batalha(vidas, monstrosDG):
                     vidas -= monstrosDG1[monstroAtual[0]][0]
                     if vidas <= 0:
                         print("Você morreu, tente novamente em uma próxima vida.")
-                        break
+                        exit()
                     print(f"\033[1mSua vida atual: \033[32m{vidas}\033[m\n")
 
                     input("\033[1mPróximo turno\033[m\n")
@@ -150,6 +153,7 @@ def batalhaBoss(vidas, bossDG, itensBossDG):
     global vida
     global forca
     global velAtaque
+    global statusItens
     contadorVasculhar = 0
     while True:
         print("""Deseja 
@@ -171,7 +175,7 @@ def batalhaBoss(vidas, bossDG, itensBossDG):
                     vidas -= bossDG[list(bossDG)[0]][0]
                     if vidas <= 0:
                         print("Você morreu, tente novamente em uma próxima vida.")
-                        break
+                        exit()
                     print(f"\033[mSua vida atual: \033[32m{vidas}\033[m\n")
 
                     input("\033[1mPróximo turno\033[m\n")
@@ -206,13 +210,13 @@ def batalhaBoss(vidas, bossDG, itensBossDG):
                     vidas -= bossDG[list(bossDG)[0]][0]
                     if vidas <= 0:
                         print("Você morreu, tente novamente em uma próxima vida.")
-                        break
+                        exit()
                     print(f"\033[1mSua vida atual: \033[32m{vidas}\033[m\n")
 
                     input("\033[1mPróximo turno\033[m\n")
             print(f"\033[31mVocê matou o temido {list(bossDG)[0]}\033[m, \033[1mvamos continuar a jornada.\033[m")
             item = list(itensBossDG)
-            itemGanho = random.choices(item, weights=[2, 2, 10, 50, 50])
+            itemGanho = random.choices(item, weights=[2, 5, 15, 40, 40])
             print("Você tem chance de ganhar um dos seguintes itens: \n")
             print("\n".join(item))
             print(f"""\nO item dropado foi: 
@@ -222,12 +226,20 @@ def batalhaBoss(vidas, bossDG, itensBossDG):
                     Velocidade de Ataque: +{itensBossDG[itemGanho[0]][2]}
                     """)
             print("Você deseja equipa-lo?")
-            escolha = int(input("1-sim\n2-não"))
+            escolha = int(input("1-sim\n2-não\n"))
             if escolha == 1:
                 print(f"Você equipou {itemGanho[0]}")
-                forca += itensBossDG[itemGanho[0]][0]
-                vida += itensBossDG[itemGanho[0]][1]
-                velAtaque += itensBossDG[itemGanho[0]][2]
+                forca -= statusItens[0]
+                vida -= statusItens[0]
+                velAtaque -= statusItens[0]
+                statusItens = []
+                statusItens.append(itensBossDG[itemGanho[0]][0])
+                statusItens.append(itensBossDG[itemGanho[0]][1])
+                statusItens.append(itensBossDG[itemGanho[0]][2])
+                forca += statusItens[0]
+                vida += statusItens[0]
+                velAtaque += statusItens[0]
+                
             elif escolha == 2:
                 pass
             print(f"\nOuro dropado: {bossDG[list(bossDG)[0]][3]}")
@@ -253,7 +265,7 @@ def batalhaBoss(vidas, bossDG, itensBossDG):
                 continue
             elif recompensa[0] == "armadilha":
                 vidaVasculhada = random.randint(5, 20)
-                print(f"Você pisou em falso em uma armadilha e tomou {vidaVasculhada} de dano.")
+                print(f"Você pisou em falso, uma armadilha explodiu e você tomou {vidaVasculhada} de dano.")
                 vida -= vidaVasculhada
                 print(f"Vida atual: {vida}")
                 contadorVasculhar += 1
