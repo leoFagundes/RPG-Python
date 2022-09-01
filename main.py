@@ -8,6 +8,8 @@ monstrosDG1 = {"Aranha": [4, 1, 20, 0, 55],
 
 bossDG1 = {"Bad Wolf": [5, 8, 500, 0]}
 
+
+
 #()
 itensBossDG1 = {"Armadura Bad Wolfão (lendário)": [],
                 "Espada Bad Wolfiado (lendário)": [],
@@ -41,6 +43,17 @@ def status():
     print(f"\033[1mVida:\033[m \033[32m{vida:^2}\033[m")
     print(f"\033[1mOuro:\033[m \033[33m{ouro:^2}\033[m")
     print(f"\033[1mVelocidade de Ataque:\033[m \033[35m{velAtaque:^2}\033[m")
+    print("\033[36m__\033[m"*15)
+
+#satatusBoss
+def statusBoss(monstro, forca, vida, velAtaque, ouro):
+    print("\033[36m__\033[m"*15)
+    print("")
+    print(f"\033[1mBoss:\033[m \033[36m{monstro}\033[m")
+    print(f"\033[1mForça:\033[m \033[31m{forca:^2}\033[m")
+    print(f"\033[1mVida:\033[m \033[32m{vida:^2}\033[m")
+    print(f"\033[1mVelocidade de Ataque:\033[m \033[35m{velAtaque:^2}\033[m")
+    print(f"\033[1mRecompensa:\033[m \033[33m{ouro:^2}\033[m moedas de ouro")
     print("\033[36m__\033[m"*15)
 
 #função para o ataque do monstro
@@ -133,7 +146,7 @@ def batalha(vidas, monstrosDG):
             vida = vidas
             return print(f"Sua vida atual é {vidas}")
 
-def batalhaBoss():
+def batalhaBoss(vidas, bossDG):
     global ouro
     global vida
     contadorVasculhar = 0
@@ -144,7 +157,63 @@ def batalhaBoss():
             """)
         escolha = int(input())
         if escolha == 1:
-            pass
+            statusBoss("Bad Wolf", bossDG1["Bad Wolf"][0], bossDG1["Bad Wolf"][1], bossDG1["Bad Wolf"][2], bossDG1["Bad Wolf"][3])
+            input("\033[1mComeçar a batalha\033[m\n")
+            vidaAtualBoss = bossDG[list(bossDG)[0]][1]
+            while vidaAtualBoss > 0:
+                if bossDG[list(bossDG)[0]][2] > velAtaque:
+                    print(f"""
+                    A velocidade do boss te superou.
+
+                    \033[31mAtaque do {list(bossDG)[0]}: {bossDG[list(bossDG)[0]][0]}\033[m
+                    """)
+                    vidas -= bossDG[list(bossDG)[0]][0]
+                    if vidas <= 0:
+                        print("Você morreu, tente novamente em uma próxima vida.")
+                        break
+                    print(f"\033[mSua vida atual: \033[32m{vidas}\033[m\n")
+
+                    input("\033[1mPróximo turno\033[m\n")
+
+                    print(f"""
+                    Sua vez de atacar:
+
+                    \033[31mAtaque: {forca}\033[m
+                    """)
+                    vidaAtualBoss -= forca
+                    print(f"\033[1mVida do {list(bossDG)[0]}: \033[32m{vidaAtualBoss}\033[m\n")
+                    if vidaAtualBoss <= 0:
+                        break
+
+                    input("\033[1mPróximo turno\033[m\n")
+                else:
+                    print(f"""
+                    Você foi mais rápido que o boss, sua vez de atacar.
+                    \033[31mAtaque: {forca}\033[m
+                    """)
+                    vidaAtualBoss -= forca
+                    print(f"\033[1mVida do {list(bossDG)[0]}: \033[32m{vidaAtualBoss}\033[m\n")
+                    if vidaAtualBoss <= 0:
+                        break
+
+                    input("\033[1mPróximo turno\033[m\n")
+
+                    print(f"""
+                    Turno do boss.
+                    \033[31mAtaque do boss: {bossDG[list(bossDG)[0]][0]}\033[m
+                    """)
+                    vidas -= bossDG[list(bossDG)[0]][0]
+                    if vidas <= 0:
+                        print("Você morreu, tente novamente em uma próxima vida.")
+                        break
+                    print(f"\033[1mSua vida atual: \033[32m{vidas}\033[m\n")
+
+                    input("\033[1mPróximo turno\033[m\n")
+            print(f"\033[31mVocê matou o temido {list(bossDG)[0]}\033[m, \033[1mvamos continuar a jornada.\033[m")
+            print(f"Ouro dropado: {bossDG[list(bossDG)[0]][3]}")
+            ouro += bossDG[list(bossDG)[0]][3]
+            vida = vidas
+            return print(f"Sua vida atual é {vidas}")
         elif escolha == 2 and contadorVasculhar == 0:
             salaBoss = ["ouro", "vida", "armadilha"]
             recompensa = random.choices(salaBoss, weights=[1, 1, 1])
@@ -248,4 +317,4 @@ while vida > 0:
         nesse momento você se depara com o BAD WOLF.\n
         """)
 
-        batalhaBoss()
+        batalhaBoss(vida, bossDG1)
