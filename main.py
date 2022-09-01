@@ -9,13 +9,12 @@ monstrosDG1 = {"Aranha": [4, 1, 20, 0, 55],
 bossDG1 = {"Bad Wolf": [5, 8, 500, 0]}
 
 
-
 #()
-itensBossDG1 = {"Armadura Bad Wolfão (lendário)": [],
-                "Espada Bad Wolfiado (lendário)": [],
-                "Adaga de presa de lobo (raro)": [],
-                "Espada quebrada (comum)": [],
-                "Armadura furada (comum)": []}
+itensBossDG1 = {"Armadura Bad Wolfão (lendário)": [0, 0, 0],
+                "Espada Bad Wolfiado (lendário)": [0, 0, 0],
+                "Adaga de presa de lobo (raro)": [0, 0, 0],
+                "Espada quebrada (comum)": [0, 0, 0],
+                "Armadura furada (comum)": [0, 0, 0]}
 
 forca = 1
 vida = 100
@@ -146,9 +145,11 @@ def batalha(vidas, monstrosDG):
             vida = vidas
             return print(f"Sua vida atual é {vidas}")
 
-def batalhaBoss(vidas, bossDG):
+def batalhaBoss(vidas, bossDG, itensBossDG):
     global ouro
     global vida
+    global forca
+    global velAtaque
     contadorVasculhar = 0
     while True:
         print("""Deseja 
@@ -210,7 +211,26 @@ def batalhaBoss(vidas, bossDG):
 
                     input("\033[1mPróximo turno\033[m\n")
             print(f"\033[31mVocê matou o temido {list(bossDG)[0]}\033[m, \033[1mvamos continuar a jornada.\033[m")
-            print(f"Ouro dropado: {bossDG[list(bossDG)[0]][3]}")
+            item = list(itensBossDG)
+            itemGanho = random.choices(item, weights=[2, 2, 10, 50, 50])
+            print("Você tem chance de ganhar um dos seguintes itens: \n")
+            print("\n".join(item))
+            print(f"""\nO item dropado foi: 
+                    {itemGanho[0]}
+                    Força: +{itensBossDG[itemGanho[0]][0]}
+                    Vida: +{itensBossDG[itemGanho[0]][1]}
+                    Velocidade de Ataque: +{itensBossDG[itemGanho[0]][2]}
+                    """)
+            print("Você deseja equipa-lo?")
+            escolha = int(input("1-sim\n2-não"))
+            if escolha == 1:
+                print(f"Você equipou {itemGanho[0]}")
+                forca += itensBossDG[itemGanho[0]][0]
+                vida += itensBossDG[itemGanho[0]][1]
+                velAtaque += itensBossDG[itemGanho[0]][2]
+            elif escolha == 2:
+                pass
+            print(f"\nOuro dropado: {bossDG[list(bossDG)[0]][3]}")
             ouro += bossDG[list(bossDG)[0]][3]
             vida = vidas
             return print(f"Sua vida atual é {vidas}")
@@ -239,10 +259,10 @@ def batalhaBoss(vidas, bossDG):
                 contadorVasculhar += 1
                 continue
         elif escolha == 2 and contadorVasculhar == 1:
-            print("Você já vasculhou toda a sala do Boss")
+            print("Você já vasculhou toda a sala do Boss\n")
             continue
         else:
-            print("Digite um valor válido, não sabe ler?")
+            print("Digite um valor válido, não sabe ler?\n")
             continue
 
 
@@ -317,4 +337,4 @@ while vida > 0:
         nesse momento você se depara com o BAD WOLF.\n
         """)
 
-        batalhaBoss(vida, bossDG1)
+        batalhaBoss(vida, bossDG1, itensBossDG1)

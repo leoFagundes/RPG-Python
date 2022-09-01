@@ -1,3 +1,10 @@
-bossDG1 = {"Bad Wolf": [5, 8, 500, 0]}
+itensBossDG1 = {"Armadura Bad Wolfão (lendário)": [0, 2],
+                "Espada Bad Wolfiado (lendário)": [0, 2],
+                "Adaga de presa de lobo (raro)": [0, 2],
+                "Espada quebrada (comum)": [0, 2],
+                "Armadura furada (comum)": [0, 2]}
 
-print(bossDG1[0])
+print(list(itensBossDG1))
+
+
+
