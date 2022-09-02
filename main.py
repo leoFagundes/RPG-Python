@@ -6,7 +6,7 @@ monstrosDG1 = {"Aranha": [4, 1, 20, 0, 55],
                "Lobo": [6, 3, 8, 0, 40],
                "Urso": [12, 5, 8, 0, 60]}
 
-bossDG1 = {"Bad Wolf": [5, 1, 500, 0]}
+bossDG1 = {"Bad Wolf": [5, 5, 500, 0]}
 
 
 #(forca, vida, velAtaque)
@@ -48,6 +48,24 @@ def status():
     print(f"\033[1mOuro:\033[m \033[33m{ouro:^2}\033[m")
     print(f"\033[1mVelocidade de Ataque:\033[m \033[35m{velAtaque:^2}\033[m")
     print("\033[36m__\033[m"*15)
+    if slot1[3] != 'empty':
+        print(f"""Slot 1 - {slot1[3]}: 
+                +{slot1[0]} de força
+                +{slot1[1]} de vida
+                +{slot1[2]} de velocidade de ataque""")
+        print("\033[36m__\033[m"*15)
+    if slot2[3] != 'empty':
+        print(f"""Slot 2 - {slot2[3]}: 
+                +{slot2[0]} de força
+                +{slot2[1]} de vida
+                +{slot2[2]} de velocidade de ataque""")
+        print("\033[36m__\033[m"*15)
+    if slot3[3] != 'empty':
+        print(f"""Slot 3 - {slot3[3]}: 
+                +{slot3[0]} de força
+                +{slot3[1]} de vida
+                +{slot3[2]} de velocidade de ataque""")
+        print("\033[36m__\033[m"*15)
 
 #satatusBoss
 def statusBoss(monstro, forca, vida, velAtaque, ouro):
