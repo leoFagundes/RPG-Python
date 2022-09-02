@@ -6,7 +6,7 @@ monstrosDG1 = {"Aranha": [4, 1, 20, 0, 55],
                "Lobo": [6, 3, 8, 0, 40],
                "Urso": [12, 5, 8, 0, 60]}
 
-bossDG1 = {"Bad Wolf": [5, 8, 500, 0]}
+bossDG1 = {"Bad Wolf": [5, 1, 500, 0]}
 
 
 #(forca, vida, velAtaque)
@@ -17,7 +17,9 @@ itensBossDG1 = {"Armadura Bad Wolfão (lendário)": [0, 0, 0],
                 "Armadura furada (comum)": [0, 0, 0]}
 
 #testando sistema de itens
-statusItens = [0, 0, 0]
+slot1 = [0, 0, 0, 'empty']
+slot2 = [0, 0, 0, 'empty']
+slot3 = [0, 0, 0, 'empty']
 
 forca = 1 
 vida = 100
@@ -58,7 +60,7 @@ def statusBoss(monstro, forca, vida, velAtaque, ouro):
     print(f"\033[1mRecompensa:\033[m \033[33m{ouro:^2}\033[m moedas de ouro")
     print("\033[36m__\033[m"*15)
 
-#função para o ataque do monstro
+#função para a luta do monstro
 def batalha(vidas, monstrosDG):
     global ouro
     global vida
@@ -148,12 +150,15 @@ def batalha(vidas, monstrosDG):
             vida = vidas
             return print(f"Sua vida atual é {vidas}")
 
+#função para a luta do boss
 def batalhaBoss(vidas, bossDG, itensBossDG):
     global ouro
     global vida
     global forca
     global velAtaque
-    global statusItens
+    global slot1
+    global slot2
+    global slot3
     contadorVasculhar = 0
     while True:
         print("""Deseja 
@@ -228,20 +233,67 @@ def batalhaBoss(vidas, bossDG, itensBossDG):
             print("Você deseja equipa-lo?")
             escolha = int(input("1-sim\n2-não\n"))
             if escolha == 1:
-                print(f"Você equipou {itemGanho[0]}")
-                forca -= statusItens[0]
-                vida -= statusItens[0]
-                velAtaque -= statusItens[0]
-                statusItens = []
-                statusItens.append(itensBossDG[itemGanho[0]][0])
-                statusItens.append(itensBossDG[itemGanho[0]][1])
-                statusItens.append(itensBossDG[itemGanho[0]][2])
-                forca += statusItens[0]
-                vida += statusItens[0]
-                velAtaque += statusItens[0]
-                
-            elif escolha == 2:
-                pass
+                while True:
+                    print(f"""
+                    Você deseja equipar em qual slot?
+                        1 - slot 1 ({slot1[3]})
+                        2 - slot 2 ({slot2[3]})
+                        3 - slot 3 ({slot3[3]})
+                    """)
+                    escolha = int(input())
+                    if escolha == 1:
+                        print(f"Você equipou {itemGanho[0]}")
+                        forca -= slot1[0]
+                        vida -= slot1[1]
+                        velAtaque -= slot1[2]
+
+                        slot1 = []
+                        slot1.append(itensBossDG[itemGanho[0]][0])
+                        slot1.append(itensBossDG[itemGanho[0]][1])
+                        slot1.append(itensBossDG[itemGanho[0]][2])
+                        slot1.append(itemGanho[0])
+
+                        forca += slot1[0]
+                        vida += slot1[1]
+                        velAtaque += slot1[2]
+                        break
+                    elif escolha == 2:
+                        print(f"Você equipou {itemGanho[0]}")
+                        forca -= slot2[0]
+                        vida -= slot2[1]
+                        velAtaque -= slot2[2]
+
+                        slot2 = []
+                        slot2.append(itensBossDG[itemGanho[0]][0])
+                        slot2.append(itensBossDG[itemGanho[0]][1])
+                        slot2.append(itensBossDG[itemGanho[0]][2])
+                        slot2.append(itemGanho[0])
+
+                        forca += slot2[0]
+                        vida += slot2[1]
+                        velAtaque += slot2[2]
+                        break
+                    elif escolha == 3:
+                        print(f"Você equipou {itemGanho[0]}")
+                        forca -= slot3[0]
+                        vida -= slot3[1]
+                        velAtaque -= slot3[2]
+
+                        slot3 = []
+                        slot3.append(itensBossDG[itemGanho[0]][0])
+                        slot3.append(itensBossDG[itemGanho[0]][1])
+                        slot3.append(itensBossDG[itemGanho[0]][2])
+                        slot3.append(itemGanho[0])
+
+                        forca += slot3[0]
+                        vida += slot3[1]
+                        velAtaque += slot3[2]
+                        break
+                    else:
+                        print("Valor inválido, escolha novamente.")
+                        continue
+            else:
+                print("Você não equipou o item.")
             print(f"\nOuro dropado: {bossDG[list(bossDG)[0]][3]}")
             ouro += bossDG[list(bossDG)[0]][3]
             vida = vidas
@@ -277,7 +329,7 @@ def batalhaBoss(vidas, bossDG, itensBossDG):
             print("Digite um valor válido, não sabe ler?\n")
             continue
 
-
+#função para a loja
 def loja():
     print(f"""\033[1;30m\n
     {"LOJA":^25}
