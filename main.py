@@ -6,7 +6,7 @@ monstrosDG1 = {"Aranha": [4, 1, 20, 0, 55],
                "Lobo": [6, 3, 8, 0, 40],
                "Urso": [12, 5, 8, 0, 60]}
 
-bossDG1 = {"Bad Wolf": [5, 5, 500, 0]}
+bossDG1 = {"Bad Wolf": [5, 1, 500, 0]}
 
 
 #(forca, vida, velAtaque)
