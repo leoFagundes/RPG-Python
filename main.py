@@ -40,51 +40,51 @@ def ataqueMonstro(vida):
             print(f"""
             O monstro é mais rápido que você, aventureiro.
 
-            Ataque do monstro: {monstrosDG1[monstroAtual[0]][0]}
+            \033[31mAtaque do monstro: {monstrosDG1[monstroAtual[0]][0]}\033[m
             """)
             vida -= monstrosDG1[monstroAtual[0]][0]
             if vida <= 0:
                 print("Você morreu, tente novamente em uma próxima vida.")
                 break
-            print(f"Vida atual: {vida}")
+            print(f"\033[mVida atual: \033[32m{vida}\033[m\n")
 
-            input()
+            input("\033[1mPróximo turno\033[m\n")
 
             print(f"""
             Sua vez de atacar:
 
-            Ataque: {forca}
+            \033[31mAtaque: {forca}\033[m
             """)
             vidaAtualMonstro -= forca
-            print(f"Vida do monstro: {vidaAtualMonstro}")
+            print(f"\033[1mVida do monstro: \033[32m{vidaAtualMonstro}\033[m\n")
             if vidaAtualMonstro <= 0:
                 break
 
-            input()
+            input("\033[1mPróximo turno\033[m\n")
         else:
             print(f"""
             Você é mais rápido que o monstro, sua vez de atacar.
-            Ataque: {forca}
+            \033[31mAtaque: {forca}\033[m
             """)
             vidaAtualMonstro -= forca
-            print(f"Vida do monstro: {vidaAtualMonstro}\n")
+            print(f"\033[1mVida do monstro: \033[32m{vidaAtualMonstro}\033[m\n")
             if vidaAtualMonstro <= 0:
                 break
 
-            input()
+            input("\033[1mPróximo turno\033[m\n")
 
             print(f"""
             Turno do monstro.
-            Ataque do monstro: {monstrosDG1[monstroAtual[0]][0]}
+            \033[31mAtaque do monstro: {monstrosDG1[monstroAtual[0]][0]}\033[m
             """)
             vida -= monstrosDG1[monstroAtual[0]][0]
             if vida <= 0:
                 print("Você morreu, tente novamente em uma próxima vida.")
                 break
-            print(f"Vida atual: {vida}")
+            print(f"\033[1mVida atual: \033[32m{vida}\033[m\n")
 
-            input()
-    print("Você matou o monstro, vamos continuar a jornada.")            
+            input("\033[1mPróximo turno\033[m\n")
+    print("\033[31mVocê matou o monstro\033[m, \033[1mvamos continuar a jornada.\033[m")
 
 print("""\033[1m
 Bem-vindos a rede dungeon, iremos dar as instruções:
@@ -130,8 +130,10 @@ while vida > 0:
         print("Você encontrou um monstro, hora de lutar.")
 
         monstroAtual = random.choices(list(monstrosDG1), weights = [100, 100, 90, 4])
-        print(f"\n\nVocê encontrou um(a) {monstroAtual[0]}:")
+        print(f"\n\n\033[1mVocê encontrou um(a) \033[36m{monstroAtual[0]}\033[m:")
         statusMonstros(monstroAtual[0], monstrosDG1[monstroAtual[0]][0], monstrosDG1[monstroAtual[0]][1], monstrosDG1[monstroAtual[0]][2])
+
+        input("\033[1mComeçar a batalha\033[m\n")
 
         ataqueMonstro(vida)
 
