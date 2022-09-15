@@ -1,0 +1,1 @@
+print("Quem ler me deve um burgão")
