@@ -1,27 +1,50 @@
 import random
 
+#----------------------------------------------------
 #(forca, vida, velAtaque, ouroDropado, chanceFuga)
-monstrosDG1 = {"Aranha": [4, 1, 20, 0, 55], 
-               "Cobra": [4, 2, 40, 0, 55],
-               "Lobo": [6, 3, 8, 0, 40],
-               "Urso": [12, 5, 8, 0, 60]}
+monstrosDG1 = {"Aranha (lvl 1)": [4, 1, 20, 20, 55], 
+               "Cobra (lvl 1)": [4, 2, 40, 20, 55],
+               "Lobo (lvl 1)": [6, 3, 8, 25, 40],
+               "Urso (lvl 3)": [12, 5, 8, 50, 60]}
 
-bossDG1 = {"Bad Wolf": [5, 1, 500, 0]}
+#(forca, vida=5, velAtaque, ouroDropado)
+bossDG1 = {"Bad Wolf": [5, 5, 80, 200]}
 
 
 #(forca, vida, velAtaque)
-itensBossDG1 = {"\033[33;1mArmadura Bad Wolfão (lendário)\033[m": [0, 0, 0],
-                "\033[33;1mEspada Bad Wolfiado (lendário)\033[m": [0, 0, 0],
-                "\033[35;1mAdaga de presa de lobo (épico)\033[m": [0, 0, 0],
-                "\033[34;1mEspada quebrada (raro)\033[m": [0, 0, 0],
-                "\033[34;1mArmadura furada (raro)\033[m": [0, 0, 0]}
+itensBossDG1 = {"\033[33;1mArmadura Bad Wolfão (lendário)\033[m": [0, 50, 0],
+                "\033[33;1mEspada Bad Wolfiado (lendário)\033[m": [5, 0, 11],
+                "\033[35;1mAdaga de presa de lobo (épico)\033[m": [2, 0, 20],
+                "\033[35;1mArmadura de pele de lobo (épico)\033[m": [0, 25, 5],
+                "\033[34;1mEspada quebrada (raro)\033[m": [1, 0, 5],
+                "\033[34;1mArmadura furada (raro)\033[m": [0, 10, 0]}
 
+#----------------------------------------------------
+#(forca, vida, velAtaque, ouroDropado, chanceFuga)
+monstrosDG2 = {"Goblin de Gelo (lvl 2)": [7, 3, 40, 40, 55], 
+               "Espírito Congelado (lvl 2)": [8, 3, 5, 15, 55],
+               "Druida de Gelo (lvl 3)": [15, 3, 10, 30, 40],
+               "Golem de Gelo (lvl 4)": [20, 10, 5, 80, 65]}
+
+#(forca, vida=10, velAtaque, ouroDropado)
+bossDG2 = {"Frozen Dragon": [15, 10, 80, 350]}
+
+
+#(forca, vida, velAtaque)
+itensBossDG2 = {"\033[33;1mPeitoral Dragônico (lendário)\033[m": [0, 100, 0],
+                "\033[33;1mLança Zero Absoluto (lendário)\033[m": [12, 0, 20],
+                "\033[35;1mGarra de dragão (épico)\033[m": [6, 0, 25],
+                "\033[35;1mArmadura Congelada (épico)\033[m": [0, 60, -10],
+                "\033[34;1mEstaca de Gelo (raro)\033[m": [3, 0, 10],
+                "\033[34;1mBota Quebradiça (raro)\033[m": [0, 20, 0]}
+
+#----------------------------------------------------
 #(forca, vida, velAtaque)
 slot1 = [0, 0, 0, 'empty']      #mudar a cor
 slot2 = [0, 0, 0, 'empty']
 slot3 = [0, 0, 0, 'empty']
 
-forca = 1 
+forca = 1
 vida = 100
 ouro = 0
 velAtaque = 10
@@ -44,7 +67,7 @@ def status():
     print("\033[36m__\033[m"*15)
     print("")
     print(f"\033[1mForça:\033[m \033[31m{forca:^2}\033[m")
-    print(f"\033[1mVida:\033[m \033[32m{vida:^2}\033[m")
+    print(f"\033[1mVida:\033[m \033[32m{vida:^2}/{100+slot1[1]+slot2[1]+slot3[1]:^2}\033[m")
     print(f"\033[1mOuro:\033[m \033[33m{ouro:^2}\033[m")
     print(f"\033[1mVelocidade de Ataque:\033[m \033[35m{velAtaque:^2}\033[m")
     print("\033[36m__\033[m"*15)
@@ -84,9 +107,9 @@ def batalha(vidas, monstrosDG):
     global vida
     global contadorFuga
 
-    monstroAtual = random.choices(list(monstrosDG1), weights = [100, 100, 90, 4])
+    monstroAtual = random.choices(list(monstrosDG), weights = [90, 90, 80, 10])
     print(f"\n\n\033[1mVocê encontrou um(a) \033[36m{monstroAtual[0]}\033[m:")
-    statusMonstros(monstroAtual[0], monstrosDG1[monstroAtual[0]][0], monstrosDG1[monstroAtual[0]][1], monstrosDG1[monstroAtual[0]][2], monstrosDG1[monstroAtual[0]][4])
+    statusMonstros(monstroAtual[0], monstrosDG[monstroAtual[0]][0], monstrosDG[monstroAtual[0]][1], monstrosDG[monstroAtual[0]][2], monstrosDG[monstroAtual[0]][4])
     while True:
         print("""\033[36;1mDeseja:\033[m 
                 \033[1m1-atacar 
@@ -99,9 +122,9 @@ def batalha(vidas, monstrosDG):
 
         if escolha == 2:
             chances = ['fugiu', 'naofugiu']
-            chance = random.choices(chances, weights = [monstrosDG1[monstroAtual[0]][4], 100-monstrosDG1[monstroAtual[0]][4]])
+            chance = random.choices(chances, weights = [monstrosDG1[monstroAtual[0]][4], 100-monstrosDG[monstroAtual[0]][4]])
             if chance[0] == 'fugiu':
-                print(f"Com {monstrosDG1[monstroAtual[0]][4]}% de chance de escapar, você conseguiu fugir com sucesso")
+                print(f"Com {monstrosDG[monstroAtual[0]][4]}% de chance de escapar, você conseguiu fugir com sucesso")
                 contadorFuga = 1
                 break
             elif chance[0] == 'naofugiu':
@@ -109,6 +132,7 @@ def batalha(vidas, monstrosDG):
                 print("Consequência: levou 10 de dano")
                 print(f"Vida atual = {vidas - 10}\n")
                 vidas -= 10
+                vida = vidas
                 continue
         elif escolha == 1:
             input("\n\033[31;1mComeçar a batalha\033[m\n\n")
@@ -119,7 +143,7 @@ def batalha(vidas, monstrosDG):
                     \033[37;1mO monstro foi mais rápido que você, aventureiro.\033[m
                     \033[31mAtaque do monstro: {monstrosDG[monstroAtual[0]][0]}\033[m
                     """)
-                    vidas -= monstrosDG1[monstroAtual[0]][0]
+                    vidas -= monstrosDG[monstroAtual[0]][0]
                     if vidas <= 0:
                         print("Você morreu, tente novamente em uma próxima vida.")
                         exit()
@@ -151,9 +175,9 @@ def batalha(vidas, monstrosDG):
 
                     print(f"""
                     Turno do monstro.
-                    \033[31mAtaque do monstro: {monstrosDG1[monstroAtual[0]][0]}\033[m
+                    \033[31mAtaque do monstro: {monstrosDG[monstroAtual[0]][0]}\033[m
                     """)
-                    vidas -= monstrosDG1[monstroAtual[0]][0]
+                    vidas -= monstrosDG[monstroAtual[0]][0]
                     if vidas <= 0:
                         print("Você morreu, tente novamente em uma próxima vida.")
                         exit()
@@ -161,8 +185,8 @@ def batalha(vidas, monstrosDG):
 
                     input("\033[1mPróximo turno\033[m\n")
             print("\033[31mVocê matou o monstro\033[m, \033[1mvamos continuar a jornada.\033[m")
-            print(f"\033[1mOuro dropado:\033[m \033[1;33m{monstrosDG1[monstroAtual[0]][3]}\033[m")
-            ouro += monstrosDG1[monstroAtual[0]][3]
+            print(f"\033[1mOuro dropado:\033[m \033[1;33m{monstrosDG[monstroAtual[0]][3]}\033[m")
+            ouro += monstrosDG[monstroAtual[0]][3]
             vida = vidas
             return print(f"\033[1mSua vida atual é\033[m \033[32;1m{vidas}\033[m")
 
@@ -183,7 +207,7 @@ def batalhaBoss(vidas, bossDG, itensBossDG):
             """)
         escolha = int(input())
         if escolha == 1:
-            statusBoss("Bad Wolf", bossDG1["Bad Wolf"][0], bossDG1["Bad Wolf"][1], bossDG1["Bad Wolf"][2], bossDG1["Bad Wolf"][3])
+            statusBoss(list(bossDG.keys())[0], bossDG[list(bossDG.keys())[0]][0], bossDG[list(bossDG.keys())[0]][1], bossDG[list(bossDG.keys())[0]][2], bossDG[list(bossDG.keys())[0]][3])
             input("\033[1mComeçar a batalha\033[m\n")
             vidaAtualBoss = bossDG[list(bossDG)[0]][1]
             while vidaAtualBoss > 0:
@@ -235,7 +259,7 @@ def batalhaBoss(vidas, bossDG, itensBossDG):
                     input("\033[1mPróximo turno\033[m\n")
             print(f"\033[31mVocê matou o temido {list(bossDG)[0]}\033[m, \033[1mvamos continuar a jornada.\033[m")
             item = list(itensBossDG)
-            itemGanho = random.choices(item, weights=[2, 5, 15, 40, 40])
+            itemGanho = random.choices(item, weights=[5, 5, 15, 15, 35, 35])
             print("Você tem chance de ganhar um dos seguintes itens: \n")
             print("\n".join(item))
             print(f"""\n\033[37;1mO item dropado foi:\033[m 
@@ -268,6 +292,8 @@ def batalhaBoss(vidas, bossDG, itensBossDG):
                         slot1.append(itemGanho[0])
 
                         forca += slot1[0]
+                        vidas += slot1[1]
+                        vida = vidas
                         vida += slot1[1]
                         velAtaque += slot1[2]
                         break
@@ -284,6 +310,8 @@ def batalhaBoss(vidas, bossDG, itensBossDG):
                         slot2.append(itemGanho[0])
 
                         forca += slot2[0]
+                        vidas += slot2[1]
+                        vida = vidas
                         vida += slot2[1]
                         velAtaque += slot2[2]
                         break
@@ -300,6 +328,8 @@ def batalhaBoss(vidas, bossDG, itensBossDG):
                         slot3.append(itemGanho[0])
 
                         forca += slot3[0]
+                        vidas += slot3[1]
+                        vida = vidas
                         vida += slot3[1]
                         velAtaque += slot3[2]
                         break
@@ -317,7 +347,7 @@ def batalhaBoss(vidas, bossDG, itensBossDG):
             recompensa = random.choices(salaBoss, weights=[1, 1, 1])
             if recompensa[0] == "ouro":
                 ouroVasculhado = random.randint(20, 110)
-                print(f"\033[1mVocê encontou\033[m \033[1;33m{ouroVasculhado}\033[m \033[1mmoedas de ouro.\033[m")
+                print(f"\033[1mVocê encontrou\033[m \033[1;33m{ouroVasculhado}\033[m \033[1mmoedas de ouro.\033[m")
                 ouro += ouroVasculhado
                 print(f"\033[1mOuro atual:\033[m \033[1;33m{ouro}\033[m")
                 contadorVasculhar += 1
@@ -326,6 +356,9 @@ def batalhaBoss(vidas, bossDG, itensBossDG):
                 print("\033[1mVocê encontou uma poção de vida média.\033[m")
                 print("\033[1mVida recuperada:\033[m \033[1;32m20\033[m")
                 vida += 20
+                if vida  > (100 + slot1[1] + slot2[1] + slot3[1]):
+                    vida = 100 + slot1[1] + slot2[1] + slot3[1]
+
                 print(f"\033[1mVida atual:\033[m \033[1;32m{vida}\033[m")
                 contadorVasculhar += 1
                 continue
@@ -374,9 +407,12 @@ while vida > 0:
     0 - Loja de itens
     1 - Dark Forest (Dungeon lvl 1) 
     '''
-    if dungeon_key == 1:
+    if dungeon_key > 0:
         menu += '2 - Frozen Tomb (Dungeon lvl 2)\n'
+    if dungeon_key > 1:
+        menu += '    3 - Ghost Village (Dungeon lvl 3)\n'
     contadorFuga = 0
+    
     print("\033[36;1m\nVocê está no saguão, para onde deseja ir?\033[m")
     print(f"""\033[1;36m{menu}\033[m""")
     escolha = int(input())
@@ -392,10 +428,10 @@ while vida > 0:
             continue
 
     elif escolha == 1:
-        print("""
+        print("""\033[1m
         Você entrou na Dark Forest (dungeon de nível 1)...
         Muitos monstros vagam por essas terras sombrias e amaldiçoadas, 
-        você como um bom e confiante aventureiro seguiu em frente na busca da cabeça do temido BAD WOLF.
+        você como um bom e confiante aventureiro seguiu em frente na busca da cabeça do temido BAD WOLF.\033[m
         """)
         print("\033[34;1mMonstro à vista, hora de lutar.\033[m")
 
@@ -426,9 +462,33 @@ while vida > 0:
             dungeon_key = 1
 
     elif escolha == 2 and dungeon_key >= 1:
-        print("""
+        print("""\033[34;1m
         Você entrou na Frozen Tomb (dungeon de nível 2)...
         Milhares de anos atrás um mago poderoso condenou essas terras congelando tudo que via pela frente, 
-        muitos monstros de gelo surgiram com os resquícios de poder que sobraram do grande mago, tome cuidado... um erro e será congelado para sempre.
+        muitos monstros de gelo surgiram com os resquícios de poder que sobraram do grande mago, tome cuidado... um erro e será congelado para sempre.\033[m
         """)
+        print("\033[34;1mVocê sente um calafrio, monstro à vista.\033[m")
+
+        batalha(vida, monstrosDG2)
+        if contadorFuga == 1:
+            continue
+
+        print("\033[34;1m\nMais um monstro à vista.\033[m")
         input()
+        batalha(vida, monstrosDG2)
+        if contadorFuga == 1:
+            continue
+
+        print("""\n\033[1m
+        Um enorme dragão surge das colinas e nota sua presença, ele está furioso com o intruso que invadiu sua dunegeon\033[m\n
+        """)
+
+        batalhaBoss(vida, bossDG2, itensBossDG2)
+
+        print("""\n\033[1m
+        Você derrotou a segunda\033[m \033[31;1md\033[m\033[32;1mu\033[m\033[33;1mn\033[m\033[34;1mg\033[m\033[35;1me\033[m\033[36;1mo\033[m\033[32;1mn\033[m!! \033[1mMeus parabéns.
+        Dungeon liberada: Ghost Village
+        \033[m\n""")
+        if dungeon_key == 1:
+            dungeon_key = 2
+
