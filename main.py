@@ -16,7 +16,7 @@ itensBossDG1 = {"\033[33;1mArmadura Bad Wolfão (lendário)\033[m": [0, 0, 0],
                 "\033[34;1mEspada quebrada (raro)\033[m": [0, 0, 0],
                 "\033[34;1mArmadura furada (raro)\033[m": [0, 0, 0]}
 
-#testando sistema de itens
+#(forca, vida, velAtaque)
 slot1 = [0, 0, 0, 'empty']      #mudar a cor
 slot2 = [0, 0, 0, 'empty']
 slot3 = [0, 0, 0, 'empty']
@@ -123,7 +123,7 @@ def batalha(vidas, monstrosDG):
                     if vidas <= 0:
                         print("Você morreu, tente novamente em uma próxima vida.")
                         exit()
-                    print(f"\033[mSua vida atual: \033[32m{vidas}\033[m\n")
+                    print(f"\033[1mSua vida atual: \033[32m{vidas}\033[m\n")
 
                     input("\033[1mPróximo turno\033[m\n")
 
@@ -308,39 +308,39 @@ def batalhaBoss(vidas, bossDG, itensBossDG):
                         continue
             else:
                 print("Você não equipou o item.")
-            print(f"\nOuro dropado: {bossDG[list(bossDG)[0]][3]}")
+            print(f"\n\033[1mOuro dropado:\033[m \033[1;33m{bossDG[list(bossDG)[0]][3]}\033[m")
             ouro += bossDG[list(bossDG)[0]][3]
             vida = vidas
-            return print(f"Sua vida atual é {vidas}")
+            return print(f"\033[1mSua vida atual é\033[m \033[1;32m{vidas}\033[m")
         elif escolha == 2 and contadorVasculhar == 0:
             salaBoss = ["ouro", "vida", "armadilha"]
             recompensa = random.choices(salaBoss, weights=[1, 1, 1])
             if recompensa[0] == "ouro":
                 ouroVasculhado = random.randint(20, 110)
-                print(f"Você encontou {ouroVasculhado} moedas de ouro.")
+                print(f"\033[1mVocê encontou\033[m \033[1;33m{ouroVasculhado}\033[m \033[1mmoedas de ouro.\033[m")
                 ouro += ouroVasculhado
-                print(f"Ouro atual: {ouro}")
+                print(f"\033[1mOuro atual:\033[m \033[1;33m{ouro}\033[m")
                 contadorVasculhar += 1
                 continue
             elif recompensa[0] == "vida":
-                print("Você encontou uma poção de vida média.")
-                print("Vida recuperada: 20")
+                print("\033[1mVocê encontou uma poção de vida média.\033[m")
+                print("\033[1mVida recuperada:\033[m \033[1;32m20\033[m")
                 vida += 20
-                print(f"Vida atual: {vida}")
+                print(f"\033[1mVida atual:\033[m \033[1;32m{vida}\033[m")
                 contadorVasculhar += 1
                 continue
             elif recompensa[0] == "armadilha":
                 vidaVasculhada = random.randint(5, 20)
-                print(f"Você pisou em falso, uma armadilha explodiu e você tomou {vidaVasculhada} de dano.")
+                print(f"Você pisou em falso, uma armadilha explodiu e você tomou \033[1;31m{vidaVasculhada}\033[m de dano.")
                 vida -= vidaVasculhada
-                print(f"Vida atual: {vida}")
+                print(f"\033[1mVida atual:\033[m \033[1;32m{vida}\033[m")
                 contadorVasculhar += 1
                 continue
         elif escolha == 2 and contadorVasculhar == 1:
-            print("\nVocê já vasculhou toda a sala do Boss\n")
+            print("\n\033[1mVocê já vasculhou toda a sala do Boss\033[m\n")
             continue
         else:
-            print("Digite um valor válido, não sabe ler?\n")
+            print("\033[1mDigite um valor válido, não sabe ler?\033[m\n")
             continue
 
 #função para a loja
@@ -367,14 +367,18 @@ Além disso você tem os seus STATUS, que começam da seguinte forma:\033[m
 status()
 
 #main
+dungeon_key = 0
 while vida > 0:
+    menu = '''
+    -1 - Visualizar Status
+    0 - Loja de itens
+    1 - Dark Forest (Dungeon lvl 1) 
+    '''
+    if dungeon_key == 1:
+        menu += '2 - Frozen Tomb (Dungeon lvl 2)\n'
     contadorFuga = 0
     print("\033[36;1m\nVocê está no saguão, para onde deseja ir?\033[m")
-    print("""\033[1;36m
-           -1 - Visualizar Status
-            0 - Loja de itens
-            1 - Dark Forest (Dungeon lvl 1) \033[m
-        """)
+    print(f"""\033[1;36m{menu}\033[m""")
     escolha = int(input())
 
     if escolha == -1:
@@ -405,11 +409,26 @@ while vida > 0:
         if contadorFuga == 1:
             continue
 
-        print("""\n
+        print("""\n\033[1m
         Após derrotar os braços direitos do grande e temido BAD WOLF você se preparar para o pior,      
         pois irritou o boss da dungeon.
         Depois de 2 horas de caminhada pela Dark Forest você escuta um uivo assustador 60º a oeste, 
-        nesse momento você se depara com o BAD WOLF.\n
+        nesse momento você se depara com o BAD WOLF.\033[m\n
         """)
 
         batalhaBoss(vida, bossDG1, itensBossDG1)
+
+        print("""\n\033[1m
+        Você derrotou a primeira\033[m \033[31;1md\033[m\033[32;1mu\033[m\033[33;1mn\033[m\033[34;1mg\033[m\033[35;1me\033[m\033[36;1mo\033[m\033[32;1mn\033[m!! \033[1mMeus parabéns.
+        Dungeon liberada: Frozen Tomb
+        \033[m\n""")
+        if dungeon_key == 0:
+            dungeon_key = 1
+
+    elif escolha == 2 and dungeon_key >= 1:
+        print("""
+        Você entrou na Frozen Tomb (dungeon de nível 2)...
+        Milhares de anos atrás um mago poderoso condenou essas terras congelando tudo que via pela frente, 
+        muitos monstros de gelo surgiram com os resquícios de poder que sobraram do grande mago, tome cuidado... um erro e será congelado para sempre.
+        """)
+        input()
