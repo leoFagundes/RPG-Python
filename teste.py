@@ -1,3 +1,6 @@
-dic = {'oioioi': 2}
+i = '2'
 
-print(list(dic.keys())[0])
+print(type(i))
+
+if type(i) == str:
+    print('oi')
