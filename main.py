@@ -11,31 +11,49 @@ monstrosDG1 = {"Aranha (lvl 1)": [4, 1, 20, 20, 55],
 bossDG1 = {"Bad Wolf": [5, 5, 80, 200]}
 
 #(forca, vida, velAtaque)
-itensBossDG1 = {"\033[33;1mArmadura Bad Wolfão (lendário)\033[m": [0, 50, 0],
-                "\033[33;1mEspada Bad Wolfiado (lendário)\033[m": [5, 0, 11],
-                "\033[35;1mAdaga de presa de lobo (épico)\033[m": [2, 0, 20],
-                "\033[35;1mArmadura de pele de lobo (épico)\033[m": [0, 25, 5],
-                "\033[34;1mEspada quebrada (raro)\033[m": [1, 0, 5],
-                "\033[34;1mArmadura furada (raro)\033[m": [0, 10, 0]}
+itensBossDG1 = {"\033[33;1mArmadura Bad Wolfão - lvl 1 (lendário)\033[m": [0, 50, 0],
+                "\033[33;1mEspada Bad Wolfiado - lvl 1 (lendário)\033[m": [5, 0, 11],
+                "\033[35;1mAdaga de presa de lobo - lvl 1 (épico)\033[m": [2, 0, 20],
+                "\033[35;1mArmadura de pele de lobo - lvl 1 (épico)\033[m": [0, 25, 5],
+                "\033[34;1mEspada quebrada - lvl 1 (raro)\033[m": [1, 0, 5],
+                "\033[34;1mArmadura furada - lvl 1 (raro)\033[m": [0, 10, 0]}
 
 
 #----------------------------------------------------
 #(forca, vida, velAtaque, ouroDropado, chanceFuga)
 monstrosDG2 = {"Goblin de Gelo (lvl 2)": [7, 3, 40, 40, 55], 
                "Espírito Congelado (lvl 2)": [8, 3, 5, 15, 55],
-               "Druida de Gelo (lvl 3)": [15, 3, 10, 30, 40],
+               "Druida de Gelo (lvl 3)": [15, 4, 10, 30, 40],
                "Golem de Gelo (lvl 4)": [20, 10, 5, 80, 65]}
 
 #(forca, vida=10, velAtaque, ouroDropado)
 bossDG2 = {"Frozen Dragon": [15, 10, 80, 350]}
 
 #(forca, vida, velAtaque)
-itensBossDG2 = {"\033[33;1mPeitoral Dragônico (lendário)\033[m": [0, 100, 0],
-                "\033[33;1mLança Zero Absoluto (lendário)\033[m": [12, 0, 20],
-                "\033[35;1mGarra de dragão (épico)\033[m": [6, 0, 25],
-                "\033[35;1mArmadura Congelada (épico)\033[m": [0, 60, -10],
-                "\033[34;1mEstaca de Gelo (raro)\033[m": [3, 0, 10],
-                "\033[34;1mBota Quebradiça (raro)\033[m": [0, 20, 0]}
+itensBossDG2 = {"\033[33;1mPeitoral Dragônico - lvl 2 (lendário)\033[m": [0, 100, 0],
+                "\033[33;1mLança Zero Absoluto - lvl 2 (lendário)\033[m": [12, 0, 20],
+                "\033[35;1mGarra de dragão - lvl 2 (épico)\033[m": [6, 0, 25],
+                "\033[35;1mArmadura Congelada - lvl 2 (épico)\033[m": [0, 60, -10],
+                "\033[34;1mEstaca de Gelo - lvl 2 (raro)\033[m": [3, 0, 10],
+                "\033[34;1mBota Quebradiça - lvl 2 (raro)\033[m": [0, 20, 0]}
+
+#----------------------------------------------------
+#(forca, vida, velAtaque, ouroDropado, chanceFuga)
+monstrosDG3 = {"Espectro (lvl 3)": [15, 12, 20, 40, 30], 
+               "Poltergeist (lvl 3)": [12, 15, 20, 40, 30],
+               "Banshee (lvl 3)": [25, 3, 36, 25, 31],
+               "Holandês Voador (lvl 5)": [22, 15, 20, 150, 50]}
+
+#(forca, vida=10, velAtaque, ouroDropado)
+bossDG3 = {"Astaroth, O Demônio Infernal": [25, 18, 80, 600]}
+
+#(forca, vida, velAtaque)
+itensBossDG3 = {"\033[33;1mArmadura de Sangue de Demônio - lvl 3 (lendário)\033[m": [0, 300, 0],
+                "\033[33;1mLivro Amaldiçoado - lvl 3 (lendário)\033[m": [40, 0, 5],
+                "\033[35;1mFoice Espectral - lvl 3 (épico)\033[m": [25, 0, 15],
+                "\033[35;1mCapa de Almas Perdidas - lvl 3 (épico)\033[m": [0, 130, 10],
+                "\033[34;1mEspada Fantasma - lvl 3 (raro)\033[m": [14, 0, 10],
+                "\033[34;1mAnel Espectral - lvl 3 (raro)\033[m": [0, 80, 5]}
 
 #----------------------------------------------------
 #(forca, vida, velAtaque)
@@ -266,7 +284,7 @@ def batalhaBoss(vidas, bossDG, itensBossDG):
                     input("\033[1mPróximo turno\033[m\n")
             print(f"\033[31mVocê matou o temido {list(bossDG)[0]}\033[m, \033[1mvamos continuar a jornada.\033[m")
             item = list(itensBossDG)
-            itemGanho = random.choices(item, weights=[5, 5, 15, 15, 35, 35])
+            itemGanho = random.choices(item, weights=[8, 8, 20, 20, 35, 35])
             print("Você tem chance de ganhar um dos seguintes itens: \n")
             print("\n".join(item))
             print(f"""\n\033[37;1mO item dropado foi:\033[m 
@@ -511,6 +529,36 @@ while vida > 0:
         \033[m\n""")
         if dungeon_key == 1:
             dungeon_key = 2
+    
+    elif escolha == '3' and dungeon_key >= 2:
+        print("""\033[34;1m
+        Caminhando pelas profundezas você avista um vilarejo abandonado e alguma magia obscura te mantém preso dentro dele.
+        Você encontrou a dunegon Ghost Village (Dungeon lvl 3)\033[m
+        """)
+        print("\033[34;1mDemônios te cercam, hora de lutar.\033[m")
+
+        batalha(vida, monstrosDG3)
+        if contadorFuga == 1:
+            continue
+
+        print("\033[34;1m\nOutro fantasma à vista.\033[m")
+        input()
+        batalha(vida, monstrosDG3)
+        if contadorFuga == 1:
+            continue
+
+        print("""\n\033[1m
+        Após derrotar todos os fantasmas da vila, Astaroth fica enfurecido e busca vingaça.\033[m\n
+        """)
+
+        batalhaBoss(vida, bossDG3, itensBossDG3)
+
+        print("""\n\033[1m
+        Você derrotou a terceira\033[m \033[31;1md\033[m\033[32;1mu\033[m\033[33;1mn\033[m\033[34;1mg\033[m\033[35;1me\033[m\033[36;1mo\033[m\033[32;1mn\033[m!! \033[1mMeus parabéns.
+        Dungeon liberada: Pirates Bay
+        \033[m\n""")
+        if dungeon_key == 2:
+            dungeon_key = 3
         
     else:
         continue
