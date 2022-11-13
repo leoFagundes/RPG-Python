@@ -60,6 +60,9 @@ itensBossDG3 = {"\033[33;1mArmadura de Sangue de Demônio - lvl 3 (lendário)\03
 slot1 = [0, 0, 0, 'empty']      #mudar a cor
 slot2 = [0, 0, 0, 'empty']
 slot3 = [0, 0, 0, 'empty']
+slot4 = [0, 0, 0, 'empty']
+slot5 = [0, 0, 0, 'empty']
+
 
 forca = 1
 vida = 100
@@ -105,6 +108,18 @@ def status():
                 \033[31;1m+{slot3[0]}\033[m \033[1;37mde força\033[m
                 \033[32;1m+{slot3[1]}\033[m \033[1;37mde vida\033[m
                 \033[35;1m+{slot3[2]}\033[m \033[1;37mde velocidade de ataque\033[m""")
+        print("\033[36m__\033[m"*15)
+    if slot4[3] != 'empty':
+        print(f"""\033[1;37mSlot 4\033[m - {slot4[3]}: 
+                \033[31;1m+{slot4[0]}\033[m \033[1;37mde força\033[m
+                \033[32;1m+{slot4[1]}\033[m \033[1;37mde vida\033[m
+                \033[35;1m+{slot4[2]}\033[m \033[1;37mde velocidade de ataque\033[m""")
+        print("\033[36m__\033[m"*15)
+    if slot5[3] != 'empty':
+        print(f"""\033[1;37mSlot 5\033[m - {slot5[3]}: 
+                \033[31;1m+{slot5[0]}\033[m \033[1;37mde força\033[m
+                \033[32;1m+{slot5[1]}\033[m \033[1;37mde vida\033[m
+                \033[35;1m+{slot5[2]}\033[m \033[1;37mde velocidade de ataque\033[m""")
         print("\033[36m__\033[m"*15)
 
 #satatusBoss
@@ -220,6 +235,8 @@ def batalhaBoss(vidas, bossDG, itensBossDG):
     global slot1
     global slot2
     global slot3
+    global slot4
+    global slot5
     contadorVasculhar = 0
     while True:
         print("""Deseja 
@@ -306,10 +323,12 @@ def batalhaBoss(vidas, bossDG, itensBossDG):
                         \033[1;37mVocê deseja equipar em qual slot?
                             1 - slot 1 ({slot1[3]})
                             2 - slot 2 ({slot2[3]})
-                            3 - slot 3 ({slot3[3]})\033[m
+                            3 - slot 3 ({slot3[3]})
+                            4 - slot 4 ({slot4[3]})
+                            5 - slot 5 ({slot5[3]})\033[m
                         """)
                         escolha = input()
-                        if escolha == '1' or escolha == '2' or escolha == '3':
+                        if escolha == '1' or escolha == '2' or escolha == '3' or escolha == '4' or escolha == '5':
                             escolha = int(escolha)
                         else:
                             continue
@@ -367,6 +386,42 @@ def batalhaBoss(vidas, bossDG, itensBossDG):
                             vida += slot3[1]
                             velAtaque += slot3[2]
                             break
+                        elif escolha == 4:
+                            print(f"Você equipou {itemGanho[0]}")
+                            forca -= slot4[0]
+                            vida -= slot4[1]
+                            velAtaque -= slot4[2]
+
+                            slot4 = []
+                            slot4.append(itensBossDG[itemGanho[0]][0])
+                            slot4.append(itensBossDG[itemGanho[0]][1])
+                            slot4.append(itensBossDG[itemGanho[0]][2])
+                            slot4.append(itemGanho[0])
+
+                            forca += slot4[0]
+                            vidas += slot4[1]
+                            vida = vidas
+                            vida += slot4[1]
+                            velAtaque += slot4[2]
+                            break
+                        elif escolha == 5:
+                            print(f"Você equipou {itemGanho[0]}")
+                            forca -= slot5[0]
+                            vida -= slot5[1]
+                            velAtaque -= slot5[2]
+
+                            slot5 = []
+                            slot5.append(itensBossDG[itemGanho[0]][0])
+                            slot5.append(itensBossDG[itemGanho[0]][1])
+                            slot5.append(itensBossDG[itemGanho[0]][2])
+                            slot5.append(itemGanho[0])
+
+                            forca += slot5[0]
+                            vidas += slot5[1]
+                            vida = vidas
+                            vida += slot5[1]
+                            velAtaque += slot5[2]
+                            break
                         else:
                             print("Valor inválido, escolha novamente.")
                             continue
@@ -390,8 +445,8 @@ def batalhaBoss(vidas, bossDG, itensBossDG):
                 print("\033[1mVocê encontou uma poção de vida média.\033[m")
                 print("\033[1mVida recuperada:\033[m \033[1;32m20\033[m")
                 vida += 20
-                if vida  > (100 + slot1[1] + slot2[1] + slot3[1]):
-                    vida = 100 + slot1[1] + slot2[1] + slot3[1]
+                if vida  > (100 + slot1[1] + slot2[1] + slot3[1] + slot4[1] + slot5[1]):
+                    vida = 100 + slot1[1] + slot2[1] + slot3[1] + slot4[1] + slot5[1]
                 vidas = vida
                 print(f"\033[1mVida atual:\033[m \033[1;32m{vida}\033[m")
                 contadorVasculhar += 1
@@ -413,16 +468,16 @@ def batalhaBoss(vidas, bossDG, itensBossDG):
 
 #função para a loja
 def loja():
-    print(f"""\033[1;36m\n
-    {"LOJA":^25}
-    {"Esse é o nosso catálogo:":^25}
+    print(f"""
+    \033[1mOuro Atual:\033[m \033[33m{ouro:^2}\033[m | \033[1mVida atual:\033[m \033[1;32m{vida:^2}/{100 + slot1[1] + slot2[1] + slot3[1] + slot4[1] + slot5[1]:^2}\033[m\n
+    \033[1;36m{"LOJA":^25}\033[m
+    \033[1;36m{"Esse é o nosso catálogo:":^25}\033[m
+    \033[36m{"1 - Poção Pequena:"}\033[m \033[33m{"30 p.o":<25}\033[m
+    \033[36m{"2 - Poção Média:"}\033[m \033[33m{"70 p.o":<25}\033[m
+    \033[36m{"3 - Poção Grande:"}\033[m \033[33m{"120 p.o":<25}\033[m
     {"-":<25}
     {"-":<25}
-    {"-":<25}
-    {"-":<25}
-    {"-":<25}
-    {"0 - sair da loja":<25}\n
-    \033[m""")
+    \033[36m{"0 - sair da loja":<25}\033[m\n""")
     
 ############################################################################################################################################
 print("""\033[1m
@@ -462,6 +517,16 @@ while vida > 0:
         escolha = input()
         if escolha == '0':
             continue
+        if escolha == '1':
+            if ouro < 30:
+                print("\033[1mVocê não tem\033[m \033[33mouro\033[m \033[1msuficiente\033[m")
+            else:
+                vida += 20
+                if vida > (100 + slot1[1] + slot2[1] + slot3[1] + slot4[1] + slot5[1]):
+                        vida = 100 + slot1[1] + slot2[1] + slot3[1] + slot4[1] + slot5[1]
+                print("\033[1mVida recuperada:\033[m \033[1;32m+20\033[m")
+                print(f"\033[1mVida atual:\033[m \033[1;32m{vida}/{100 + slot1[1] + slot2[1] + slot3[1] + slot4[1] + slot5[1]:^2}\033[m")
+                ouro -= 20
         else:
             continue
 
