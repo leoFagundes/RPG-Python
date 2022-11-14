@@ -467,14 +467,17 @@ def batalhaBoss(vidas, bossDG, itensBossDG):
             continue
 
 #função para a loja
+preco_pocao_pequena = 100
+preco_pocao_media = 180
+preco_pocao_grande = 300
 def loja():
     print(f"""
     \033[1mOuro Atual:\033[m \033[33m{ouro:^2}\033[m | \033[1mVida atual:\033[m \033[1;32m{vida:^2}/{100 + slot1[1] + slot2[1] + slot3[1] + slot4[1] + slot5[1]:^2}\033[m\n
     \033[1;36m{"LOJA":^25}\033[m
     \033[1;36m{"Esse é o nosso catálogo:":^25}\033[m
-    \033[36m{"1 - Poção Pequena:"}\033[m \033[33m{"30 p.o":<25}\033[m
-    \033[36m{"2 - Poção Média:"}\033[m \033[33m{"70 p.o":<25}\033[m
-    \033[36m{"3 - Poção Grande:"}\033[m \033[33m{"120 p.o":<25}\033[m
+    \033[36m{"1 - Poção Pequena (+20 de vida):"}\033[m \033[33m{preco_pocao_pequena} p.o\033[m
+    \033[36m{"2 - Poção Média (+x de vida):"}\033[m \033[33m{preco_pocao_media} p.o\033[m
+    \033[36m{"3 - Poção Grande (+x de vida):"}\033[m \033[33m{preco_pocao_grande} p.o\033[m
     {"-":<25}
     {"-":<25}
     \033[36m{"0 - sair da loja":<25}\033[m\n""")
@@ -518,15 +521,16 @@ while vida > 0:
         if escolha == '0':
             continue
         if escolha == '1':
-            if ouro < 30:
+            if ouro < preco_pocao_pequena:
                 print("\033[1mVocê não tem\033[m \033[33mouro\033[m \033[1msuficiente\033[m")
+                print(f"\033[1mFaltam\033[m \033[33m{preco_pocao_pequena-ouro} p.o\033[m \033[1mpara comprar a poção\033[m ")
             else:
                 vida += 20
                 if vida > (100 + slot1[1] + slot2[1] + slot3[1] + slot4[1] + slot5[1]):
                         vida = 100 + slot1[1] + slot2[1] + slot3[1] + slot4[1] + slot5[1]
                 print("\033[1mVida recuperada:\033[m \033[1;32m+20\033[m")
                 print(f"\033[1mVida atual:\033[m \033[1;32m{vida}/{100 + slot1[1] + slot2[1] + slot3[1] + slot4[1] + slot5[1]:^2}\033[m")
-                ouro -= 20
+                ouro -= preco_pocao_pequena
         else:
             continue
 
