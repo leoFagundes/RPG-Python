@@ -16,7 +16,7 @@ itensBossDG1 = {"\033[33;1mArmadura Bad Wolfão - lvl 1 (lendário)\033[m": [0, 
                 "\033[35;1mAdaga de presa de lobo - lvl 1 (épico)\033[m": [2, 0, 20],
                 "\033[35;1mArmadura de pele de lobo - lvl 1 (épico)\033[m": [0, 25, 5],
                 "\033[34;1mEspada quebrada - lvl 1 (raro)\033[m": [1, 0, 5],
-                "\033[34;1mArmadura furada - lvl 1 (raro)\033[m": [0, 10, 0]}
+                "\033[34;1mArmadura furada - lvl 1 (raro)\033[m": [0, 15, 0]}
 
 
 #----------------------------------------------------
@@ -32,7 +32,7 @@ bossDG2 = {"Frozen Dragon": [15, 10, 80, 350]}
 #(forca, vida, velAtaque)
 itensBossDG2 = {"\033[33;1mPeitoral Dragônico - lvl 2 (lendário)\033[m": [0, 100, 0],
                 "\033[33;1mLança Zero Absoluto - lvl 2 (lendário)\033[m": [12, 0, 20],
-                "\033[35;1mGarra de dragão - lvl 2 (épico)\033[m": [6, 0, 25],
+                "\033[35;1mGarra de dragão - lvl 2 (épico)\033[m": [8, 0, 25],
                 "\033[35;1mArmadura Congelada - lvl 2 (épico)\033[m": [0, 60, -10],
                 "\033[34;1mEstaca de Gelo - lvl 2 (raro)\033[m": [3, 0, 10],
                 "\033[34;1mBota Quebradiça - lvl 2 (raro)\033[m": [0, 20, 0]}
@@ -48,12 +48,48 @@ monstrosDG3 = {"Espectro (lvl 3)": [15, 12, 20, 40, 30],
 bossDG3 = {"Astaroth, O Demônio Infernal": [25, 18, 80, 600]}
 
 #(forca, vida, velAtaque)
-itensBossDG3 = {"\033[33;1mArmadura de Sangue de Demônio - lvl 3 (lendário)\033[m": [0, 300, 0],
-                "\033[33;1mLivro Amaldiçoado - lvl 3 (lendário)\033[m": [40, 0, 5],
-                "\033[35;1mFoice Espectral - lvl 3 (épico)\033[m": [25, 0, 15],
-                "\033[35;1mCapa de Almas Perdidas - lvl 3 (épico)\033[m": [0, 130, 10],
-                "\033[34;1mEspada Fantasma - lvl 3 (raro)\033[m": [14, 0, 10],
-                "\033[34;1mAnel Espectral - lvl 3 (raro)\033[m": [0, 80, 5]}
+itensBossDG3 = {"\033[33;1mArmadura de Sangue de Demônio - lvl 3 (lendário)\033[m": [0, 320, 0],
+                "\033[33;1mLivro Amaldiçoado - lvl 3 (lendário)\033[m": [70, 0, 5],
+                "\033[35;1mFoice Espectral - lvl 3 (épico)\033[m": [40, 0, 15],
+                "\033[35;1mCapa de Almas Perdidas - lvl 3 (épico)\033[m": [0, 240, 10],
+                "\033[34;1mEspada Fantasma - lvl 3 (raro)\033[m": [25, 0, 10],
+                "\033[34;1mAnel Espectral - lvl 3 (raro)\033[m": [0, 150, 5]}
+
+#----------------------------------------------------
+#(forca, vida, velAtaque, ouroDropado, chanceFuga)
+monstrosDG4 = {"Marujo (lvl 4)": [45, 150, 20, 70, 30], 
+               "Marinheiro (lvl 4)": [35, 220, 20, 72, 30],
+               "Bucaneiro (lvl 5)": [60, 140, 1, 75, 34],
+               "Barba Negra (lvl 7)": [95, 220, 70, 350, 50]}
+
+#(forca, vida=10, velAtaque, ouroDropado)
+bossDG4 = {"Kraken": [70, 270, 80, 1000]}
+
+#(forca, vida, velAtaque)
+itensBossDG4 = {"\033[33;1mArmadura de Escama - lvl 4 (lendário)\033[m": [20, 500, 2],
+                "\033[33;1mMosquete - lvl 4 (lendário)\033[m": [150, 0, 5],
+                "\033[35;1mRevólver de Pólvora - lvl 4 (épico)\033[m": [80, 0, 8],
+                "\033[35;1mFarda Pirata - lvl 4 (épico)\033[m": [0, 340, 0],
+                "\033[34;1mCimitarra Pirata - lvl 4 (raro)\033[m": [65, 0, 35],
+                "\033[34;1mChapéu Pirata - lvl 4 (raro)\033[m": [0, 250, 5]}
+
+#----------------------------------------------------
+#(forca, vida, velAtaque, ouroDropado, chanceFuga)
+monstrosDG5 = {"Shadow Dragon (lvl 6)": [15, 12, 20, 40, 30], 
+               "Dracolich (lvl 6)": [12, 15, 20, 40, 30],
+               "Beholder (lvl 7)": [25, 3, 36, 25, 31],
+               "Lich King (lvl 9)": [22, 15, 20, 150, 50]}
+
+#(forca, vida=10, velAtaque, ouroDropado)
+bossDG5 = {"Rei Destruído": [25, 18, 80, 600]}
+
+#(forca, vida, velAtaque)
+itensBossDG5 = {"\033[33;1mCoroa do Rei Destruído - lvl 5 (lendário)\033[m": [0, 300, 0],
+                "\033[33;1mEspada do Rei Destruído - lvl 5 (lendário)\033[m": [40, 0, 5],
+                "\033[35;1mMachado dos Condenados - lvl 5 (épico)\033[m": [25, 0, 15],
+                "\033[35;1mPeitoral de Escamas Sombrias - lvl 5 (épico)\033[m": [0, 130, 10],
+                "\033[34;1mKatana Sombria - lvl 5 (raro)\033[m": [14, 0, 10],
+                "\033[34;1mManto das Trevas - lvl 5 (raro)\033[m": [0, 80, 5]}
 
 #----------------------------------------------------
 #(forca, vida, velAtaque)
@@ -70,6 +106,8 @@ ouro = 0
 velAtaque = 10
 
 contadorFuga = 0
+bool_slot4 = False
+bool_slot5 = False
 
 #status monstros
 def statusMonstros(monstro, forca, vida, velAtaque, fuga):
@@ -87,7 +125,7 @@ def status():
     print("\033[36m__\033[m"*15)
     print("")
     print(f"\033[1mForça:\033[m \033[31m{forca:^2}\033[m")
-    print(f"\033[1mVida:\033[m \033[32m{vida:^2}/{100+slot1[1]+slot2[1]+slot3[1]:^2}\033[m")
+    print(f"\033[1mVida:\033[m \033[32m{vida:^2}/{100+slot1[1]+slot2[1]+slot3[1]+slot4[1]+slot5[1]:^2}\033[m")
     print(f"\033[1mOuro:\033[m \033[33m{ouro:^2}\033[m")
     print(f"\033[1mVelocidade de Ataque:\033[m \033[35m{velAtaque:^2}\033[m")
     print("\033[36m__\033[m"*15)
@@ -158,7 +196,7 @@ def batalha(vidas, monstrosDG):
 
         if escolha == 2:
             chances = ['fugiu', 'naofugiu']
-            chance = random.choices(chances, weights = [monstrosDG1[monstroAtual[0]][4], 100-monstrosDG[monstroAtual[0]][4]])
+            chance = random.choices(chances, weights = [monstrosDG[monstroAtual[0]][4], 100-monstrosDG[monstroAtual[0]][4]])
             if chance[0] == 'fugiu':
                 print(f"Com {monstrosDG[monstroAtual[0]][4]}% de chance de escapar, você conseguiu fugir com sucesso")
                 contadorFuga = 1
@@ -237,6 +275,8 @@ def batalhaBoss(vidas, bossDG, itensBossDG):
     global slot3
     global slot4
     global slot5
+    global bool_slot4
+    global bool_slot5
     contadorVasculhar = 0
     while True:
         print("""Deseja 
@@ -301,7 +341,7 @@ def batalhaBoss(vidas, bossDG, itensBossDG):
                     input("\033[1mPróximo turno\033[m\n")
             print(f"\033[31mVocê matou o temido {list(bossDG)[0]}\033[m, \033[1mvamos continuar a jornada.\033[m")
             item = list(itensBossDG)
-            itemGanho = random.choices(item, weights=[8, 8, 20, 20, 35, 35])
+            itemGanho = random.choices(item, weights=[5, 5, 20, 20, 35, 35])
             print("Você tem chance de ganhar um dos seguintes itens: \n")
             print("\n".join(item))
             print(f"""\n\033[37;1mO item dropado foi:\033[m 
@@ -319,14 +359,39 @@ def batalhaBoss(vidas, bossDG, itensBossDG):
                     continue
                 if escolha == 1:
                     while True:
-                        print(f"""
-                        \033[1;37mVocê deseja equipar em qual slot?
-                            1 - slot 1 ({slot1[3]})
-                            2 - slot 2 ({slot2[3]})
-                            3 - slot 3 ({slot3[3]})
-                            4 - slot 4 ({slot4[3]})
-                            5 - slot 5 ({slot5[3]})\033[m
-                        """)
+                        if bool_slot4 == True and bool_slot5 == True:
+                            texto = f"""
+                            \033[1;37mVocê deseja equipar em qual slot?
+                                1 - slot 1 ({slot1[3]})
+                                2 - slot 2 ({slot2[3]})
+                                3 - slot 3 ({slot3[3]})
+                                4 - slot 4 ({slot4[3]})
+                                5 - slot 5 ({slot5[3]})\033[m
+                            """
+                        elif bool_slot4 == False and bool_slot5 == True:
+                            texto = f"""
+                            \033[1;37mVocê deseja equipar em qual slot?
+                                1 - slot 1 ({slot1[3]})
+                                2 - slot 2 ({slot2[3]})
+                                3 - slot 3 ({slot3[3]})
+                                5 - slot 5 ({slot5[3]})\033[m
+                            """
+                        elif bool_slot4 == True and bool_slot5 == False:
+                            texto = f"""
+                            \033[1;37mVocê deseja equipar em qual slot?
+                                1 - slot 1 ({slot1[3]})
+                                2 - slot 2 ({slot2[3]})
+                                3 - slot 3 ({slot3[3]})
+                                5 - slot 4 ({slot4[3]})\033[m
+                            """
+                        elif bool_slot4 == False and bool_slot5 == False:
+                            texto = f"""
+                            \033[1;37mVocê deseja equipar em qual slot?
+                                1 - slot 1 ({slot1[3]})
+                                2 - slot 2 ({slot2[3]})
+                                3 - slot 3 ({slot3[3]})\033[m
+                            """
+                        print(texto)
                         escolha = input()
                         if escolha == '1' or escolha == '2' or escolha == '3' or escolha == '4' or escolha == '5':
                             escolha = int(escolha)
@@ -386,7 +451,7 @@ def batalhaBoss(vidas, bossDG, itensBossDG):
                             vida += slot3[1]
                             velAtaque += slot3[2]
                             break
-                        elif escolha == 4:
+                        elif escolha == 4 and bool_slot4 == True:
                             print(f"Você equipou {itemGanho[0]}")
                             forca -= slot4[0]
                             vida -= slot4[1]
@@ -404,7 +469,7 @@ def batalhaBoss(vidas, bossDG, itensBossDG):
                             vida += slot4[1]
                             velAtaque += slot4[2]
                             break
-                        elif escolha == 5:
+                        elif escolha == 5 and bool_slot5 == True:
                             print(f"Você equipou {itemGanho[0]}")
                             forca -= slot5[0]
                             vida -= slot5[1]
@@ -467,9 +532,11 @@ def batalhaBoss(vidas, bossDG, itensBossDG):
             continue
 
 #função para a loja
-preco_pocao_pequena = 100
-preco_pocao_media = 180
-preco_pocao_grande = 300
+preco_pocao_pequena = 160
+preco_pocao_media = 350
+preco_pocao_grande = 800
+preco_slot4 = 1500
+preco_slot5 = 3000
 def loja():
     print(f"""
     \033[1mOuro Atual:\033[m \033[33m{ouro:^2}\033[m | \033[1mVida atual:\033[m \033[1;32m{vida:^2}/{100 + slot1[1] + slot2[1] + slot3[1] + slot4[1] + slot5[1]:^2}\033[m\n
@@ -478,8 +545,8 @@ def loja():
     \033[36m{"1 - Poção Pequena (+20 de vida):"}\033[m \033[33m{preco_pocao_pequena} p.o\033[m
     \033[36m{"2 - Poção Média (+x de vida):"}\033[m \033[33m{preco_pocao_media} p.o\033[m
     \033[36m{"3 - Poção Grande (+x de vida):"}\033[m \033[33m{preco_pocao_grande} p.o\033[m
-    {"-":<25}
-    {"-":<25}
+    \033[36m{"4 - Slot 4 (dungeon lvl 2 necessária):"}\033[m \033[33m{preco_slot4} p.o\033[m
+    \033[36m{"5 - Slot 5 (dungeon lvl 4 necessária):"}\033[m \033[33m{preco_slot5} p.o\033[m
     \033[36m{"0 - sair da loja":<25}\033[m\n""")
     
 ############################################################################################################################################
@@ -504,6 +571,8 @@ while vida > 0:
         menu += '2 - Frozen Tomb (Dungeon lvl 2)\n'
     if dungeon_key > 1:
         menu += '    3 - Ghost Village (Dungeon lvl 3)\n'
+    if dungeon_key > 2:
+        menu += '    4 - Pirates Bay (Dungeon lvl 4)\n'
     contadorFuga = 0
     
     print("\033[36;1m\nVocê está no saguão, para onde deseja ir?\033[m")
@@ -520,10 +589,12 @@ while vida > 0:
         escolha = input()
         if escolha == '0':
             continue
-        if escolha == '1':
+
+        elif escolha == '1':
             if ouro < preco_pocao_pequena:
                 print("\033[1mVocê não tem\033[m \033[33mouro\033[m \033[1msuficiente\033[m")
                 print(f"\033[1mFaltam\033[m \033[33m{preco_pocao_pequena-ouro} p.o\033[m \033[1mpara comprar a poção\033[m ")
+                continue
             else:
                 vida += 20
                 if vida > (100 + slot1[1] + slot2[1] + slot3[1] + slot4[1] + slot5[1]):
@@ -531,12 +602,34 @@ while vida > 0:
                 print("\033[1mVida recuperada:\033[m \033[1;32m+20\033[m")
                 print(f"\033[1mVida atual:\033[m \033[1;32m{vida}/{100 + slot1[1] + slot2[1] + slot3[1] + slot4[1] + slot5[1]:^2}\033[m")
                 ouro -= preco_pocao_pequena
+
+        elif escolha == '4' and dungeon_key >= 2:
+            if ouro < preco_slot4:
+                print("\033[1mVocê não tem\033[m \033[33mouro\033[m \033[1msuficiente\033[m")
+                print(f"\033[1mFaltam\033[m \033[33m{preco_slot4-ouro} p.o\033[m \033[1mpara comprar esse slot\033[m ")
+                continue
+            else:
+                print("\033[1mSlot 4 comprado com sucesso, você já pode utilizá-lo\033[m")
+                print(f"\033[1mOuro: \033[m \033[33m-{preco_slot4} p.o\033[m \033[1m= \033[m  \033[33m-{ouro-preco_slot4} p.o\033[m ")
+                ouro -= preco_slot4
+                bool_slot4 = True
+
+        elif escolha == '5' and dungeon_key >= 4:
+            if ouro < preco_slot5:
+                print("\033[1mVocê não tem\033[m \033[33mouro\033[m \033[1msuficiente\033[m")
+                print(f"\033[1mFaltam\033[m \033[33m{preco_slot5-ouro} p.o\033[m \033[1mpara comprar esse slot\033[m ")
+                continue
+            else:
+                print("\033[1mSlot 5 comprado com sucesso, você já pode utilizá-lo\033[m")
+                print(f"\033[1mOuro: \033[m \033[33m-{preco_slot5} p.o\033[m \033[1m= \033[m  \033[33m-{ouro-preco_slot5} p.o\033[m ")
+                ouro -= preco_slot5
+                bool_slot5 = True
         else:
-            continue
+            print("\033[1mConclua os requisitos para comprar esse slot\033[m")
 
     elif escolha == '1':
         print("""\033[1m
-        Você entrou na Dark Forest (dungeon de nível 1)...
+        Você entrou na Dark Forest (dungeon de lvl 1)...
         Muitos monstros vagam por essas terras sombrias e amaldiçoadas, 
         você como um bom e confiante aventureiro seguiu em frente na busca da cabeça do temido BAD WOLF.\033[m
         """)
@@ -570,7 +663,7 @@ while vida > 0:
 
     elif escolha == '2' and dungeon_key >= 1:
         print("""\033[34;1m
-        Você entrou na Frozen Tomb (dungeon de nível 2)...
+        Você entrou na Frozen Tomb (dungeon de lvl 2)...
         Milhares de anos atrás um mago poderoso condenou essas terras congelando tudo que via pela frente, 
         muitos monstros de gelo surgiram com os resquícios de poder que sobraram do grande mago, tome cuidado... um erro e será congelado para sempre.\033[m
         """)
@@ -628,6 +721,36 @@ while vida > 0:
         \033[m\n""")
         if dungeon_key == 2:
             dungeon_key = 3
+        
+    elif escolha == '4' and dungeon_key >= 3:
+        print("""\033[34;1m
+        O mar... muitas vezes pode ser traiçoeiro, sombrio e perverso. Em busca da quarta dungeon você entra no território aquático mais perigoso conehcido pelos aventureiros.
+        Em busca da cabeça do Kraken você entra na Dungeon conhecida como Pirates Bay (Dungeon lvl 4)\033[m
+        """)
+        print("\033[34;1mSeu navio foi invadido, prepare-se.\033[m")
+
+        batalha(vida, monstrosDG4)
+        if contadorFuga == 1:
+            continue
+
+        print("\033[34;1m\nInimigo à vista, atirar!!\033[m")
+        input()
+        batalha(vida, monstrosDG4)
+        if contadorFuga == 1:
+            continue
+
+        print("""\n\033[1m
+        O Kraken percebe a presença de meros aventureiros em seu território, você despertou a fúria do ser aquático mais poderoso conhecido pelo homem.\033[m\n
+        """)
+
+        batalhaBoss(vida, bossDG4, itensBossDG4)
+
+        print("""\n\033[1m
+        Você derrotou a quarta\033[m \033[31;1md\033[m\033[32;1mu\033[m\033[33;1mn\033[m\033[34;1mg\033[m\033[35;1me\033[m\033[36;1mo\033[m\033[32;1mn\033[m!! \033[1mMeus parabéns.
+        Dungeon liberada: Destroyed World
+        \033[m\n""")
+        if dungeon_key == 3:
+            dungeon_key = 4
         
     else:
         continue
