@@ -48,7 +48,7 @@ monstrosDG3 = {"Espectro (lvl 3)": [15, 12, 20, 40, 30],
 bossDG3 = {"Astaroth, O Demônio Infernal": [25, 18, 80, 600]}
 
 #(forca, vida, velAtaque)
-itensBossDG3 = {"\033[33;1mArmadura de Sangue de Demônio - lvl 3 (lendário)\033[m": [0, 320, 0],
+itensBossDG3 = {"\033[33;1mArmadura de Sangue de Demônio - lvl 3 (lendário)\033[m": [0, 320, 3],
                 "\033[33;1mLivro Amaldiçoado - lvl 3 (lendário)\033[m": [70, 0, 5],
                 "\033[35;1mFoice Espectral - lvl 3 (épico)\033[m": [40, 0, 15],
                 "\033[35;1mCapa de Almas Perdidas - lvl 3 (épico)\033[m": [0, 240, 10],
@@ -98,7 +98,6 @@ slot2 = [0, 0, 0, 'empty']
 slot3 = [0, 0, 0, 'empty']
 slot4 = [0, 0, 0, 'empty']
 slot5 = [0, 0, 0, 'empty']
-
 
 forca = 1
 vida = 100
@@ -362,38 +361,46 @@ def batalhaBoss(vidas, bossDG, itensBossDG):
                         if bool_slot4 == True and bool_slot5 == True:
                             texto = f"""
                             \033[1;37mVocê deseja equipar em qual slot?
-                                1 - slot 1 ({slot1[3]})
-                                2 - slot 2 ({slot2[3]})
-                                3 - slot 3 ({slot3[3]})
-                                4 - slot 4 ({slot4[3]})
-                                5 - slot 5 ({slot5[3]})\033[m
+                                0 - Não Equipar
+                                1 - slot 1 ({slot1[3]}) -> (Força: \033[31m{slot1[0]}\033[m | Vida: \033[32m{slot1[1]}\033[m | Velocidade de Ataque: \033[33m{slot1[2]}\033[m)
+                                2 - slot 2 ({slot2[3]}) -> (Força: \033[31m{slot2[0]}\033[m | Vida: \033[32m{slot2[1]}\033[m | Velocidade de Ataque: \033[33m{slot2[2]}\033[m)
+                                3 - slot 3 ({slot3[3]}) -> (Força: \033[31m{slot3[0]}\033[m | Vida: \033[32m{slot3[1]}\033[m | Velocidade de Ataque: \033[33m{slot3[2]}\033[m)
+                                4 - slot 4 ({slot4[3]}) -> (Força: \033[31m{slot4[0]}\033[m | Vida: \033[32m{slot4[1]}\033[m | Velocidade de Ataque: \033[33m{slot4[2]}\033[m)
+                                5 - slot 5 ({slot5[3]}) -> (Força: \033[31m{slot5[0]}\033[m | Vida: \033[32m{slot5[1]}\033[m | Velocidade de Ataque: \033[33m{slot5[2]}\033[m)
+                                \033[m
                             """
                         elif bool_slot4 == False and bool_slot5 == True:
                             texto = f"""
                             \033[1;37mVocê deseja equipar em qual slot?
-                                1 - slot 1 ({slot1[3]})
-                                2 - slot 2 ({slot2[3]})
-                                3 - slot 3 ({slot3[3]})
-                                5 - slot 5 ({slot5[3]})\033[m
+                                0 - Não Equipar
+                                1 - slot 1 ({slot1[3]}) -> (Força: \033[31m{slot1[0]}\033[m | Vida: \033[32m{slot1[1]}\033[m | Velocidade de Ataque: \033[33m{slot1[2]}\033[m)
+                                2 - slot 2 ({slot2[3]}) -> (Força: \033[31m{slot2[0]}\033[m | Vida: \033[32m{slot2[1]}\033[m | Velocidade de Ataque: \033[33m{slot2[2]}\033[m)
+                                3 - slot 3 ({slot3[3]}) -> (Força: \033[31m{slot3[0]}\033[m | Vida: \033[32m{slot3[1]}\033[m | Velocidade de Ataque: \033[33m{slot3[2]}\033[m)
+                                5 - slot 5 ({slot5[3]}) -> (Força: \033[31m{slot5[0]}\033[m | Vida: \033[32m{slot5[1]}\033[m | Velocidade de Ataque: \033[33m{slot5[2]}\033[m)
+                                \033[m
                             """
                         elif bool_slot4 == True and bool_slot5 == False:
                             texto = f"""
                             \033[1;37mVocê deseja equipar em qual slot?
-                                1 - slot 1 ({slot1[3]})
-                                2 - slot 2 ({slot2[3]})
-                                3 - slot 3 ({slot3[3]})
-                                5 - slot 4 ({slot4[3]})\033[m
+                                0 - Não Equipar
+                                1 - slot 1 ({slot1[3]}) -> (Força: \033[31m{slot1[0]}\033[m | Vida: \033[32m{slot1[1]}\033[m | Velocidade de Ataque: \033[33m{slot1[2]}\033[m)
+                                2 - slot 2 ({slot2[3]}) -> (Força: \033[31m{slot2[0]}\033[m | Vida: \033[32m{slot2[1]}\033[m | Velocidade de Ataque: \033[33m{slot2[2]}\033[m)
+                                3 - slot 3 ({slot3[3]}) -> (Força: \033[31m{slot3[0]}\033[m | Vida: \033[32m{slot3[1]}\033[m | Velocidade de Ataque: \033[33m{slot3[2]}\033[m)
+                                5 - slot 4 ({slot4[3]}) -> (Força: \033[31m{slot4[0]}\033[m | Vida: \033[32m{slot4[1]}\033[m | Velocidade de Ataque: \033[33m{slot4[2]}\033[m)
+                                \033[m
                             """
                         elif bool_slot4 == False and bool_slot5 == False:
                             texto = f"""
                             \033[1;37mVocê deseja equipar em qual slot?
-                                1 - slot 1 ({slot1[3]})
-                                2 - slot 2 ({slot2[3]})
-                                3 - slot 3 ({slot3[3]})\033[m
+                                0 - Não Equipar
+                                1 - slot 1 ({slot1[3]}) -> (Força: \033[31m{slot1[0]}\033[m | Vida: \033[32m{slot1[1]}\033[m | Velocidade de Ataque: \033[33m{slot1[2]}\033[m)
+                                2 - slot 2 ({slot2[3]}) -> (Força: \033[31m{slot2[0]}\033[m | Vida: \033[32m{slot2[1]}\033[m | Velocidade de Ataque: \033[33m{slot2[2]}\033[m)
+                                3 - slot 3 ({slot3[3]}) -> (Força: \033[31m{slot3[0]}\033[m | Vida: \033[32m{slot3[1]}\033[m | Velocidade de Ataque: \033[33m{slot3[2]}\033[m)
+                                \033[m
                             """
                         print(texto)
                         escolha = input()
-                        if escolha == '1' or escolha == '2' or escolha == '3' or escolha == '4' or escolha == '5':
+                        if escolha == '0' or escolha == '1' or escolha == '2' or escolha == '3' or escolha == '4' or escolha == '5':
                             escolha = int(escolha)
                         else:
                             continue
@@ -487,6 +494,8 @@ def batalhaBoss(vidas, bossDG, itensBossDG):
                             vida += slot5[1]
                             velAtaque += slot5[2]
                             break
+                        elif escolha == 0:
+                            break
                         else:
                             print("Valor inválido, escolha novamente.")
                             continue
@@ -507,10 +516,11 @@ def batalhaBoss(vidas, bossDG, itensBossDG):
                 contadorVasculhar += 1
                 continue
             elif recompensa[0] == "vida":
-                print("\033[1mVocê encontou uma poção de vida média.\033[m")
-                print("\033[1mVida recuperada:\033[m \033[1;32m20\033[m")
-                vida += 20
-                if vida  > (100 + slot1[1] + slot2[1] + slot3[1] + slot4[1] + slot5[1]):
+                vidaGanha = random.randint(14, 28)
+                print("\033[1mVocê encontou uma poção de vida.\033[m")
+                print(f"\033[1mVida recuperada:\033[m \033[1;32m{vidaGanha}\033[m")
+                vida += vidaGanha
+                if vida > (100 + slot1[1] + slot2[1] + slot3[1] + slot4[1] + slot5[1]):
                     vida = 100 + slot1[1] + slot2[1] + slot3[1] + slot4[1] + slot5[1]
                 vidas = vida
                 print(f"\033[1mVida atual:\033[m \033[1;32m{vida}\033[m")
@@ -533,8 +543,8 @@ def batalhaBoss(vidas, bossDG, itensBossDG):
 
 #função para a loja
 preco_pocao_pequena = 160
-preco_pocao_media = 350
-preco_pocao_grande = 800
+preco_pocao_media = 550
+preco_pocao_grande = 1300
 preco_slot4 = 1500
 preco_slot5 = 3000
 def loja():
@@ -542,7 +552,7 @@ def loja():
     \033[1mOuro Atual:\033[m \033[33m{ouro:^2}\033[m | \033[1mVida atual:\033[m \033[1;32m{vida:^2}/{100 + slot1[1] + slot2[1] + slot3[1] + slot4[1] + slot5[1]:^2}\033[m\n
     \033[1;36m{"LOJA":^25}\033[m
     \033[1;36m{"Esse é o nosso catálogo:":^25}\033[m
-    \033[36m{"1 - Poção Pequena (+20 de vida):"}\033[m \033[33m{preco_pocao_pequena} p.o\033[m
+    \033[36m{"1 - Poção Pequena (+10 de vida):"}\033[m \033[33m{preco_pocao_pequena} p.o\033[m
     \033[36m{"2 - Poção Média (+x de vida):"}\033[m \033[33m{preco_pocao_media} p.o\033[m
     \033[36m{"3 - Poção Grande (+x de vida):"}\033[m \033[33m{preco_pocao_grande} p.o\033[m
     \033[36m{"4 - Slot 4 (dungeon lvl 2 necessária):"}\033[m \033[33m{preco_slot4} p.o\033[m
@@ -573,6 +583,8 @@ while vida > 0:
         menu += '    3 - Ghost Village (Dungeon lvl 3)\n'
     if dungeon_key > 2:
         menu += '    4 - Pirates Bay (Dungeon lvl 4)\n'
+    if dungeon_key > 3:
+        menu += '    5 - Destroyed World (Dungeon lvl 5)\n'
     contadorFuga = 0
     
     print("\033[36;1m\nVocê está no saguão, para onde deseja ir?\033[m")
@@ -596,10 +608,10 @@ while vida > 0:
                 print(f"\033[1mFaltam\033[m \033[33m{preco_pocao_pequena-ouro} p.o\033[m \033[1mpara comprar a poção\033[m ")
                 continue
             else:
-                vida += 20
+                vida += 10
                 if vida > (100 + slot1[1] + slot2[1] + slot3[1] + slot4[1] + slot5[1]):
                         vida = 100 + slot1[1] + slot2[1] + slot3[1] + slot4[1] + slot5[1]
-                print("\033[1mVida recuperada:\033[m \033[1;32m+20\033[m")
+                print("\033[1mVida recuperada:\033[m \033[1;32m+10\033[m")
                 print(f"\033[1mVida atual:\033[m \033[1;32m{vida}/{100 + slot1[1] + slot2[1] + slot3[1] + slot4[1] + slot5[1]:^2}\033[m")
                 ouro -= preco_pocao_pequena
 
@@ -752,6 +764,37 @@ while vida > 0:
         if dungeon_key == 3:
             dungeon_key = 4
         
+    elif escolha == '5' and dungeon_key >= 4:
+        print("""\033[34;1m
+        Após derrotar todas as dungeons você finalmente encontrou a última e mais perigosa dungeon onde encontramos os monstros mais perigosos, sombrios e temidos da humanidade.
+        Você encontrou uma nova dungeon: Destroyed World (Dungeon lvl 4)\033[m
+        """)
+        print("\033[34;1mQue a calamidade comece.\033[m")
+
+        batalha(vida, monstrosDG5)
+        if contadorFuga == 1:
+            continue
+
+        print("\033[34;1m\nPrepare-se, um monstro logo em frente.\033[m")
+        input()
+        batalha(vida, monstrosDG5)
+        if contadorFuga == 1:
+            continue
+
+        print("""\n\033[1m
+        Após anos de inatividade o boss finalmente sentiu um poder que vale a pena, um aventureiro corajoso o bastante para desafiálo em um batalha,
+        o Rei renasce das cinzas e vai em sua direção a fim de entretenimento, prepare-se aventureiro um grande desafio está a sua frente.
+        Que o genocídio comece, surge o Rei Destruído\033[m\n
+        """)
+
+        batalhaBoss(vida, bossDG5, itensBossDG5)
+
+        print("""\n\033[1m
+        Você derrotou a quinta\033[m \033[31;1md\033[m\033[32;1mu\033[m\033[33;1mn\033[m\033[34;1mg\033[m\033[35;1me\033[m\033[36;1mo\033[m\033[32;1mn\033[m!! \033[1mMeus parabéns.
+        boss liberado: XXXXX
+        \033[m\n""")
+        if dungeon_key == 4:
+            dungeon_key = 5
+        
     else:
         continue
-
