@@ -851,5 +851,3 @@ while aventureiro.vida > 0:
  #sequência de escolha principal
  else:
      continue
-
-
