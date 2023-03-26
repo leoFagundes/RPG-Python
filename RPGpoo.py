@@ -1,5 +1,7 @@
+#Obs: nesse código existem alguns caractéres no meio das string como: \033m[... Esses códigos servem para mudar a cor da string no terminal.
 import random
 
+#classe aventureiro -> seu personagem principal vai ser uma instância dessa classe
 class Aventureiro:
  
 
@@ -19,7 +21,7 @@ class Aventureiro:
      self.bool_slot5 = False
 
 
- #visualizar status do aventureiro
+ #método para  visualizar status do aventureiro
  def statusAventureiro(self):
      print("\033[36m__\033[m"*15)
      print("")
@@ -28,6 +30,7 @@ class Aventureiro:
      print(f"\033[1mOuro:\033[m \033[33m{self.ouro:^2}\033[m")
      print(f"\033[1mVelocidade de Ataque:\033[m \033[35m{self.velAtaque:^2}\033[m")
      print("\033[36m__\033[m"*15)
+     #essas condições servem para mostrar os slots caso o nome delas não esteja 'empty'
      if self.slot1[3] != 'empty':
          print(f"""\033[1;37mSlot 1\033[m - {self.slot1[3]}:
                  \033[31;1m+{self.slot1[0]}\033[m \033[1;37mde força\033[m
@@ -59,7 +62,7 @@ class Aventureiro:
                  \033[35;1m+{self.slot5[2]}\033[m \033[1;37mde velocidade de ataque\033[m""")
          print("\033[36m__\033[m"*15)
 
-
+#classe para a loja do jogo
 class Loja():
  
 
@@ -83,7 +86,7 @@ class Loja():
      \033[36m{"5 - Slot 5 (dungeon lvl 4 necessária):"}\033[m \033[33m{self.preco_slot5} p.o\033[m
      \033[36m{"0 - sair da loja":<25}\033[m\n""")
 
-
+#classe para os monstros do jogo
 class Monstros:
 
 
@@ -96,7 +99,7 @@ class Monstros:
      self.chanceFuga = chanceFuga
 
 
- #visualizar os status dos monstros
+ #método para visualizar os status dos monstros
  def statusMonstro(self):
      print("\033[36m__\033[m"*15)
      print("")
@@ -134,8 +137,12 @@ class Boss:
      print("\033[36m__\033[m"*15)
 
 
-
+#função para iniciar uma batalha que iremos chamar no construtor
 def batalha(listaInstancia):
+ '''
+ Essa função recebe uma lista de 4 instancias de monstros, 
+ logo em seguida vai ser sorteado na proporcionalidade 90 90 75 10
+ '''
  global contadorFuga
 
  sorteio = [0, 1, 2, 3]
@@ -144,13 +151,19 @@ def batalha(listaInstancia):
 
  currentMonster.statusMonstro()
 
+ #inicio da luta contra o monstro escolhido aleatoriamente
  while True:
      print("""\033[36;1mDeseja:\033[m
              \033[1m1-atacar
              2-tentar fugir\033[m
              """)
      escolha = input()
-
+     
+     '''
+     esse if serve para pegar o valor em string e depois transformar em inteiro
+     fiz isso para a pessoa poder dar enter ou digitar qualquer outro valor sem dar um erro de Type
+     quando ela digitar um valor errado ou dar enter a mensagem vai aparecer novamente sem ter problemas de erro
+     '''
      if escolha == '1' or escolha == '2':
          escolha = int(escolha)
      else:
@@ -161,6 +174,7 @@ def batalha(listaInstancia):
          print("Escolha um valor válido.\n")
          continue
 
+     #condição para a fuga do aventureiro com base no atributo 'chanceFuga' do monstro escolhido
      if escolha == 2:
          chances = ['fugiu', 'naofugiu']
          chance = random.choices(chances, weights = [currentMonster.chanceFuga, 100-currentMonster.chanceFuga])
@@ -177,10 +191,16 @@ def batalha(listaInstancia):
                  print(f"{currentMonster.nome} matou você, boa sorte na próxima vida.")
                  exit()
              continue
- 
+             
+     #escolha que inicia a batalha com o monstro
      elif escolha == 1:
          input("\n\033[31;1mComeçar a batalha\033[m\n\n")
          while currentMonster.vida > 0:
+             '''
+             aqui existem duas condições
+             uma caso a sua velocidade de ataque seja mais rápida que a do monstro, nesse caso você ataca primeiro
+             caso contrário o monstro ataca primeiro
+             '''
              if currentMonster.velAtaque > aventureiro.velAtaque:
                  print(f"""
                  \033[37;1mO monstro foi mais rápido que você, aventureiro.\033[m
@@ -232,7 +252,11 @@ def batalha(listaInstancia):
          aventureiro.ouro += currentMonster.ouroDropado
          return print(f"\033[1mSua vida atual é\033[m \033[32;1m{aventureiro.vida}\033[m")
 
+#função para a batalha do boss que iremos chamar no construtor
 def batalhaBoss(boss):
+ '''
+ essa função pede apenas a intancia de um boss
+ '''
   contadorVasculhar = 0
   while True:
       print("""Deseja
@@ -240,13 +264,20 @@ def batalhaBoss(boss):
                   2-vasculhar sala
           """)
       escolha = input()
+      '''
+      esse if serve para pegar o valor em string e depois transformar em inteiro
+      fiz isso para a pessoa poder dar enter ou digitar qualquer outro valor sem dar um erro de Type
+      quando ela digitar um valor errado ou dar enter a mensagem vai aparecer novamente sem ter problemas de erro
+      '''
       if escolha == '1' or escolha == '2':
           escolha = int(escolha)
       else:
           continue
       if escolha == 2 and contadorVasculhar == 0:
           salaBoss = ["ouro", "vida", "armadilha"]
+          #a recompensa tem uma chance igual de ser ouro, vida ou armadilha
           recompensa = random.choices(salaBoss, weights=[1, 1, 1])
+          
           if recompensa[0] == "ouro":
               ouroMinimo = 0
               ouroMaximo = 0
@@ -274,6 +305,7 @@ def batalhaBoss(boss):
               print(f"\033[1mOuro atual:\033[m \033[1;33m{aventureiro.ouro}\033[m")
               contadorVasculhar += 1
               continue
+              
           elif recompensa[0] == "vida":
               if aventureiro.key == 0 or aventureiro.key == 1:
                   potion = random.randint(12, 18)
@@ -292,6 +324,7 @@ def batalhaBoss(boss):
               print(f"\033[1mVida atual:\033[m \033[1;32m{aventureiro.vida}\033[m")
               contadorVasculhar += 1
               continue
+              
           elif recompensa[0] == "armadilha":
               if aventureiro.key == 0 or aventureiro.key == 1:
                   armadilha = random.randint(4, 18)
@@ -304,19 +337,24 @@ def batalhaBoss(boss):
               print(f"\033[1mVida atual:\033[m \033[1;32m{aventureiro.vida}\033[m")
               contadorVasculhar += 1
               continue
+              
       elif escolha == 2 and contadorVasculhar == 1:
           print("\n\033[1mVocê já vasculhou toda a sala do Boss\033[m\n")
           continue
+      #aqui começa a batalha conta o boss
       elif escolha == 1:
           boss.statusBoss()
           input("\033[1mComeçar a batalha\033[m\n")
           while boss.vida > 0:
+              
+              #caso a velocidade do boss for maior do que a sua ele ataca primeiro, caso contráro você ataca
               if boss.velAtaque > aventureiro.velAtaque:
                   print(f"""
                   A velocidade do Boss te superou.
                   \033[31mAtaque do {boss.nome}: {boss.forca}\033[m
                   """)
                   aventureiro.vida -= boss.forca
+               
                   if aventureiro.vida <= 0:
                       print("Você morreu, tente novamente em uma próxima vida.")
                       exit()
@@ -341,6 +379,7 @@ def batalhaBoss(boss):
                   """)
                   boss.vida -= aventureiro.forca
                   print(f"\033[1mVida do {boss.nome}: \033[32m{boss.vida}\033[m\n")
+                  
                   if boss.vida <= 0:
                       break
 
@@ -351,6 +390,7 @@ def batalhaBoss(boss):
                   \033[31mAtaque do {boss.nome}: {boss.forca}\033[m
                   """)
                   aventureiro.vida -= boss.forca
+                  
                   if aventureiro.vida <= 0:
                       print("Você morreu, tente novamente em uma próxima vida.")
                       exit()
@@ -358,6 +398,8 @@ def batalhaBoss(boss):
 
                   input("\033[1mPróximo turno\033[m\n")
           print(f"\033[31mVocê matou o temido {boss.nome}\033[m, \033[1mvamos continuar a jornada.\033[m")
+          
+          #nessa parte o item é sorteado aleatoriamente com as chances 5, 5, 20, 20, 35, 35
           item = list(boss.loot)
           itemGanho = random.choices(item, weights=[5, 5, 20, 20, 35, 35])
           print("Você tem chance de ganhar um dos seguintes itens: \n")
@@ -371,11 +413,18 @@ def batalhaBoss(boss):
           while True:
               print("\033[1;37mVocê deseja equipa-lo?\033[m")
               escolha = input("\033[37m1-sim\n2-não\n\033[m")
+              '''
+              esse if serve para pegar o valor em string e depois transformar em inteiro
+              fiz isso para a pessoa poder dar enter ou digitar qualquer outro valor sem dar um erro de Type
+              quando ela digitar um valor errado ou dar enter a mensagem vai aparecer novamente sem ter problemas de erro
+              '''
               if escolha == '1' or escolha == '2':
                   escolha = int(escolha)
               else:
                   continue
               if escolha == 1:
+               
+                  #aqui o código vai verificar se você já comprou o slot 4 ou o slot 5 e gerar um texto com base nisso
                   while True:
                       if aventureiro.bool_slot4 == True and aventureiro.bool_slot5 == True:
                           texto = f"""
@@ -415,10 +464,16 @@ def batalhaBoss(boss):
                           """
                       print(texto)
                       escolha = input()
+                      '''
+                      esse if serve para pegar o valor em string e depois transformar em inteiro
+                      fiz isso para a pessoa poder dar enter ou digitar qualquer outro valor sem dar um erro de Type
+                      quando ela digitar um valor errado ou dar enter a mensagem vai aparecer novamente sem ter problemas de erro
+                      '''
                       if escolha == '0' or escolha == '1' or escolha == '2' or escolha == '3' or escolha == '4' or escolha == '5':
                           escolha = int(escolha)
                       else:
                           continue
+                      #aqui o aventureiro vai escolher em qual slot ele vai querer equipar o item
                       if escolha == 1:
                           print(f"Você equipou {itemGanho[0]}")
                           aventureiro.forca -= aventureiro.slot1[0]
@@ -516,7 +571,7 @@ def batalhaBoss(boss):
                           print("Valor inválido, escolha novamente.")
                           continue
               else:
-                  print("Você não equipou o item.")
+                  print(f"Você decidiu não equipar o item {itemGanho[0]}")
               print(f"\n\033[1mOuro dropado:\033[m \033[1;33m{boss.ouroDropado}\033[m")
               aventureiro.ouro += boss.ouroDropado
               return print(f"\033[1mSua vida atual é\033[m \033[1;32m{aventureiro.vida}\033[m")
