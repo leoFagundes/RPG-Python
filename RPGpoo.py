@@ -12,6 +12,7 @@ class Aventureiro:
      self.ouro = 0
      self.velAtaque = 10
      self.key = 0
+     self.key_dungeon = 0
      self.slot1 = [0, 0, 0, 'empty']
      self.slot2 = [0, 0, 0, 'empty']
      self.slot3 = [0, 0, 0, 'empty']
@@ -67,9 +68,9 @@ class Loja():
  
 
  def __init__(self):
-     self.preco_pocao_pequena = 160
-     self.preco_pocao_media = 350
-     self.preco_pocao_grande = 800
+     self.preco_pocao_pequena = 200
+     self.preco_pocao_media = 400
+     self.preco_pocao_grande = 750
      self.preco_slot4 = 1500
      self.preco_slot5 = 3000
 
@@ -80,8 +81,8 @@ class Loja():
      \033[1;36m{"LOJA":^25}\033[m
      \033[1;36m{"Esse é o nosso catálogo:":^25}\033[m
      \033[36m{"1 - Poção Pequena (+20 de vida):"}\033[m \033[33m{self.preco_pocao_pequena} p.o\033[m
-     \033[36m{"2 - Poção Média (+x de vida):"}\033[m \033[33m{self.preco_pocao_media} p.o\033[m
-     \033[36m{"3 - Poção Grande (+x de vida):"}\033[m \033[33m{self.preco_pocao_grande} p.o\033[m
+     \033[36m{"2 - Poção Média (+60 de vida) (dungeon lvl 3 necessária):"}\033[m \033[33m{self.preco_pocao_media} p.o\033[m
+     \033[36m{"3 - Poção Grande (+150 de vida) (dungeon lvl 4 necessária):"}\033[m \033[33m{self.preco_pocao_grande} p.o\033[m
      \033[36m{"4 - Slot 4 (dungeon lvl 2 necessária):"}\033[m \033[33m{self.preco_slot4} p.o\033[m
      \033[36m{"5 - Slot 5 (dungeon lvl 4 necessária):"}\033[m \033[33m{self.preco_slot5} p.o\033[m
      \033[36m{"0 - sair da loja":<25}\033[m\n""")
@@ -110,7 +111,6 @@ class Monstros:
      print(f"\033[1mRecompensa:\033[m \033[33m{self.ouroDropado:^2}\033[m moedas de ouro")
      print(f"\033[1mChance de fuga:\033[m \033[33m{self.chanceFuga:^2}%\033[m")
      print("\033[36m__\033[m"*15)
-
 
 
 class Boss:
@@ -183,10 +183,11 @@ def batalha(listaInstancia):
              contadorFuga = 1
              break
          elif chance[0] == 'naofugiu':
+             dano = currentMonster.forca/1.25
              print(f"Você tentou fugir, porém o {currentMonster.nome} foi mais rápido e te atacou.")
-             print("Consequência: levou 10 de dano")
-             print(f"Vida atual = {aventureiro.vida - 10}\n")
-             aventureiro.vida -= 10
+             print(f"Consequência: levou {dano} de dano")
+             print(f"Vida atual = {aventureiro.vida - dano}\n")
+             aventureiro.vida -= dano
              if aventureiro.vida <= 0:
                  print(f"{currentMonster.nome} matou você, boa sorte na próxima vida.")
                  exit()
@@ -254,9 +255,9 @@ def batalha(listaInstancia):
 
 #função para a batalha do boss que iremos chamar no construtor
 def batalhaBoss(boss):
- '''
- essa função pede apenas a intancia de um boss
- '''
+  '''
+  essa função pede apenas a instancia de um boss
+  '''
   contadorVasculhar = 0
   while True:
       print("""Deseja
@@ -281,19 +282,19 @@ def batalhaBoss(boss):
           if recompensa[0] == "ouro":
               ouroMinimo = 0
               ouroMaximo = 0
-              if aventureiro.key == 0:
+              if aventureiro.key_dungeon == 0:
                   ouroMinimo = 20
                   ouroMaximo = 80
-              elif aventureiro.key == 1:
+              elif aventureiro.key_dungeon == 1:
                   ouroMinimo = 20
                   ouroMaximo = 110
-              elif aventureiro.key == 2:
+              elif aventureiro.key_dungeon == 2:
                   ouroMinimo = 40
                   ouroMaximo = 120
-              elif aventureiro.key == 3:
+              elif aventureiro.key_dungeon == 3:
                   ouroMinimo = 50
                   ouroMaximo = 200
-              elif aventureiro.key == 4:
+              elif aventureiro.key_dungeon == 4:
                   ouroMinimo = 50
                   ouroMaximo = 250
               else:
@@ -307,14 +308,14 @@ def batalhaBoss(boss):
               continue
               
           elif recompensa[0] == "vida":
-              if aventureiro.key == 0 or aventureiro.key == 1:
+              if aventureiro.key_dungeon == 1:
                   potion = random.randint(12, 18)
                   textoPotion = 'pequena'
-              elif aventureiro.key == 2 or aventureiro.key == 3:
-                  potion = random.randint(18, 28)
+              elif aventureiro.key_dungeon == 2 or aventureiro.key_dungeon == 3:
+                  potion = random.randint(25, 45)
                   textoPotion = 'média'
               else:
-                  potion = random.randint(25, 40)
+                  potion = random.randint(100, 300)
                   textoPotion = 'grande'
               print(f"\033[1mVocê encontou uma poção de vida {textoPotion}.\033[m")
               print(f"\033[1mVida recuperada:\033[m \033[1;32m{potion}\033[m")
@@ -326,12 +327,12 @@ def batalhaBoss(boss):
               continue
               
           elif recompensa[0] == "armadilha":
-              if aventureiro.key == 0 or aventureiro.key == 1:
-                  armadilha = random.randint(4, 18)
-              elif aventureiro.key == 2 or aventureiro.key == 3:
-                  armadilha = random.randint(7, 23)
+              if aventureiro.key_dungeon == 1:
+                  armadilha = random.randint(12, 18)
+              elif aventureiro.key_dungeon == 2 or aventureiro.key_dungeon == 3:
+                  armadilha = random.randint(25, 50)
               else:
-                  armadilha = random.randint(10, 30)
+                  armadilha = random.randint(100, 300)
               print(f"Você pisou em falso, uma armadilha explodiu e você tomou \033[1;31m{armadilha}\033[m de dano.")
               aventureiro.vida -= armadilha
               print(f"\033[1mVida atual:\033[m \033[1;32m{aventureiro.vida}\033[m")
@@ -648,6 +649,32 @@ while aventureiro.vida > 0:
                print(f"\033[1mVida atual:\033[m \033[1;32m{aventureiro.vida}/{100 + aventureiro.slot1[1] + aventureiro.slot2[1] + aventureiro.slot3[1] + aventureiro.slot4[1] + aventureiro.slot5[1]:^2}\033[m")
                aventureiro.ouro -= loja.preco_pocao_pequena
 
+       elif escolha == '2' and aventureiro.key >= 3:
+           if aventureiro.ouro < loja.preco_pocao_media:
+               print("\033[1mVocê não tem\033[m \033[33mouro\033[m \033[1msuficiente\033[m")
+               print(f"\033[1mFaltam\033[m \033[33m{loja.preco_pocao_media-aventureiro.ouro} p.o\033[m \033[1mpara comprar a poção\033[m ")
+               continue
+           else:
+               aventureiro.vida += 60
+               if aventureiro.vida > (100 + aventureiro.slot1[1] + aventureiro.slot2[1] + aventureiro.slot3[1] + aventureiro.slot4[1] + aventureiro.slot5[1]):
+                       aventureiro.vida = 100 + aventureiro.slot1[1] + aventureiro.slot2[1] + aventureiro.slot3[1] + aventureiro.slot4[1] + aventureiro.slot5[1]
+               print("\033[1mVida recuperada:\033[m \033[1;32m+60\033[m")
+               print(f"\033[1mVida atual:\033[m \033[1;32m{aventureiro.vida}/{100 + aventureiro.slot1[1] + aventureiro.slot2[1] + aventureiro.slot3[1] + aventureiro.slot4[1] + aventureiro.slot5[1]:^2}\033[m")
+               aventureiro.ouro -= loja.preco_pocao_media
+               
+       elif escolha == '3' and aventureiro.key >= 4:
+           if aventureiro.ouro < loja.preco_pocao_grande:
+               print("\033[1mVocê não tem\033[m \033[33mouro\033[m \033[1msuficiente\033[m")
+               print(f"\033[1mFaltam\033[m \033[33m{loja.preco_pocao_grande-aventureiro.ouro} p.o\033[m \033[1mpara comprar a poção\033[m ")
+               continue
+           else:
+               aventureiro.vida += 150
+               if aventureiro.vida > (100 + aventureiro.slot1[1] + aventureiro.slot2[1] + aventureiro.slot3[1] + aventureiro.slot4[1] + aventureiro.slot5[1]):
+                       aventureiro.vida = 100 + aventureiro.slot1[1] + aventureiro.slot2[1] + aventureiro.slot3[1] + aventureiro.slot4[1] + aventureiro.slot5[1]
+               print("\033[1mVida recuperada:\033[m \033[1;32m+150\033[m")
+               print(f"\033[1mVida atual:\033[m \033[1;32m{aventureiro.vida}/{100 + aventureiro.slot1[1] + aventureiro.slot2[1] + aventureiro.slot3[1] + aventureiro.slot4[1] + aventureiro.slot5[1]:^2}\033[m")
+               aventureiro.ouro -= loja.preco_pocao_grande
+
        elif escolha == '4' and aventureiro.key >= 2:
            if aventureiro.bool_slot4 == True:
                print("\033[1mVocê já comprou esse item, mas pela burrice vou tirar 150 de ouro do seu bolso.\033[m")
@@ -684,6 +711,7 @@ while aventureiro.vida > 0:
 
  #sequência de escolha principal
  elif escolha == '1':
+     aventureiro.key_dungeon = 1
      #(nome, forca, vida, velAtaque, ouroDropado, chanceFuga)
      aranha = Monstros("Aranha (lvl 1)", 4, 1, 20, 20, 55)
      cobra = Monstros("Cobra (lvl 1)", 4, 2, 40, 20, 55)
@@ -737,6 +765,7 @@ while aventureiro.vida > 0:
 
  #sequência de escolha principal
  elif escolha == '2' and aventureiro.key >= 1:
+     aventureiro.key_dungeon = 2
      #(nome, forca, vida, velAtaque, ouroDropado, chanceFuga)
      goblin = Monstros("Goblin de Gelo (lvl 2)", 7, 3, 40, 40, 55)
      espirito = Monstros("Espírito Congelado (lvl 2)", 8, 3, 5, 15, 55)
@@ -787,6 +816,7 @@ while aventureiro.vida > 0:
 
  #sequência de escolha principal
  elif escolha == '3' and aventureiro.key >= 2:
+     aventureiro.key_dungeon = 3
      espectro = Monstros("Espectro (lvl 3)", 15, 12, 20, 40, 30)
      poltergeist = Monstros("Poltergeist (lvl 3)", 12, 15, 20, 40, 30)
      banshee = Monstros("Banshee (lvl 3)", 25, 3, 36, 25, 31)
@@ -835,6 +865,7 @@ while aventureiro.vida > 0:
 
  #sequência de escolha principal
  elif escolha == '4' and aventureiro.key >= 3:
+     aventureiro.key_dungeon = 4
      marujo = Monstros("Marujo (lvl 4)", 45, 150, 20, 70, 30)
      marinheiro = Monstros("Marinheiro (lvl 4)", 35, 220, 20, 72, 30)
      bucaneiro = Monstros("Bucaneiro (lvl 5)", 60, 140, 1, 75, 34)
@@ -871,7 +902,7 @@ while aventureiro.vida > 0:
      if contadorFuga == 1:
          continue
      print("""\n\033[1m
-     O Kraken percebe a presença de meros aventureiros em seu território, você despertou a fúria do ser aquático mais poderoso conhecido pelo homem.\033[m\n
+     As ondas do oceano se agitam violentamente e um som ensurdecedor é ouvido quando o temido Kraken emerge das profundezas, dominando o campo de batalha com sua presença colossal.\033[m\n
      """)
      batalhaBoss(boss4)
      print("""\n\033[1m
@@ -881,28 +912,55 @@ while aventureiro.vida > 0:
      if aventureiro.key == 3:
          aventureiro.key = 4
 
-
  #sequência de escolha principal
  elif escolha == '5' and aventureiro.key >= 4:
-     '''shadowDragon = Monstros("Shadow Dragon (lvl 6)")
-     dracoLich = Monstros("Dracolich (lvl 6)")
-     beholder = Monstros("Beholder (lvl 7)")
-     lichKing = Monstros("Lich King (lvl 9)")
+     aventureiro.key_dungeon = 5
+     shadowDragon = Monstros("Shadow Dragon (lvl 6)", 100, 370, 35, 150, 35)
+     dracoLich = Monstros("Dracolich (lvl 6)", 150, 301, 38, 150, 40)
+     beholder = Monstros("Beholder (lvl 7)", 200, 400, 10, 250, 45)
+     lichKing = Monstros("Lich King (lvl 9)", 300, 350, 50, 500, 60)
 
      #(forca, vida, velAtaque)
-     loot5 = {"\033[33;1mCoroa do Rei Destruído - lvl 5 (lendário)\033[m": [0, 300, 0],
-             "\033[33;1mEspada do Rei Destruído - lvl 5 (lendário)\033[m": [40, 0, 5],
-             "\033[35;1mMachado dos Condenados - lvl 5 (épico)\033[m": [25, 0, 15],
-             "\033[35;1mPeitoral de Escamas Sombrias - lvl 5 (épico)\033[m": [0, 130, 10],
-             "\033[34;1mKatana Sombria - lvl 5 (raro)\033[m": [14, 0, 10],
-             "\033[34;1mManto das Trevas - lvl 5 (raro)\033[m": [0, 80, 5]}
+     loot5 = {"\033[33;1mCoroa do Rei Destruído - lvl 5 (lendário)\033[m": [0, 1000, 10],
+             "\033[33;1mEspada do Rei Destruído - lvl 5 (lendário)\033[m": [320, 0, 20],
+             "\033[35;1mMachado dos Condenados - lvl 5 (épico)\033[m": [250, 0, 10],
+             "\033[35;1mPeitoral de Escamas Sombrias - lvl 5 (épico)\033[m": [0, 750, 0],
+             "\033[34;1mKatana Sombria - lvl 5 (raro)\033[m": [150, 0, 35],
+             "\033[34;1mManto das Trevas - lvl 5 (raro)\033[m": [20, 450, 0]}
      #(forca, vida=5, velAtaque, ouroDropado, loot)
      boss5 = Boss("Rei Destruído")
 
-     listaInstancia4 = [shadowDragon, dracoLich, beholder, lichKing]'''
+     listaInstancia5 = [shadowDragon, dracoLich, beholder, lichKing]
 
      #main
-
+     print("""\033[34;1m
+     O aventureiro caminhou com cautela até a entrada da Dungeon Destruida, sua mochila pesada nas costas. Ele sabia dos perigos que a esperavam dentro daquele lugar abandonado há tanto tempo. Com uma respiração profunda, ele deu um passo adiante e desceu as escadas íngremes, decidido a enfrentar qualquer desafio que surgisse em seu caminho. 
+     A escuridão engoliu o aventureiro enquanto ele avançava cada vez mais fundo na dungeon, determinado a desvendar seus mistérios e sair vitorioso.
+     Bem-vindo a Dungeon World Destroyed (Dungeon lvl 5)\033[m
+     """)
+     print("\033[34;1mO som de arranhar de garras ecoa pelas paredes, anunciando que criaturas selvagens estão próximas.\033[m")
+     batalha(listaInstancia5)
+     if contadorFuga == 1:
+         continue
+     shadowDragon.vida = 370
+     dracoLich.vida = 301
+     beholder.vida = 400
+     lichKing.vida = 350
+     print("\033[34;1m\nUm novo monstro surge da escuridão!\033[m")
+     input()
+     batalha(listaInstancia5)
+     if contadorFuga == 1:
+         continue
+     print("""\n\033[1m
+     Com passos pesados e olhar fixo em seu objetivo, o Rei Destruído adentra a câmara final, pronto para enfrentar os heróis que ousaram desafiá-lo.\033[m\n
+     """)
+     batalhaBoss(boss5)
+     print("""\n\033[1m
+     Você derrotou a quinta\033[m \033[31;1md\033[m\033[32;1mu\033[m\033[33;1mn\033[m\033[34;1mg\033[m\033[35;1me\033[m\033[36;1mo\033[m\033[32;1mn\033[m!! \033[1mMeus parabéns.
+     BOSS acordou!
+     \033[m\n""")
+     if aventureiro.key == 4:
+         aventureiro.key = 5
  #sequência de escolha principal
  else:
      continue
