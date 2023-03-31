@@ -618,6 +618,8 @@ while aventureiro.vida > 0:
      menu += ' 3 - Ghost Village (Dungeon lvl 3)\n'
  if aventureiro.key > 2:
      menu += ' 4 - Pirates Bay (Dungeon lvl 4)\n'
+ if aventureiro.key > 3:
+     menu += ' 5 - World Destroyed (Dungeon lvl 5)\n'
  contadorFuga = 0
  print("\033[36;1m\nVocê está no saguão, para onde deseja ir?\033[m")
  print(f"""\033[1;36m{menu}\033[m""")
