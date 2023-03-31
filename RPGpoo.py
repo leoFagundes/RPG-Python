@@ -330,9 +330,9 @@ def batalhaBoss(boss):
               if aventureiro.key_dungeon == 1:
                   armadilha = random.randint(12, 18)
               elif aventureiro.key_dungeon == 2 or aventureiro.key_dungeon == 3:
-                  armadilha = random.randint(25, 50)
+                  armadilha = random.randint(18, 50)
               else:
-                  armadilha = random.randint(100, 300)
+                  armadilha = random.randint(80, 270)
               print(f"Você pisou em falso, uma armadilha explodiu e você tomou \033[1;31m{armadilha}\033[m de dano.")
               aventureiro.vida -= armadilha
               print(f"\033[1mVida atual:\033[m \033[1;32m{aventureiro.vida}\033[m")
@@ -584,7 +584,7 @@ def batalhaBoss(boss):
 ############################################################################################################################################
 #construtor
 print("""\033[1m
-Bem-vindos a rede\033[m \033[31;1md\033[m\033[32;1mu\033[m\033[33;1mn\033[m\033[34;1mg\033[m\033[35;1me\033[m\033[36;1mo\033[m\033[32;1mn\033[m\033[1m, iremos dar as instruções:
+Bem-vindo a rede\033[m \033[31;1md\033[m\033[32;1mu\033[m\033[33;1mn\033[m\033[34;1mg\033[m\033[35;1me\033[m\033[36;1mo\033[m\033[32;1mn\033[m\033[1m, iremos dar as instruções:
 Seu objetivo é conquistar as 5 dungeons espalhadas pelo mundo, para conquistar cada uma você deve matar o BOSS que nela reside.
 """)
 
@@ -734,9 +734,8 @@ while aventureiro.vida > 0:
 
      #main
      print("""\033[1m
-     Você entrou na Dark Forest (dungeon de lvl 1)...
-     Muitos monstros vagam por essas terras sombrias e amaldiçoadas,
-     você como um bom e confiante aventureiro seguiu em frente na busca da cabeça do temido BAD WOLF.\033[m
+     Você adentrou a Dark Forest (dungeon de nível 1), onde muitos monstros perambulam por essas terras sombrias e amaldiçoadas. 
+     Como um aventureiro corajoso e determinado em busca da cabeça do temido BAD WOLF, você segue em frente, pronto para enfrentar os perigos que encontrar pelo caminho."\033[m
      """)
      print("\033[34;1mMonstro à vista, hora de lutar.\033[m")
      batalha(listaInstancia1)
@@ -752,10 +751,8 @@ while aventureiro.vida > 0:
      if contadorFuga == 1:
          continue
      print("""\n\033[1m
-     Após derrotar os braços direitos do grande e temido BAD WOLF você se preparar para o pior, 
-     pois irritou o boss da dungeon.
-     Depois de 2 horas de caminhada pela Dark Forest você escuta um uivo assustador 60º a oeste,
-     nesse momento você se depara com o BAD WOLF.\033[m\n
+     Após vencer os braços direitos do temido BAD WOLF, você se prepara para a batalha final contra o chefe da dungeon. 
+     Com o coração acelerado, você caminha por duas longas horas pela Dark Forest até que, de repente, um uivo assustador ecoa a 60 graus a oeste. Sabendo que é o BAD WOLF, você se prepara para o confronto mais desafiador da sua jornada.\033[m\n
      """)
      batalhaBoss(boss1)
      print("""\n\033[1m
@@ -769,7 +766,7 @@ while aventureiro.vida > 0:
  elif escolha == '2' and aventureiro.key >= 1:
      aventureiro.key_dungeon = 2
      #(nome, forca, vida, velAtaque, ouroDropado, chanceFuga)
-     goblin = Monstros("Goblin de Gelo (lvl 2)", 7, 3, 40, 40, 55)
+     goblin = Monstros("Goblin de Gelo (lvl 2)", 7, 3, 40, 20, 55)
      espirito = Monstros("Espírito Congelado (lvl 2)", 8, 3, 5, 15, 55)
      druida = Monstros("Druida de Gelo (lvl 3)", 15, 4, 10, 30, 40)
      golem = Monstros("Golem de Gelo (lvl 4)", 20, 10, 5, 80, 65)
@@ -782,7 +779,7 @@ while aventureiro.vida > 0:
              "\033[34;1mEstaca de Gelo - lvl 2 (raro)\033[m": [3, 0, 10],
              "\033[34;1mBota Quebradiça - lvl 2 (raro)\033[m": [0, 20, 0]}
      #(forca, vida=5, velAtaque, ouroDropado, loot)
-     boss2 = Boss("Frozen Dragon", 15, 10, 80, 350, loot2)
+     boss2 = Boss("Frozen Dragon", 15, 10, 80, 300, loot2)
 
      listaInstancia2 = [goblin, espirito, druida, golem]
 
@@ -832,14 +829,13 @@ while aventureiro.vida > 0:
              "\033[34;1mEspada Fantasma - lvl 3 (raro)\033[m": [25, 0, 10],
              "\033[34;1mAnel Espectral - lvl 3 (raro)\033[m": [0, 150, 5]}
      #(forca, vida=5, velAtaque, ouroDropado, loot)
-     boss3 = Boss("Astaroth, O Demônio Infernal", 25, 18, 80, 600, loot3)
+     boss3 = Boss("Astaroth, O Demônio Infernal", 25, 18, 80, 400, loot3)
 
      listaInstancia3 = [espectro, poltergeist, banshee, holandes]
 
      #main
      print("""\033[34;1m
-      Caminhando pelas profundezas você avista um vilarejo abandonado e alguma magia obscura te mantém preso dentro dele.
-      Você encontrou a dunegon Ghost Village (Dungeon lvl 3)\033[m
+      Ao adentrar as profundezas, seus olhos fitam um vilarejo abandonado, que emana uma aura de magia obscura e te envolve, deixando-o preso dentro dele. Bem-vindo à Dungeon Ghost Village  (Dungeon lvl 3)\033[m
       """)
      print("\033[34;1mDemônios te cercam, hora de lutar.\033[m")
      batalha(listaInstancia3)
@@ -870,7 +866,7 @@ while aventureiro.vida > 0:
      aventureiro.key_dungeon = 4
      marujo = Monstros("Marujo (lvl 4)", 45, 150, 20, 70, 30)
      marinheiro = Monstros("Marinheiro (lvl 4)", 35, 220, 20, 72, 30)
-     bucaneiro = Monstros("Bucaneiro (lvl 5)", 60, 140, 1, 75, 34)
+     bucaneiro = Monstros("Bucaneiro (lvl 5)", 60, 180, 1, 75, 34)
      barbaNegra = Monstros("Barba Negra (lvl 7)", 95, 220, 70, 350, 50)
 
      #(forca, vida, velAtaque)
@@ -881,7 +877,7 @@ while aventureiro.vida > 0:
              "\033[34;1mCimitarra Pirata - lvl 4 (raro)\033[m": [65, 0, 35],
              "\033[34;1mChapéu Pirata - lvl 4 (raro)\033[m": [0, 250, 5]}
      #(forca, vida=5, velAtaque, ouroDropado, loot)
-     boss4 = Boss("Kraken", 70, 270, 80, 1000, loot4)
+     boss4 = Boss("Kraken", 70, 270, 80, 600, loot4)
 
      listaInstancia4 = [marujo, marinheiro, bucaneiro, barbaNegra]
 
@@ -917,10 +913,10 @@ while aventureiro.vida > 0:
  #sequência de escolha principal
  elif escolha == '5' and aventureiro.key >= 4:
      aventureiro.key_dungeon = 5
-     shadowDragon = Monstros("Shadow Dragon (lvl 6)", 100, 370, 35, 150, 35)
-     dracoLich = Monstros("Dracolich (lvl 6)", 150, 301, 38, 150, 40)
-     beholder = Monstros("Beholder (lvl 7)", 200, 400, 10, 250, 45)
-     lichKing = Monstros("Lich King (lvl 9)", 300, 350, 50, 500, 60)
+     shadowDragon = Monstros("Shadow Dragon (lvl 6)", 150, 370, 35, 150, 35)
+     dracoLich = Monstros("Dracolich (lvl 6)", 150, 350, 52, 150, 40)
+     beholder = Monstros("Beholder (lvl 7)", 200, 430, 10, 180, 45)
+     lichKing = Monstros("Lich King (lvl 9)", 300, 350, 50, 300, 60)
 
      #(forca, vida, velAtaque)
      loot5 = {"\033[33;1mCoroa do Rei Destruído - lvl 5 (lendário)\033[m": [0, 1000, 10],
@@ -930,7 +926,7 @@ while aventureiro.vida > 0:
              "\033[34;1mKatana Sombria - lvl 5 (raro)\033[m": [150, 0, 35],
              "\033[34;1mManto das Trevas - lvl 5 (raro)\033[m": [20, 450, 0]}
      #(forca, vida=5, velAtaque, ouroDropado, loot)
-     boss5 = Boss("Rei Destruído")
+     boss5 = Boss("Rei Destruído", 250, 650, 50, 850, loot5)
 
      listaInstancia5 = [shadowDragon, dracoLich, beholder, lichKing]
 
@@ -945,8 +941,8 @@ while aventureiro.vida > 0:
      if contadorFuga == 1:
          continue
      shadowDragon.vida = 370
-     dracoLich.vida = 301
-     beholder.vida = 400
+     dracoLich.vida = 350
+     beholder.vida = 430
      lichKing.vida = 350
      print("\033[34;1m\nUm novo monstro surge da escuridão!\033[m")
      input()
