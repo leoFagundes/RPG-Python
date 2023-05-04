@@ -112,7 +112,7 @@ class Monstros:
      print(f"\033[1mChance de fuga:\033[m \033[33m{self.chanceFuga:^2}%\033[m")
      print("\033[36m__\033[m"*15)
 
-
+#classe para os bosses do jogo
 class Boss:
  
 
@@ -135,7 +135,6 @@ class Boss:
      print(f"\033[1mVelocidade de Ataque:\033[m \033[35m{self.velAtaque:^2}\033[m")
      print(f"\033[1mRecompensa:\033[m \033[33m{self.ouroDropado:^2}\033[m moedas de ouro")
      print("\033[36m__\033[m"*15)
-
 
 #função para iniciar uma batalha que iremos chamar no construtor
 def batalha(listaInstancia):
@@ -620,6 +619,8 @@ while aventureiro.vida > 0:
      menu += ' 4 - Pirates Bay (Dungeon lvl 4)\n'
  if aventureiro.key > 3:
      menu += ' 5 - World Destroyed (Dungeon lvl 5)\n'
+ if aventureiro.key > 4:
+     menu += ' 6 - Abyssal Overlord (Governante das Profundezas)\n'
  contadorFuga = 0
  print("\033[36;1m\nVocê está no saguão, para onde deseja ir?\033[m")
  print(f"""\033[1;36m{menu}\033[m""")
@@ -728,7 +729,7 @@ while aventureiro.vida > 0:
              "\033[34;1mEspada quebrada - lvl 1 (raro)\033[m": [1, 0, 5],
              "\033[34;1mArmadura furada - lvl 1 (raro)\033[m": [0, 15, 0]}
      #(forca, vida=5, velAtaque, ouroDropado, loot)
-     boss1 = Boss("Bad Wolf", 5, 5, 80, 200, loot1)
+     boss1 = Boss("Bad Wolf", 5, 5, 80, 180, loot1)
 
      listaInstancia1 = [aranha, cobra, lobo, urso]
 
@@ -767,9 +768,9 @@ while aventureiro.vida > 0:
      aventureiro.key_dungeon = 2
      #(nome, forca, vida, velAtaque, ouroDropado, chanceFuga)
      goblin = Monstros("Goblin de Gelo (lvl 2)", 7, 3, 40, 20, 55)
-     espirito = Monstros("Espírito Congelado (lvl 2)", 8, 3, 5, 15, 55)
+     espirito = Monstros("Espírito Congelado (lvl 2)", 8, 3, 5, 25, 55)
      druida = Monstros("Druida de Gelo (lvl 3)", 15, 4, 10, 30, 40)
-     golem = Monstros("Golem de Gelo (lvl 4)", 20, 10, 5, 80, 65)
+     golem = Monstros("Golem de Gelo (lvl 4)", 20, 10, 5, 70, 65)
 
      #(forca, vida, velAtaque)
      loot2 = {"\033[33;1mPeitoral Dragônico - lvl 2 (lendário)\033[m": [0, 100, 0],
@@ -779,7 +780,7 @@ while aventureiro.vida > 0:
              "\033[34;1mEstaca de Gelo - lvl 2 (raro)\033[m": [3, 0, 10],
              "\033[34;1mBota Quebradiça - lvl 2 (raro)\033[m": [0, 20, 0]}
      #(forca, vida=5, velAtaque, ouroDropado, loot)
-     boss2 = Boss("Frozen Dragon", 15, 10, 80, 300, loot2)
+     boss2 = Boss("Frozen Dragon", 15, 10, 80, 200, loot2)
 
      listaInstancia2 = [goblin, espirito, druida, golem]
 
@@ -816,10 +817,11 @@ while aventureiro.vida > 0:
  #sequência de escolha principal
  elif escolha == '3' and aventureiro.key >= 2:
      aventureiro.key_dungeon = 3
+     #(nome, forca, vida, velAtaque, ouroDropado, chanceFuga)
      espectro = Monstros("Espectro (lvl 3)", 15, 12, 20, 40, 30)
      poltergeist = Monstros("Poltergeist (lvl 3)", 12, 15, 20, 40, 30)
-     banshee = Monstros("Banshee (lvl 3)", 25, 3, 36, 25, 31)
-     holandes = Monstros("Holandês Voador (lvl 5)", 22, 15, 20, 150, 50)
+     banshee = Monstros("Banshee (lvl 3)", 25, 3, 36, 30, 31)
+     holandes = Monstros("Holandês Voador (lvl 5)", 22, 15, 20, 110, 50)
 
      #(forca, vida, velAtaque)
      loot3 = {"\033[33;1mArmadura de Sangue de Demônio - lvl 3 (lendário)\033[m": [0, 320, 0],
@@ -829,7 +831,7 @@ while aventureiro.vida > 0:
              "\033[34;1mEspada Fantasma - lvl 3 (raro)\033[m": [25, 0, 10],
              "\033[34;1mAnel Espectral - lvl 3 (raro)\033[m": [0, 150, 5]}
      #(forca, vida=5, velAtaque, ouroDropado, loot)
-     boss3 = Boss("Astaroth, O Demônio Infernal", 25, 18, 80, 400, loot3)
+     boss3 = Boss("Astaroth, O Demônio Infernal", 25, 18, 80, 350, loot3)
 
      listaInstancia3 = [espectro, poltergeist, banshee, holandes]
 
@@ -867,7 +869,7 @@ while aventureiro.vida > 0:
      marujo = Monstros("Marujo (lvl 4)", 45, 150, 20, 70, 30)
      marinheiro = Monstros("Marinheiro (lvl 4)", 35, 220, 20, 72, 30)
      bucaneiro = Monstros("Bucaneiro (lvl 5)", 60, 180, 1, 75, 34)
-     barbaNegra = Monstros("Barba Negra (lvl 7)", 95, 220, 70, 350, 50)
+     barbaNegra = Monstros("Barba Negra (lvl 7)", 95, 220, 70, 250, 50)
 
      #(forca, vida, velAtaque)
      loot4 = {"\033[33;1mArmadura de Escama - lvl 4 (lendário)\033[m": [20, 500, 2],
@@ -877,7 +879,7 @@ while aventureiro.vida > 0:
              "\033[34;1mCimitarra Pirata - lvl 4 (raro)\033[m": [65, 0, 35],
              "\033[34;1mChapéu Pirata - lvl 4 (raro)\033[m": [0, 250, 5]}
      #(forca, vida=5, velAtaque, ouroDropado, loot)
-     boss4 = Boss("Kraken", 70, 270, 80, 600, loot4)
+     boss4 = Boss("Kraken", 70, 320, 80, 450, loot4)
 
      listaInstancia4 = [marujo, marinheiro, bucaneiro, barbaNegra]
 
@@ -925,8 +927,8 @@ while aventureiro.vida > 0:
              "\033[35;1mPeitoral de Escamas Sombrias - lvl 5 (épico)\033[m": [0, 750, 0],
              "\033[34;1mKatana Sombria - lvl 5 (raro)\033[m": [150, 0, 35],
              "\033[34;1mManto das Trevas - lvl 5 (raro)\033[m": [20, 450, 0]}
-     #(forca, vida=5, velAtaque, ouroDropado, loot)
-     boss5 = Boss("Rei Destruído", 250, 650, 50, 850, loot5)
+     #(forca, vida, velAtaque, ouroDropado, loot)
+     boss5 = Boss("Rei Destruído", 250, 750, 50, 750, loot5)
 
      listaInstancia5 = [shadowDragon, dracoLich, beholder, lichKing]
 
@@ -955,10 +957,14 @@ while aventureiro.vida > 0:
      batalhaBoss(boss5)
      print("""\n\033[1m
      Você derrotou a quinta\033[m \033[31;1md\033[m\033[32;1mu\033[m\033[33;1mn\033[m\033[34;1mg\033[m\033[35;1me\033[m\033[36;1mo\033[m\033[32;1mn\033[m!! \033[1mMeus parabéns.
-     BOSS acordou!
+     Abyssal Overlord acordou, cuidado!
      \033[m\n""")
      if aventureiro.key == 4:
          aventureiro.key = 5
+ 
  #sequência de escolha principal
+ elif escolha == '6' and aventureiro.key >= 5:
+     print("Em andamento")
+     pass
  else:
      continue
