@@ -1,5 +1,8 @@
 #Obs: nesse código existem alguns caractéres no meio das string como: \033m[... Esses códigos servem para mudar a cor da string no terminal.
 import random
+#pickle serve para salvar o aventureiro criado pelo jogador
+import pickle
+import os
 
 #classe aventureiro -> seu personagem principal vai ser uma instância dessa classe
 class Aventureiro:
@@ -189,6 +192,7 @@ def batalha(listaInstancia):
              aventureiro.vida -= dano
              if aventureiro.vida <= 0:
                  print(f"{currentMonster.nome} matou você, boa sorte na próxima vida.")
+                 os.remove("aventureiro.pickle")
                  exit()
              continue
              
@@ -209,6 +213,7 @@ def batalha(listaInstancia):
                  aventureiro.vida -= currentMonster.forca
                  if aventureiro.vida <= 0:
                      print("Você morreu, tente novamente em uma próxima vida.")
+                     os.remove("aventureiro.pickle")
                      exit()
                  print(f"\033[1mSua vida atual: \033[32m{aventureiro.vida}\033[m\n")
 
@@ -243,6 +248,7 @@ def batalha(listaInstancia):
                  aventureiro.vida -= currentMonster.forca
                  if aventureiro.vida <= 0:
                      print("Você morreu, tente novamente em uma próxima vida.")
+                     os.remove("aventureiro.pickle")
                      exit()
                  print(f"\033[1mSua vida atual: \033[32m{aventureiro.vida}\033[m\n")
 
@@ -357,6 +363,7 @@ def batalhaBoss(boss):
                
                   if aventureiro.vida <= 0:
                       print("Você morreu, tente novamente em uma próxima vida.")
+                      os.remove("aventureiro.pickle")
                       exit()
                   print(f"\033[1mSua vida atual:\033[m \033[32m{aventureiro.vida}\033[m\n")
 
@@ -393,6 +400,7 @@ def batalhaBoss(boss):
                   
                   if aventureiro.vida <= 0:
                       print("Você morreu, tente novamente em uma próxima vida.")
+                      os.remove("aventureiro.pickle")
                       exit()
                   print(f"\033[1mSua vida atual: \033[32m{aventureiro.vida}\033[m\n")
 
@@ -580,26 +588,59 @@ def batalhaBoss(boss):
           print("\033[1mDigite um valor válido, não sabe ler?\033[m\n")
           continue
 
+#função para salvar o aventureiro
+def salvarAventureiro(aventureiro):
+    with open("aventureiro.pickle", "wb") as f:
+        pickle.dump(aventureiro, f)
+    print("Dados do aventureiro salvos com sucesso.")
+
+#função para carregar o aventureiro já salvo
+def carregarAventureiro():
+    with open("aventureiro.pickle", "rb") as f:
+        aventureiro = pickle.load(f)
+    print("Dados do aventureiro carregados com sucesso.")
+    return aventureiro
+
 ############################################################################################################################################
 #construtor
-print("""\033[1m
-Bem-vindo a rede\033[m \033[31;1md\033[m\033[32;1mu\033[m\033[33;1mn\033[m\033[34;1mg\033[m\033[35;1me\033[m\033[36;1mo\033[m\033[32;1mn\033[m\033[1m, iremos dar as instruções:
-Seu objetivo é conquistar as 5 dungeons espalhadas pelo mundo, para conquistar cada uma você deve matar o BOSS que nela reside.
-""")
+while True:
+    escolha = input("\nDeseja:\n 1 - Carregar aventureiro salvo\n 2 - Criar um novo aventureiro\n")
+    if escolha == '1' or escolha == '2':
+        escolha = int(escolha)
+    
+        if escolha == 2:
+            print("""\033[1m
+            Bem-vindo a rede\033[m \033[31;1md\033[m\033[32;1mu\033[m\033[33;1mn\033[m\033[34;1mg\033[m\033[35;1me\033[m\033[36;1mo\033[m\033[32;1mn\033[m\033[1m, iremos dar as instruções:
+            Seu objetivo é conquistar as 5 dungeons espalhadas pelo mundo, para conquistar cada uma você deve matar o BOSS que nela reside.
+            """)
 
-#criando a instância do jogador
-nome = input("Para começar, qual o seu nome aventureiro? ") 
-aventureiro = Aventureiro(nome)
+            #criando a instância do jogador
+            nome = input("Para começar, qual o seu nome aventureiro? ") 
+            aventureiro = Aventureiro(nome)
 
 
-print(f"Bem-vindo, {aventureiro.nome}")
-print("""
-\033[1mVocê também tem os seus STATUS, que começam da seguinte forma:\033[m
-\033[4m(Obs: quando o código parar dê um enter para continuar)\033[m
-""")
+            print(f"Bem-vindo, {aventureiro.nome}")
+            print("""
+            \033[1mVocê também tem os seus STATUS, que começam da seguinte forma:\033[m
+            \033[4m(Obs: quando o código parar dê um enter para continuar)\033[m
+            """)
 
-#chamando o método para mostrar os status
-aventureiro.statusAventureiro()
+            #chamando o método para mostrar os status
+            aventureiro.statusAventureiro()
+            break
+
+        elif escolha == 1:
+            try:
+                aventureiro = carregarAventureiro()
+                break
+            except FileNotFoundError:
+                print("\nNão existe um aventureiro salvo")
+                continue
+    else:
+        print("Escolha inválida")
+        continue
+
+
 
 #criando a instância da loja
 loja = Loja()
@@ -607,6 +648,7 @@ loja = Loja()
 #main
 while aventureiro.vida > 0:
  menu = '''
+ s - Save
  -1 - Visualizar Status
  0 - Loja de itens
  1 - Dark Forest (Dungeon lvl 1)
@@ -627,10 +669,26 @@ while aventureiro.vida > 0:
  escolha = input()
 
  #sequência de escolha principal
- if escolha == '-1':
+ if escolha == 's' or escolha == "S":
+     salvarAventureiro(aventureiro)
+     print(f"\nCASO {aventureiro.nome.upper()} MORRA O SAVE SERÁ APAGADO")
+     print("""
+     Deseja sair? 
+        1 - Sim
+        2 - Não
+     """)
+     escolha = input()
+     if escolha == '1':
+        exit()
+     else:
+        pass
+
+ #sequência de escolha principal
+ elif escolha == '-1':
      aventureiro.statusAventureiro()
      input()
      continue
+ 
  #sequência de escolha principal
  elif escolha == '0':
      while True:
@@ -964,7 +1022,12 @@ while aventureiro.vida > 0:
  
  #sequência de escolha principal
  elif escolha == '6' and aventureiro.key >= 5:
-     print("Em andamento")
+     
+     #main
+     print(f"""\033[34;1m
+     Enquanto você adentra a câmara final, a atmosfera se torna densa e opressiva. Seus sentidos são atingidos por um cheiro pútrido, e você ouve o som de garras afiadas raspando contra pedra. No centro da sala, em um trono macabro, está o Abyssal Overlord, um ser colossal de aparência monstruosa. Sua presença irradia um mal insondável, e seus olhos brilham com uma chama sinistra. 
+     Com uma voz grave e gutural, ele fala: '{aventureiro.nome.capitalize()} ousa me desafiar? Preparem-se para enfrentar a fúria do Abyssal Overlord, criatura das trevas que governa este reino com punho de ferro!'\033[m
+     """)
      pass
  else:
      continue
