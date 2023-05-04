@@ -29,6 +29,7 @@ class Aventureiro:
  def statusAventureiro(self):
      print("\033[36m__\033[m"*15)
      print("")
+     print(f"\033[1mAventureiro: {aventureiro.nome}\033[m")
      print(f"\033[1mForça:\033[m \033[31m{self.forca:^2}\033[m")
      print(f"\033[1mVida:\033[m \033[32m{self.vida:^2}/{100+self.slot1[1]+self.slot2[1]+self.slot3[1]+self.slot4[1]+self.slot5[1]:^2}\033[m")
      print(f"\033[1mOuro:\033[m \033[33m{self.ouro:^2}\033[m")
@@ -342,6 +343,10 @@ def batalhaBoss(boss):
               aventureiro.vida -= armadilha
               print(f"\033[1mVida atual:\033[m \033[1;32m{aventureiro.vida}\033[m")
               contadorVasculhar += 1
+              if aventureiro.vida <= 0:
+                      print("Você morreu, tente novamente em uma próxima vida.")
+                      os.remove("aventureiro.pickle")
+                      exit()
               continue
               
       elif escolha == 2 and contadorVasculhar == 1:
@@ -598,7 +603,7 @@ def salvarAventureiro(aventureiro):
 def carregarAventureiro():
     with open("aventureiro.pickle", "rb") as f:
         aventureiro = pickle.load(f)
-    print("Dados do aventureiro carregados com sucesso.")
+    print(f"Dados do {aventureiro.nome} carregados com sucesso.")
     return aventureiro
 
 ############################################################################################################################################
@@ -639,8 +644,6 @@ while True:
     else:
         print("Escolha inválida")
         continue
-
-
 
 #criando a instância da loja
 loja = Loja()
