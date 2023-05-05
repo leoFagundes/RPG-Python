@@ -1,10 +1,10 @@
 ﻿# RPG em terminal - Python <i>(em andamento)</i>
 
-Esse é um projeto bem simples, apenas com terminal e bem divertido. 😊
+Este é um jogo de RPG simples e divertido, que pode ser jogado diretamente no terminal. 
+A ideia é que você explore diferentes dungeons, cada uma com um chefe e seus monstros, assumindo o papel de um aventureiro em busca de emoção e aventura.
 
-A ideia é que estamos entrando em um sistema de dungeons e cada dungeon tem um boss e seus respectivos monstros, você como um aventureiro prestes a encarar cada uma dessas dungeons adentra nesse mundo em busca de aventura. 
+O jogo possui um sistema de batalha, estatísticas, fuga, sorte, loja, itens e save. Embora a batalha em si não seja muito complexa, o jogo é muito divertido de se jogar. Para começar a jogar, basta executar o arquivo RPGpoo! 
 
-Foi feito um sistema de batalha, estatísticas, fuga, sorte, loja e itens, a batalha em si não é grande coisa mas no final ficou bem divertido.
-Basta rodar o arquivo RPGpoo! (recomendo que use o tema "Drácula")
+<i>Recomendo usar o tema "Drácula" para uma melhor experiência.</i>
 <br><br><br>
 <img src='./images/rpg.jpg'>
