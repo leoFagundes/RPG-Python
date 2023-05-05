@@ -72,11 +72,13 @@ class Loja():
  
 
  def __init__(self):
-     self.preco_pocao_pequena = 200
+     self.preco_pocao_pequena = 210
      self.preco_pocao_media = 400
      self.preco_pocao_grande = 750
-     self.preco_slot4 = 1500
-     self.preco_slot5 = 3000
+     self.preco_slot4 = 1700
+     self.preco_slot5 = 3200
+     self.preco_espadaEncantada = 0
+     self.preco_armaduraEncantada = 0
 
 
  def mostrarLoja(self, ouro, vida, slot1, slot2, slot3, slot4, slot5):
@@ -89,6 +91,8 @@ class Loja():
      \033[36m{"3 - Poção Grande (+150 de vida) (dungeon lvl 4 necessária):"}\033[m \033[33m{self.preco_pocao_grande} p.o\033[m
      \033[36m{"4 - Slot 4 (dungeon lvl 2 necessária):"}\033[m \033[33m{self.preco_slot4} p.o\033[m
      \033[36m{"5 - Slot 5 (dungeon lvl 4 necessária):"}\033[m \033[33m{self.preco_slot5} p.o\033[m
+     \033[36m{"6 - Espada Encantada com os 5 Elementos (dungeon lvl 5 necessária):"}\033[m \033[33m{self.preco_espadaEncantada} p.o\033[m
+     \033[36m{"7 - Armadura Encantada com os 5 Elementos (dungeon lvl 5 necessária):"}\033[m \033[33m{self.preco_armaduraEncantada} p.o\033[m
      \033[36m{"0 - sair da loja":<25}\033[m\n""")
 
 #classe para os monstros do jogo
@@ -593,6 +597,16 @@ def batalhaBoss(boss):
           print("\033[1mDigite um valor válido, não sabe ler?\033[m\n")
           continue
 
+def bossFInal(boss):
+    while True:
+        print(f'''
+        {aventureiro.nome} olha com atenção para a poderosa entidade em sua frente e, sem querer acreditar, percebe que há apenas uma forma de derrota-lo...
+        Para derrotar Abyssal Overlord é necessário duas coisas.
+        - Uma espada encantada com os 5 elementos.
+        - Perfurar seus coração enquanto ele está vivo e com uma vida abaixo de 20% 
+        Caso mate-o sem perfurar seu coração ele irá se auto-destruir evaporando tudo e todos em sua volta.
+        ''')
+
 #função para salvar o aventureiro
 def salvarAventureiro(aventureiro):
     with open("aventureiro.pickle", "wb") as f:
@@ -770,6 +784,23 @@ while aventureiro.vida > 0:
                print(f"\033[1mOuro: \033[m \033[33m-{loja.preco_slot5} p.o\033[m \033[1m=\033[m \033[33m{aventureiro.ouro-loja.preco_slot5} p.o\033[m ")
                aventureiro.ouro -= loja.preco_slot5
                aventureiro.bool_slot5 = True
+
+       elif escolha == '6' and aventureiro.key >= 5:
+            if aventureiro.ouro < loja.preco_espadaEncantada:
+               print("\033[1mVocê não tem\033[m \033[33mouro\033[m \033[1msuficiente\033[m")
+               print(f"\033[1mFaltam\033[m \033[33m{loja.preco_espadaEncantada-aventureiro.ouro} p.o\033[m \033[1mpara comprar esse item\033[m ")
+               continue
+            else:
+                print("\033[1mEspada Encantada comprada com sucesso, onde deseja equipa-la?\033[m")
+       
+       elif escolha == '7' and aventureiro.key >= 5:
+            if aventureiro.ouro < loja.preco_armaduraEncantada:
+               print("\033[1mVocê não tem\033[m \033[33mouro\033[m \033[1msuficiente\033[m")
+               print(f"\033[1mFaltam\033[m \033[33m{loja.preco_armaduraEncantada-aventureiro.ouro} p.o\033[m \033[1mpara comprar esse item\033[m ")
+               continue
+            else:
+                print("\033[1mEspada Encantada comprada com sucesso, onde deseja equipa-la?\033[m")
+       
        else:
            print("\033[1mConclua os requisitos para comprar esse slot\033[m")
 
@@ -1025,12 +1056,23 @@ while aventureiro.vida > 0:
  
  #sequência de escolha principal
  elif escolha == '6' and aventureiro.key >= 5:
-     
+     aventureiro.key_dungeon = 5
+
+     #(forca, vida, velAtaque)
+     loot6 = {"\033[33;1mCoroa do Rei Destruído - lvl 5 (lendário)\033[m": [0, 1000, 10],
+             "\033[33;1mEspada do Rei Destruído - lvl 5 (lendário)\033[m": [320, 0, 20],
+             "\033[35;1mMachado dos Condenados - lvl 5 (épico)\033[m": [250, 0, 10],
+             "\033[35;1mPeitoral de Escamas Sombrias - lvl 5 (épico)\033[m": [0, 750, 0],
+             "\033[34;1mKatana Sombria - lvl 5 (raro)\033[m": [150, 0, 35],
+             "\033[34;1mManto das Trevas - lvl 5 (raro)\033[m": [20, 450, 0]}
+
+     #(forca, vida, velAtaque, ouroDropado, loot)
+     boss6 = Boss("Abyssal Overlord", 400, 1500, 999, 10000, loot6)
      #main
      print(f"""\033[34;1m
      Enquanto você adentra a câmara final, a atmosfera se torna densa e opressiva. Seus sentidos são atingidos por um cheiro pútrido, e você ouve o som de garras afiadas raspando contra pedra. No centro da sala, em um trono macabro, está o Abyssal Overlord, um ser colossal de aparência monstruosa. Sua presença irradia um mal insondável, e seus olhos brilham com uma chama sinistra. 
      Com uma voz grave e gutural, ele fala: '{aventureiro.nome.capitalize()} ousa me desafiar? Preparem-se para enfrentar a fúria do Abyssal Overlord, criatura das trevas que governa este reino com punho de ferro!'\033[m
      """)
-     pass
+     
  else:
      continue
