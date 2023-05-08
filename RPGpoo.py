@@ -21,6 +21,7 @@ class Aventureiro:
      self.slot3 = [0, 0, 0, 'empty']
      self.slot4 = [0, 0, 0, 'empty']
      self.slot5 = [0, 0, 0, 'empty']
+     self.slotEspadaEcantada = [0, 0, 0, 'empty']
      self.bool_slot4 = False
      self.bool_slot5 = False
 
@@ -66,6 +67,13 @@ class Aventureiro:
                  \033[32;1m+{self.slot5[1]}\033[m \033[1;37mde vida\033[m
                  \033[35;1m+{self.slot5[2]}\033[m \033[1;37mde velocidade de ataque\033[m""")
          print("\033[36m__\033[m"*15)
+     if self.slotEspadaEcantada[3] != 'empty':
+         print(f"""\033[1;37mSlot Especial\033[m - {self.slotEspadaEcantada[3]}:
+                 \033[31;1m+{self.slotEspadaEcantada[0]}\033[m \033[1;37mde força\033[m
+                 \033[32;1m+{self.slotEspadaEcantada[1]}\033[m \033[1;37mde vida\033[m
+                 \033[35;1m+{self.slotEspadaEcantada[2]}\033[m \033[1;37mde velocidade de ataque\033[m""")
+         print("\033[36m__\033[m"*15)
+     
 
 #classe para a loja do jogo
 class Loja():
@@ -613,6 +621,13 @@ def bossFInal(boss):
 
     boss.statusBoss()
 
+    if aventureiro.slotEspadaEcantada[3] != 'empty':
+        pass
+    else:
+        print("O aventureiro se aproxima da entrada da dungeon, mas é impedido por uma barreira mágica que o impede de entrar. Ele percebe que a barreira é alimentada pela energia da Espada Encantada, e entende que não pode prosseguir sem ela. Ele reflete sobre a importância de estar preparado para enfrentar os perigos que o aguardam dentro da dungeon, e decide procurar a lendária arma antes de tentar novamente entrar.")
+        contadorFuga = 1
+        return None
+    
     while True:
         print(f"""
         |Vida ({aventureiro.nome}): {aventureiro.vida}
@@ -701,6 +716,19 @@ def bossFInal(boss):
                 pass
 
         #Ataques possíveis do boss
+        ataques = ['Fúria do Abismo', 'Colapso Dimensional', 'Cetro da Morte', 'Drenar Vida']
+        ataque = random.choices(ataques, weights = [40, 10, 25, 10])
+        if ataque == 'Fúria do Abismo':
+            print("o Abyssal Overlord ergue seu braço para o alto, e a energia sombria começa a se acumular em torno dele. Com um grito ensurdecedor, o boss libera uma onda de choque que sacode o chão e causa danos a todos ao seu redor. As sombras parecem ganhar vida própria, envolvendo o boss em um manto sombrio e ameaçador.")
+
+        elif ataque == 'Colapso Dimensional':
+            print("o Abyssal Overlord ergue ambas as mãos para o alto, e uma fenda no espaço-tempo começa a se abrir à sua frente. O vazio sombrio começa a puxar tudo ao seu redor, sugando os aventureiros em direção ao abismo sem fim. A voz rouca do boss ressoa pelo ar, desafiando aqueles que ousam enfrentá-lo.")
+
+        elif ataque == 'Cetro da Morte':
+            print("o Abyssal Overlord levanta seu cetro de energia sombria, apontando-o em direção ao aventureiro. Raios negros começam a disparar do cetro, acertando seus alvos com precisão letal. O boss parece se regozijar com o sofrimento de seu oponente, rindo com desdém enquanto a energia sombria percorre seus dedos.")
+
+        elif ataque == 'Drenar Vida':
+            print("O Abyssal Overlord ergue seu cetro em direção ao aventureiro, e a energia sombria começa a envolvê-lo. Ele fecha os olhos, concentrando-se em drenar a vida de seu oponente para curar suas próprias feridas. O aventureiro pode sentir sua própria energia vital sendo sugada, enquanto o boss é cercado por um brilho sombrio que denota sua cura.")
 
 #função para salvar o aventureiro
 def salvarAventureiro(aventureiro):
@@ -731,7 +759,7 @@ while True:
             #criando a instância do jogador
             nome = input("Para começar, qual o seu nome aventureiro? ") 
             aventureiro = Aventureiro(nome)
-
+            salvarAventureiro(aventureiro)
 
             print(f"Bem-vindo, {aventureiro.nome}")
             print("""
@@ -886,16 +914,171 @@ while aventureiro.vida > 0:
                print(f"\033[1mFaltam\033[m \033[33m{loja.preco_espadaEncantada-aventureiro.ouro} p.o\033[m \033[1mpara comprar esse item\033[m ")
                continue
             else:
-                print("\033[1mEspada Encantada comprada com sucesso, onde deseja equipa-la?\033[m")
-       
+               espadaEncantada = [1, 1, 1, 'Espada Encantada']
+               print(f"""\n\033[37;1mSTATUS\033[m
+                  {espadaEncantada[3]}
+                  \033[31mForça: +{espadaEncantada[0]}\033[m
+                  \033[32mVida: +{espadaEncantada[1]}\033[m
+                  \033[33mVelocidade de Ataque: +{espadaEncantada[2]}\033[m
+                  """)
+               print("\033[1m\nEspada Encantada comprada com sucesso.\033[m")
+               print(f"Você equipou {espadaEncantada[0]}")
+               aventureiro.slotEspadaEcantada = espadaEncantada
+               aventureiro.forca += aventureiro.slotEspadaEcantada[0]
+               aventureiro.vida += aventureiro.slotEspadaEcantada[1]
+               aventureiro.velAtaque += aventureiro.slotEspadaEcantada[2]
+
        elif escolha == '7' and aventureiro.key >= 5:
             if aventureiro.ouro < loja.preco_armaduraEncantada:
                print("\033[1mVocê não tem\033[m \033[33mouro\033[m \033[1msuficiente\033[m")
                print(f"\033[1mFaltam\033[m \033[33m{loja.preco_armaduraEncantada-aventureiro.ouro} p.o\033[m \033[1mpara comprar esse item\033[m ")
                continue
             else:
-                print("\033[1mArmadura Encantada comprada com sucesso, onde deseja equipa-la?\033[m")
-       
+               print("\033[1mArmadura Encantada comprada com sucesso.\n\033[m")
+               #aqui o código vai verificar se você já comprou o slot 4 ou o slot 5 e gerar um texto com base nisso
+               while True:
+                    armaduraEncantada = {'Armadura Encantada': [1, 1, 1]}
+                    if aventureiro.bool_slot4 == True and aventureiro.bool_slot5 == True:
+                        texto = f"""
+                        \033[1;37mVocê deseja equipar em qual slot?
+                            1 - slot 1 (\033[m{aventureiro.slot1[3]}\033[1;37m) (Atributos atuais: Força:\033[m \033[31m{aventureiro.slot1[0]}\033[m | \033[1;37mVida:\033[m \033[32m{aventureiro.slot1[1]}\033[m | \033[1;37mVelocidade de Ataque:\033[m \033[35m{aventureiro.slot1[2]}\033[m)
+                            \033[1;37m2 - slot 2 (\033[m{aventureiro.slot2[3]}\033[1;37m) (Atributos atuais: Força:\033[m \033[31m{aventureiro.slot2[0]}\033[m | \033[1;37mVida:\033[m \033[32m{aventureiro.slot2[1]}\033[m | \033[1;37mVelocidade de Ataque:\033[m \033[35m{aventureiro.slot2[2]}\033[m)
+                            \033[1;37m3 - slot 3 (\033[m{aventureiro.slot3[3]}\033[1;37m) (Atributos atuais: Força:\033[m \033[31m{aventureiro.slot3[0]}\033[m | \033[1;37mVida:\033[m \033[32m{aventureiro.slot3[1]}\033[m | \033[1;37mVelocidade de Ataque:\033[m \033[35m{aventureiro.slot3[2]}\033[m)
+                            \033[1;37m4 - slot 4 (\033[m{aventureiro.slot4[3]}\033[1;37m) (Atributos atuais: Força:\033[m \033[31m{aventureiro.slot4[0]}\033[m | \033[1;37mVida:\033[m \033[32m{aventureiro.slot4[1]}\033[m | \033[1;37mVelocidade de Ataque:\033[m \033[35m{aventureiro.slot4[2]}\033[m)
+                            \033[1;37m5 - slot 5 (\033[m{aventureiro.slot5[3]}\033[1;37m) (Atributos atuais: Força:\033[m \033[31m{aventureiro.slot5[0]}\033[m | \033[1;37mVida:\033[m \033[32m{aventureiro.slot5[1]}\033[m | \033[1;37mVelocidade de Ataque:\033[m \033[35m{aventureiro.slot5[2]}\033[m)
+                            \033[1;37m0 - Não equipar\033[m
+                        """
+                    elif aventureiro.bool_slot4 == False and aventureiro.bool_slot5 == True:
+                        texto = f"""
+                        \033[1;37mVocê deseja equipar em qual slot?
+                            \033[1;37m1 - slot 1 (\033[m{aventureiro.slot1[3]}\033[1;37m) (Atributos atuais: Força:\033[m \033[31m{aventureiro.slot1[0]}\033[m | \033[1;37mVida:\033[m \033[32m{aventureiro.slot1[1]}\033[m | \033[1;37mVelocidade de Ataque:\033[m \033[35m{aventureiro.slot1[2]}\033[m)
+                            \033[1;37m2 - slot 2 (\033[m{aventureiro.slot2[3]}\033[1;37m) (Atributos atuais: Força:\033[m \033[31m{aventureiro.slot2[0]}\033[m | \033[1;37mVida:\033[m \033[32m{aventureiro.slot2[1]}\033[m | \033[1;37mVelocidade de Ataque:\033[m \033[35m{aventureiro.slot2[2]}\033[m)
+                            \033[1;37m3 - slot 3 (\033[m{aventureiro.slot3[3]}\033[1;37m) (Atributos atuais: Força:\033[m \033[31m{aventureiro.slot3[0]}\033[m | \033[1;37mVida:\033[m \033[32m{aventureiro.slot3[1]}\033[m | \033[1;37mVelocidade de Ataque:\033[m \033[35m{aventureiro.slot3[2]}\033[m)
+                            \033[1;37m5 - slot 5 (\033[m{aventureiro.slot5[3]}\033[1;37m) (Atributos atuais: Força:\033[m \033[31m{aventureiro.slot5[0]}\033[m | \033[1;37mVida:\033[m \033[32m{aventureiro.slot5[1]}\033[m | \033[1;37mVelocidade de Ataque:\033[m \033[35m{aventureiro.slot5[2]}\033[m)
+                            \033[1;37m0 - Não equipar\033[m
+                        """
+                    elif aventureiro.bool_slot4 == True and aventureiro.bool_slot5 == False:
+                        texto = f"""
+                        \033[1;37mVocê deseja equipar em qual slot?
+                            1 - slot 1 (\033[m{aventureiro.slot1[3]}\033[1;37m) (Atributos atuais: Força:\033[m \033[31m{aventureiro.slot1[0]}\033[m | \033[1;37mVida:\033[m \033[32m{aventureiro.slot1[1]}\033[m | \033[1;37mVelocidade de Ataque:\033[m \033[35m{aventureiro.slot1[2]}\033[m)
+                            \033[1;37m2 - slot 2 (\033[m{aventureiro.slot2[3]}\033[1;37m) (Atributos atuais: Força:\033[m \033[31m{aventureiro.slot2[0]}\033[m | \033[1;37mVida:\033[m \033[32m{aventureiro.slot2[1]}\033[m | \033[1;37mVelocidade de Ataque:\033[m \033[35m{aventureiro.slot2[2]}\033[m)
+                            \033[1;37m3 - slot 3 (\033[m{aventureiro.slot3[3]}\033[1;37m) (Atributos atuais: Força:\033[m \033[31m{aventureiro.slot3[0]}\033[m | \033[1;37mVida:\033[m \033[32m{aventureiro.slot3[1]}\033[m | \033[1;37mVelocidade de Ataque:\033[m \033[35m{aventureiro.slot3[2]}\033[m)
+                            \033[1;37m4 - slot 4 (\033[m{aventureiro.slot4[3]}\033[1;37m) (Atributos atuais: Força:\033[m \033[31m{aventureiro.slot4[0]}\033[m | \033[1;37mVida:\033[m \033[32m{aventureiro.slot4[1]}\033[m | \033[1;37mVelocidade de Ataque:\033[m \033[35m{aventureiro.slot4[2]}\033[m)
+                            \033[1;37m0 - Não equipar\033[m
+                        """
+                    elif aventureiro.bool_slot4 == False and aventureiro.bool_slot5 == False:
+                        texto = f"""
+                        \033[1;37mVocê deseja equipar em qual slot?
+                            1 - slot 1 (\033[m{aventureiro.slot1[3]}\033[1;37m) (Atributos atuais: Força:\033[m \033[31m{aventureiro.slot1[0]}\033[m | \033[1;37mVida:\033[m \033[32m{aventureiro.slot1[1]}\033[m | \033[1;37mVelocidade de Ataque:\033[m \033[35m{aventureiro.slot1[2]}\033[m)
+                            \033[1;37m2 - slot 2 (\033[m{aventureiro.slot2[3]}\033[1;37m) (Atributos atuais: Força:\033[m \033[31m{aventureiro.slot2[0]}\033[m | \033[1;37mVida:\033[m \033[32m{aventureiro.slot2[1]}\033[m | \033[1;37mVelocidade de Ataque:\033[m \033[35m{aventureiro.slot2[2]}\033[m)
+                            \033[1;37m3 - slot 3 (\033[m{aventureiro.slot3[3]}\033[1;37m) (Atributos atuais: Força:\033[m \033[31m{aventureiro.slot3[0]}\033[m | \033[1;37mVida:\033[m \033[32m{aventureiro.slot3[1]}\033[m | \033[1;37mVelocidade de Ataque:\033[m \033[35m{aventureiro.slot3[2]}\033[m)
+                            \033[1;37m0 - Não equipar\033[m
+                        """
+                    print(texto)
+                    escolha = input()
+                    '''
+                    esse if serve para pegar o valor em string e depois transformar em inteiro
+                    fiz isso para a pessoa poder dar enter ou digitar qualquer outro valor sem dar um erro de Type
+                    quando ela digitar um valor errado ou dar enter a mensagem vai aparecer novamente sem ter problemas de erro
+                    '''
+                    if escolha == '0' or escolha == '1' or escolha == '2' or escolha == '3' or escolha == '4' or escolha == '5':
+                        escolha = int(escolha)
+                    else:
+                        continue
+                    #aqui o aventureiro vai escolher em qual slot ele vai querer equipar o item
+                    if escolha == 1:
+                        print(f"Você equipou {'Armadura Encantada'}")
+                        aventureiro.forca -= aventureiro.slot1[0]
+                        #aventureiro.vida -= aventureiro.slot1[1]
+                        aventureiro.velAtaque -= aventureiro.slot1[2]
+
+                        aventureiro.slot1 = []
+                        aventureiro.slot1.append(armaduraEncantada['Armadura Encantada'][0])
+                        aventureiro.slot1.append(armaduraEncantada['Armadura Encantada'][1])
+                        aventureiro.slot1.append(armaduraEncantada['Armadura Encantada'][2])
+                        aventureiro.slot1.append('Armadura Encantada')
+
+                        aventureiro.forca += aventureiro.slot1[0]
+                        aventureiro.vida += aventureiro.slot1[1]
+                        aventureiro.velAtaque += aventureiro.slot1[2]
+                        if aventureiro.vida > (100 + aventureiro.slot1[1] + aventureiro.slot2[1] + aventureiro.slot3[1] + aventureiro.slot4[1] + aventureiro.slot5[1]):
+                            aventureiro.vida = 100 + aventureiro.slot1[1] + aventureiro.slot2[1] + aventureiro.slot3[1] + aventureiro.slot4[1] + aventureiro.slot5[1]
+                        break
+                    elif escolha == 2:
+                        print(f"Você equipou {'Armadura Encantada'}")
+                        aventureiro.forca -= aventureiro.slot2[0]
+                        #aventureiro.vida -= aventureiro.slot2[1]
+                        aventureiro.velAtaque -= aventureiro.slot2[2]
+
+                        aventureiro.slot2 = []
+                        aventureiro.slot2.append(armaduraEncantada['Armadura Encantada'][0])
+                        aventureiro.slot2.append(armaduraEncantada['Armadura Encantada'][1])
+                        aventureiro.slot2.append(armaduraEncantada['Armadura Encantada'][2])
+                        aventureiro.slot2.append('Armadura Encantada')
+
+                        aventureiro.forca += aventureiro.slot2[0]
+                        aventureiro.vida += aventureiro.slot2[1]
+                        aventureiro.velAtaque += aventureiro.slot2[2]
+                        if aventureiro.vida > (100 + aventureiro.slot1[1] + aventureiro.slot2[1] + aventureiro.slot3[1] + aventureiro.slot4[1] + aventureiro.slot5[1]):
+                            aventureiro.vida = 100 + aventureiro.slot1[1] + aventureiro.slot2[1] + aventureiro.slot3[1] + aventureiro.slot4[1] + aventureiro.slot5[1]
+                        break
+                    elif escolha == 3:
+                        print(f"Você equipou {'Armadura Encantada'}")
+                        aventureiro.forca -= aventureiro.slot3[0]
+                        #aventureiro.vida -= aventureiro.slot3[1]
+                        aventureiro.velAtaque -= aventureiro.slot3[2]
+
+                        aventureiro.slot3 = []
+                        aventureiro.slot3.append(armaduraEncantada['Armadura Encantada'][0])
+                        aventureiro.slot3.append(armaduraEncantada['Armadura Encantada'][1])
+                        aventureiro.slot3.append(armaduraEncantada['Armadura Encantada'][2])
+                        aventureiro.slot3.append('Armadura Encantada')
+
+                        aventureiro.forca += aventureiro.slot3[0]
+                        aventureiro.vida += aventureiro.slot3[1]
+                        aventureiro.velAtaque += aventureiro.slot3[2]
+                        if aventureiro.vida > (100 + aventureiro.slot1[1] + aventureiro.slot2[1] + aventureiro.slot3[1] + aventureiro.slot4[1] + aventureiro.slot5[1]):
+                            aventureiro.vida = 100 + aventureiro.slot1[1] + aventureiro.slot2[1] + aventureiro.slot3[1] + aventureiro.slot4[1] + aventureiro.slot5[1]
+                        break
+                    elif escolha == 4 and aventureiro.bool_slot4 == True:
+                        print(f"Você equipou {'Armadura Encantada'}")
+                        aventureiro.forca -= aventureiro.slot4[0]
+                        #aventureiro.vida -= aventureiro.slot4[1]
+                        aventureiro.velAtaque -= aventureiro.slot4[2]
+
+                        aventureiro.slot4 = []
+                        aventureiro.slot4.append(armaduraEncantada['Armadura Encantada'][0])
+                        aventureiro.slot4.append(armaduraEncantada['Armadura Encantada'][1])
+                        aventureiro.slot4.append(armaduraEncantada['Armadura Encantada'][2])
+                        aventureiro.slot4.append('Armadura Encantada')
+
+                        aventureiro.forca += aventureiro.slot4[0]
+                        aventureiro.vida += aventureiro.slot4[1]
+                        aventureiro.velAtaque += aventureiro.slot4[2]
+                        if aventureiro.vida > (100 + aventureiro.slot1[1] + aventureiro.slot2[1] + aventureiro.slot3[1] + aventureiro.slot4[1] + aventureiro.slot5[1]):
+                            aventureiro.vida = 100 + aventureiro.slot1[1] + aventureiro.slot2[1] + aventureiro.slot3[1] + aventureiro.slot4[1] + aventureiro.slot5[1]
+                        break
+                    elif escolha == 5 and aventureiro.bool_slot5 == True:
+                        print(f"Você equipou {'Armadura Encantada'}")
+                        aventureiro.forca -= aventureiro.slot5[0]
+                        #aventureiro.vida -= aventureiro.slot5[1]
+                        aventureiro.velAtaque -= aventureiro.slot5[2]
+
+                        aventureiro.slot5 = []
+                        aventureiro.slot5.append(armaduraEncantada['Armadura Encantada'][0])
+                        aventureiro.slot5.append(armaduraEncantada['Armadura Encantada'][1])
+                        aventureiro.slot5.append(armaduraEncantada['Armadura Encantada'][2])
+                        aventureiro.slot5.append('Armadura Encantada')
+
+                        aventureiro.forca += aventureiro.slot5[0]
+                        aventureiro.vida += aventureiro.slot5[1]
+                        aventureiro.velAtaque += aventureiro.slot5[2]
+                        if aventureiro.vida > (100 + aventureiro.slot1[1] + aventureiro.slot2[1] + aventureiro.slot3[1] + aventureiro.slot4[1] + aventureiro.slot5[1]):
+                            aventureiro.vida = 100 + aventureiro.slot1[1] + aventureiro.slot2[1] + aventureiro.slot3[1] + aventureiro.slot4[1] + aventureiro.slot5[1]
+                        break
+                    else:
+                        print("Valor inválido, escolha novamente.")
+                        continue
        else:
            print("\033[1mConclua os requisitos para comprar esse slot\033[m")
 
@@ -1168,7 +1351,10 @@ while aventureiro.vida > 0:
      Enquanto você adentra a câmara final, a atmosfera se torna densa e opressiva. Seus sentidos são atingidos por um cheiro pútrido, e você ouve o som de garras afiadas raspando contra pedra. No centro da sala, em um trono macabro, está o Abyssal Overlord, um ser colossal de aparência monstruosa. Sua presença irradia um mal insondável, e seus olhos brilham com uma chama sinistra. 
      Com uma voz grave e gutural, ele fala: '{aventureiro.nome.capitalize()} ousa me desafiar? Preparem-se para enfrentar a fúria do Abyssal Overlord, criatura das trevas que governa este reino com punho de ferro!'\033[m
      """)
-     #depois da função tratar caso o contador fuga seja 1
+     bossFInal(boss6)
+     if contadorFuga == 1:
+         continue
+    
      
  else:
      continue
