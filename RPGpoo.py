@@ -598,14 +598,109 @@ def batalhaBoss(boss):
           continue
 
 def bossFInal(boss):
+    chance_de_fuga = 15
+    vida_total = boss.vida
+    dano_reduzido = 0
+    acertar_arremesso = 40
+    contra_atacar = 50
+    print(f'''
+    {aventureiro.nome} olha com atenção para a poderosa entidade em sua frente e, sem querer acreditar, percebe que há apenas uma forma de derrota-lo...
+    Para derrotar o poderoso Abyssal Overlord, há duas condições imprescindíveis. 
+    Primeiramente, é necessário possuir uma espada encantada com os 5 elementos, cuja lâmina reluzente corta com precisão até mesmo os materiais mais resistentes. 
+    Mas isso não é suficiente. É preciso também ter coragem e habilidade para enfrentá-lo em sua forma mais vulnerável, quando sua vida está abaixo de 20%. Nesse momento, cada golpe é crucial, pois somente um acerto certeiro em seu coração pode selar a queda desse monstro descomunal.
+    Caso mate-o sem perfurar seu coração, ele irá se auto-destruir, evaporando tudo e todos em sua volta.\n
+    ''')
+
+    boss.statusBoss()
+
     while True:
-        print(f'''
-        {aventureiro.nome} olha com atenção para a poderosa entidade em sua frente e, sem querer acreditar, percebe que há apenas uma forma de derrota-lo...
-        Para derrotar Abyssal Overlord é necessário duas coisas.
-        - Uma espada encantada com os 5 elementos.
-        - Perfurar seus coração enquanto ele está vivo e com uma vida abaixo de 20% 
-        Caso mate-o sem perfurar seu coração ele irá se auto-destruir evaporando tudo e todos em sua volta.
-        ''')
+        print(f"""
+        |Vida ({aventureiro.nome}): {aventureiro.vida}
+        |Vida ({boss.nome}): {boss.vida}\n
+        """)
+        print(f"""Deseja
+                  1-Ataque normal (Dano: {aventureiro.forca})
+                  2-Arremessar arma (Dano: {aventureiro.forca*1.3} | Chance de acertar: {acertar_arremesso}%)
+                  3-Se defender (Dano reduzido: 50% | Chance de contra-atacar: {contra_atacar}%)
+                  4-Perfurar coração
+                  5-Fugir (Chance de fuga: {chance_de_fuga}%)
+          """)
+        escolha = input()
+        '''
+        esse if serve para pegar o valor em string e depois transformar em inteiro
+        fiz isso para a pessoa poder dar enter ou digitar qualquer outro valor sem dar um erro de Type
+        quando ela digitar um valor errado ou dar enter a mensagem vai aparecer novamente sem ter problemas de erro
+        '''
+        if escolha == '1' or escolha == '2' or escolha == '3' or escolha == '4' or escolha == '5':
+            escolha = int(escolha)
+        else:
+            print("Opção inválida")
+            continue
+
+        if escolha == 1:
+            print("Com muita determinação o aventureiro desfere uma ataque poderoso no Boss")
+            print(f"\033[31mAtaque: {aventureiro.forca}\033[m")
+            boss.vida -= aventureiro.forca
+            print(f"\033[1mVida do {boss.nome}: \033[32m{boss.vida}\033[m\n")
+            if boss.vida <= 0:
+                print("Uma explosão devastadora irrompeu do corpo do Abyssal Overlord, varrendo tudo e todos ao seu redor em uma onda de destruição impiedosa.")
+                print("Você morreu, falhou em perfurar o coração do Boss.")
+                os.remove("aventureiro.pickle")
+                exit()
+                
+        elif escolha == 2:
+            chances = ['acertou', 'errou']
+            chance = random.choices(chances, weights = [acertar_arremesso, 100-acertar_arremesso])
+            if chance == 'acertou':
+                print("A arma arremessada pelo aventureiro atinge o corpo do boss com precisão, causando dano significativo e enfraquecendo-o ainda mais para o próximo ataque.")
+                print(f"\033[31mAtaque: {aventureiro.forca*1.3}\033[m")
+                boss.vida -= aventureiro.forca*1.3
+                print(f"\033[1mVida do {boss.nome}: \033[32m{boss.vida}\033[m\n")
+                if boss.vida <= 0:
+                    print("Uma explosão devastadora irrompeu do corpo do Abyssal Overlord, varrendo tudo e todos ao seu redor em uma onda de destruição impiedosa.")
+                    print("Você morreu, falhou em perfurar o coração do Boss.")
+                    os.remove("aventureiro.pickle")
+                exit()
+            elif chance == 'errou':
+                print("A arma arremessada pelo aventureiro passa raspando pelo corpo do boss, errando o alvo e causando pouco ou nenhum dano. O guerreiro se prepara para o próximo ataque, consciente de que precisa ser mais preciso em seus movimentos para vencer essa batalha épica.")
+                print(f"Consequência: Perdeu a vez")
+                pass
+
+        elif escolha == 3:
+            dano_reduzido = 1
+            print("Você se defende e espera o ataque do boss.")
+            pass
+
+        elif escolha == 4:
+            if boss.vida <= 0.2 * vida_total:
+                print("""
+                Com um movimento ágil e preciso, o aventureiro crava sua espada encantada no coração do Abyssal Overlord, selando assim sua vitória e o fim da batalha épica. 
+                O ar treme com a explosão de energia do monstro derrotado, enquanto o guerreiro se mantém firme e impávido diante da magnitude da sua conquista. 
+                Ainda que ferido e exausto, ele sabe que superou seu maior desafio e que seu nome será lembrado por muitas gerações como o herói que enfrentou e venceu o temível Abyssal Overlord.
+                """)
+                #fazer ações de fim da batalha
+                break
+            else:
+                print("""
+                A espada encantada do aventureiro erra o coração do boss por pouco, fazendo com que ele desvie-se habilidosamente do ataque.
+                """)
+                print(f"Consequência: Perdeu a vez")
+                pass
+
+        elif escolha == 5:
+            chances = ['fugiu', 'naofugiu']
+            chance = random.choices(chances, weights = [15, 85])
+            if chance[0] == 'fugiu':
+                print(f"Com {chance_de_fuga}% de chance de escapar, você conseguiu fugir com sucesso")
+                contadorFuga = 1
+                break
+            elif chance[0] == 'naofugiu':
+                print(f"Você tentou fugir, porém o {boss.nome} não teve piedade.")
+                print(f"Consequência: Perdeu a vez")
+                print(f"Vida atual = {aventureiro.vida}\n")
+                pass
+
+        #Ataques possíveis do boss
 
 #função para salvar o aventureiro
 def salvarAventureiro(aventureiro):
@@ -1073,6 +1168,7 @@ while aventureiro.vida > 0:
      Enquanto você adentra a câmara final, a atmosfera se torna densa e opressiva. Seus sentidos são atingidos por um cheiro pútrido, e você ouve o som de garras afiadas raspando contra pedra. No centro da sala, em um trono macabro, está o Abyssal Overlord, um ser colossal de aparência monstruosa. Sua presença irradia um mal insondável, e seus olhos brilham com uma chama sinistra. 
      Com uma voz grave e gutural, ele fala: '{aventureiro.nome.capitalize()} ousa me desafiar? Preparem-se para enfrentar a fúria do Abyssal Overlord, criatura das trevas que governa este reino com punho de ferro!'\033[m
      """)
+     #depois da função tratar caso o contador fuga seja 1
      
  else:
      continue
