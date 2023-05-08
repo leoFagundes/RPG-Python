@@ -10,7 +10,7 @@ class Aventureiro:
 
  def __init__(self, nome):
      self.nome = nome
-     self.forca = 1
+     self.forca = 600
      self.vida = 100
      self.ouro = 0
      self.velAtaque = 10
@@ -74,7 +74,6 @@ class Aventureiro:
                  \033[35;1m+{self.slotEspadaEcantada[2]}\033[m \033[1;37mde velocidade de ataque\033[m""")
          print("\033[36m__\033[m"*15)
      
-
 #classe para a loja do jogo
 class Loja():
  
@@ -605,17 +604,20 @@ def batalhaBoss(boss):
           print("\033[1mDigite um valor válido, não sabe ler?\033[m\n")
           continue
 
+#função para a batalha do boss final que iremos chamar no construtor
 def bossFInal(boss):
     chance_de_fuga = 15
     vida_total = boss.vida
-    dano_reduzido = 0
     acertar_arremesso = 40
     contra_atacar = 50
+    defender = 50
+
     print(f'''
     {aventureiro.nome} olha com atenção para a poderosa entidade em sua frente e, sem querer acreditar, percebe que há apenas uma forma de derrota-lo...
-    Para derrotar o poderoso Abyssal Overlord, há duas condições imprescindíveis. 
+    \nPara derrotar o poderoso Abyssal Overlord, há duas condições imprescindíveis. 
     Primeiramente, é necessário possuir uma espada encantada com os 5 elementos, cuja lâmina reluzente corta com precisão até mesmo os materiais mais resistentes. 
-    Mas isso não é suficiente. É preciso também ter coragem e habilidade para enfrentá-lo em sua forma mais vulnerável, quando sua vida está abaixo de 20%. Nesse momento, cada golpe é crucial, pois somente um acerto certeiro em seu coração pode selar a queda desse monstro descomunal.
+    Mas isso não é suficiente. 
+    \nÉ preciso também ter coragem e habilidade para enfrentá-lo em sua forma mais vulnerável, quando sua vida está abaixo de 20%. Nesse momento, cada golpe é crucial, pois somente um acerto certeiro em seu coração pode selar a queda desse monstro descomunal.
     Caso mate-o sem perfurar seu coração, ele irá se auto-destruir, evaporando tudo e todos em sua volta.\n
     ''')
 
@@ -624,19 +626,22 @@ def bossFInal(boss):
     if aventureiro.slotEspadaEcantada[3] != 'empty':
         pass
     else:
-        print("O aventureiro se aproxima da entrada da dungeon, mas é impedido por uma barreira mágica que o impede de entrar. Ele percebe que a barreira é alimentada pela energia da Espada Encantada, e entende que não pode prosseguir sem ela. Ele reflete sobre a importância de estar preparado para enfrentar os perigos que o aguardam dentro da dungeon, e decide procurar a lendária arma antes de tentar novamente entrar.")
+        print("\nO aventureiro se aproxima da entrada da dungeon, mas é impedido por uma barreira mágica que o impede de entrar. Ele percebe que a barreira é alimentada pela energia da Espada Encantada, e entende que não pode prosseguir sem ela. Ele reflete sobre a importância de estar preparado para enfrentar os perigos que o aguardam dentro da dungeon, e decide procurar a lendária arma antes de tentar novamente entrar.")
         contadorFuga = 1
         return None
     
     while True:
+        dano_reduzido = 0
         print(f"""
+        Novo Turno
+        ---------------------------------------------------
         |Vida ({aventureiro.nome}): {aventureiro.vida}
         |Vida ({boss.nome}): {boss.vida}\n
         """)
         print(f"""Deseja
                   1-Ataque normal (Dano: {aventureiro.forca})
                   2-Arremessar arma (Dano: {aventureiro.forca*1.3} | Chance de acertar: {acertar_arremesso}%)
-                  3-Se defender (Dano reduzido: 50% | Chance de contra-atacar: {contra_atacar}%)
+                  3-Se defender (Dano reduzido: {defender}% | Chance de contra-atacar: {contra_atacar}%)
                   4-Perfurar coração
                   5-Fugir (Chance de fuga: {chance_de_fuga}%)
           """)
@@ -666,7 +671,7 @@ def bossFInal(boss):
         elif escolha == 2:
             chances = ['acertou', 'errou']
             chance = random.choices(chances, weights = [acertar_arremesso, 100-acertar_arremesso])
-            if chance == 'acertou':
+            if chance[0] == 'acertou':
                 print("A arma arremessada pelo aventureiro atinge o corpo do boss com precisão, causando dano significativo e enfraquecendo-o ainda mais para o próximo ataque.")
                 print(f"\033[31mAtaque: {aventureiro.forca*1.3}\033[m")
                 boss.vida -= aventureiro.forca*1.3
@@ -675,10 +680,13 @@ def bossFInal(boss):
                     print("Uma explosão devastadora irrompeu do corpo do Abyssal Overlord, varrendo tudo e todos ao seu redor em uma onda de destruição impiedosa.")
                     print("Você morreu, falhou em perfurar o coração do Boss.")
                     os.remove("aventureiro.pickle")
-                exit()
-            elif chance == 'errou':
-                print("A arma arremessada pelo aventureiro passa raspando pelo corpo do boss, errando o alvo e causando pouco ou nenhum dano. O guerreiro se prepara para o próximo ataque, consciente de que precisa ser mais preciso em seus movimentos para vencer essa batalha épica.")
-                print(f"Consequência: Perdeu a vez")
+                    exit()
+            elif chance[0] == 'errou':
+                print("""
+                A arma arremessada pelo aventureiro passa raspando pelo corpo do boss, errando o alvo e causando nenhum dano. 
+                O guerreiro se prepara para o próximo ataque, consciente de que precisa ser mais preciso em seus movimentos para vencer essa batalha épica.
+                Consequência: Perdeu a vez
+                """)
                 pass
 
         elif escolha == 3:
@@ -687,7 +695,7 @@ def bossFInal(boss):
             pass
 
         elif escolha == 4:
-            if boss.vida <= 0.2 * vida_total:
+            if boss.vida <= vida_total * 0.2:
                 print("""
                 Com um movimento ágil e preciso, o aventureiro crava sua espada encantada no coração do Abyssal Overlord, selando assim sua vitória e o fim da batalha épica. 
                 O ar treme com a explosão de energia do monstro derrotado, enquanto o guerreiro se mantém firme e impávido diante da magnitude da sua conquista. 
@@ -695,11 +703,12 @@ def bossFInal(boss):
                 """)
                 #fazer ações de fim da batalha
                 break
+
             else:
-                print("""
-                A espada encantada do aventureiro erra o coração do boss por pouco, fazendo com que ele desvie-se habilidosamente do ataque.
+                print(f"""
+                Você tenta enfiar a espada encantada no coração do {boss.nome}, porém o coração ainda não está exposto.
+                Consequência: Perdeu a vez
                 """)
-                print(f"Consequência: Perdeu a vez")
                 pass
 
         elif escolha == 5:
@@ -717,18 +726,156 @@ def bossFInal(boss):
 
         #Ataques possíveis do boss
         ataques = ['Fúria do Abismo', 'Colapso Dimensional', 'Cetro da Morte', 'Drenar Vida']
-        ataque = random.choices(ataques, weights = [40, 10, 25, 10])
-        if ataque == 'Fúria do Abismo':
-            print("o Abyssal Overlord ergue seu braço para o alto, e a energia sombria começa a se acumular em torno dele. Com um grito ensurdecedor, o boss libera uma onda de choque que sacode o chão e causa danos a todos ao seu redor. As sombras parecem ganhar vida própria, envolvendo o boss em um manto sombrio e ameaçador.")
+        if boss.vida >= vida_total * 0.45:
+            ataque = random.choices(ataques, weights = [40, 5, 35, 7])
+        elif boss.vida < vida_total * 0.45:
+            ataque = random.choices(ataques, weights = [10, 15, 10, 15])
 
-        elif ataque == 'Colapso Dimensional':
-            print("o Abyssal Overlord ergue ambas as mãos para o alto, e uma fenda no espaço-tempo começa a se abrir à sua frente. O vazio sombrio começa a puxar tudo ao seu redor, sugando os aventureiros em direção ao abismo sem fim. A voz rouca do boss ressoa pelo ar, desafiando aqueles que ousam enfrentá-lo.")
+        if ataque[0] == 'Fúria do Abismo':
+            dano = 0
+            print("\033[1m\nO Abyssal Overlord ergue seu braço para o alto, e a energia sombria começa a se acumular em torno dele. Com um grito ensurdecedor, o boss libera uma onda de choque que sacode o chão e causa danos a todos ao seu redor. As sombras parecem ganhar vida própria, envolvendo o boss em um manto sombrio e ameaçador.\033[m")
+            if dano_reduzido == 300:
+                print(f"\033[1mDano recebido:\033[m \033[31m{dano}\033[m")
+                aventureiro.vida -= dano
+                if aventureiro.vida <= 0:
+                    print("O aventureiro é lançado para trás com a força da onda de choque, seu corpo se contorcendo em agonia enquanto as sombras o envolvem e o arrastam para o abismo.")
+                    os.remove("aventureiro.pickle")
+                    exit()
+            elif dano_reduzido == 1:
+                dano = dano/2
+                print("Você consegue se defender do ataque, reduzindo drasticamente o dano do Boss.")
+                print(f"\033[1mDano recebido:\033[m \033[31m{dano}\033[m")
+                aventureiro.vida -= dano
+                if aventureiro.vida <= 0:
+                    print("O aventureiro é lançado para trás com a força da onda de choque, seu corpo se contorcendo em agonia enquanto as sombras o envolvem e o arrastam para o abismo.")
+                    os.remove("aventureiro.pickle")
+                    exit()
+                chances = ['contraAtacou', 'naoContraAtacou']
+                chance = random.choices(chances, weights = [contra_atacar, 100-contra_atacar])
+                if chance == 'contraAtacou':
+                    print(f"Após receber o ataque {ataque[0]}, você consegue pular para cima do Boss dando um contra-ataque poderoso.")
+                    print(f"\033[31mAtaque: {aventureiro.forca*1.25}\033[m")
+                    boss.vida -= aventureiro.forca*1.25
+                    if boss.vida <= 0:
+                        print("Uma explosão devastadora irrompeu do corpo do Abyssal Overlord, varrendo tudo e todos ao seu redor em uma onda de destruição impiedosa.")
+                        print("Você morreu, falhou em perfurar o coração do Boss.")
+                        os.remove("aventureiro.pickle")
+                        exit()
+                    pass
+                elif chance == 'naoContraAtacou':
+                    print(f"Você tentou contra-atacar, porém {boss.nome} reagiu mais rápdo do que o esperado.")
+                    pass
+            print(f"\033[1mVida atual:\033[m \033[32m{aventureiro.vida}\033[m")
 
-        elif ataque == 'Cetro da Morte':
-            print("o Abyssal Overlord levanta seu cetro de energia sombria, apontando-o em direção ao aventureiro. Raios negros começam a disparar do cetro, acertando seus alvos com precisão letal. O boss parece se regozijar com o sofrimento de seu oponente, rindo com desdém enquanto a energia sombria percorre seus dedos.")
+        elif ataque[0] == 'Colapso Dimensional':
+            dano = 500
+            print("\033[1m\nO Abyssal Overlord ergue ambas as mãos para o alto, e uma fenda no espaço-tempo começa a se abrir à sua frente. O vazio sombrio começa a puxar tudo ao seu redor, sugando os aventureiros em direção ao abismo sem fim. A voz rouca do boss ressoa pelo ar, desafiando aqueles que ousam enfrentá-lo.\033[m")
+            if dano_reduzido == 0:
+                print(f"\033[1mDano recebido:\033[m \033[31m{dano}\033[m")
+                aventureiro.vida -= dano
+                if aventureiro.vida <= 0:
+                    print("O Abyssal Overlord se vira para o aventureiro, suas pupilas vermelhas brilhando intensamente. Ele ergue seu braço em um gesto ameaçador, e a energia sombria começa a se acumular ao seu redor. O aventureiro pode sentir o chão tremer sob seus pés enquanto o boss grita em um tom aterrorizante. Com um movimento rápido, o boss libera uma onda de choque que arremessa o aventureiro para longe, causando danos fatais e espalhando o sangue do aventureiro pelo chão da dungeon.")
+                    os.remove("aventureiro.pickle")
+                    exit()
+            elif dano_reduzido == 1:
+                dano = dano/2
+                print("Você consegue se defender do ataque, reduzindo drasticamente o dano do Boss.")
+                print(f"\033[1mDano recebido:\033[m \033[31m{dano}\033[m")
+                aventureiro.vida -= dano
+                if aventureiro.vida <= 0:
+                    print("O aventureiro é lançado para trás com a força da onda de choque, seu corpo se contorcendo em agonia enquanto as sombras o envolvem e o arrastam para o abismo.")
+                    os.remove("aventureiro.pickle")
+                    exit()
+                chances = ['contraAtacou', 'naoContraAtacou']
+                chance = random.choices(chances, weights = [contra_atacar, 100-contra_atacar])
+                if chance == 'contraAtacou':
+                    print(f"Após receber o ataque {ataque[0]}, você consegue pular para cima do Boss dando um contra-ataque poderoso.")
+                    print(f"\033[31mAtaque: {aventureiro.forca*1.25}\033[m")
+                    boss.vida -= aventureiro.forca*1.25
+                    if boss.vida <= 0:
+                        print("Uma explosão devastadora irrompeu do corpo do Abyssal Overlord, varrendo tudo e todos ao seu redor em uma onda de destruição impiedosa.")
+                        print("Você morreu, falhou em perfurar o coração do Boss.")
+                        os.remove("aventureiro.pickle")
+                        exit()
+                    pass
+                elif chance == 'naoContraAtacou':
+                    print(f"Você tentou contra-atacar, porém {boss.nome} reagiu mais rápdo do que o esperado.")
+                    pass
+            print(f"\033[1mVida atual:\033[m \033[32m{aventureiro.vida}\033[m")
 
-        elif ataque == 'Drenar Vida':
-            print("O Abyssal Overlord ergue seu cetro em direção ao aventureiro, e a energia sombria começa a envolvê-lo. Ele fecha os olhos, concentrando-se em drenar a vida de seu oponente para curar suas próprias feridas. O aventureiro pode sentir sua própria energia vital sendo sugada, enquanto o boss é cercado por um brilho sombrio que denota sua cura.")
+        elif ataque[0] == 'Cetro da Morte':
+            dano = 350
+            print("\033[1m\nO Abyssal Overlord levanta seu cetro de energia sombria, apontando-o em direção ao aventureiro. Raios negros começam a disparar do cetro, acertando seus alvos com precisão letal. O boss parece se regozijar com o sofrimento de seu oponente, rindo com desdém enquanto a energia sombria percorre seus dedos.\033[m")
+            if dano_reduzido == 0:
+                print(f"\033[1mDano recebido:\033[m \033[31m{dano}\033[m")
+                aventureiro.vida -= dano
+                if aventureiro.vida <= 0:
+                    print("O aventureiro cai no chão, com o corpo coberto de marcas negras e sangrentas. Sua vida é extinta pela energia sombria, enquanto o Abyssal Overlord ri com satisfação, triunfante em sua vitória.")
+                    os.remove("aventureiro.pickle")
+                    exit()
+            elif dano_reduzido == 1:
+                dano = dano/2
+                print("Você consegue se defender do ataque, reduzindo drasticamente o dano do Boss.")
+                print(f"\033[1mDano recebido:\033[m \033[31m{dano}\033[m")
+                aventureiro.vida -= dano
+                if aventureiro.vida <= 0:
+                    print("O aventureiro é lançado para trás com a força da onda de choque, seu corpo se contorcendo em agonia enquanto as sombras o envolvem e o arrastam para o abismo.")
+                    os.remove("aventureiro.pickle")
+                    exit()
+                chances = ['contraAtacou', 'naoContraAtacou']
+                chance = random.choices(chances, weights = [contra_atacar, 100-contra_atacar])
+                if chance == 'contraAtacou':
+                    print(f"Após receber o ataque {ataque[0]}, você consegue pular para cima do Boss dando um contra-ataque poderoso.")
+                    print(f"\033[31mAtaque: {aventureiro.forca*1.25}\033[m")
+                    boss.vida -= aventureiro.forca*1.25
+                    if boss.vida <= 0:
+                        print("Uma explosão devastadora irrompeu do corpo do Abyssal Overlord, varrendo tudo e todos ao seu redor em uma onda de destruição impiedosa.")
+                        print("Você morreu, falhou em perfurar o coração do Boss.")
+                        os.remove("aventureiro.pickle")
+                        exit()
+                    pass
+                elif chance == 'naoContraAtacou':
+                    print(f"Você tentou contra-atacar, porém {boss.nome} reagiu mais rápdo do que o esperado.")
+                    pass
+            print(f"\033[1mVida atual:\033[m \033[32m{aventureiro.vida}\033[m")
+
+        elif ataque[0] == 'Drenar Vida':
+            dano = 470
+            print("\033[1m\nO Abyssal Overlord ergue seu cetro em direção ao aventureiro, e a energia sombria começa a envolvê-lo. Ele fecha os olhos, concentrando-se em drenar a vida de seu oponente para curar suas próprias feridas. O aventureiro pode sentir sua própria energia vital sendo sugada, enquanto o boss é cercado por um brilho sombrio que denota sua cura.\033[m")
+            if dano_reduzido == 0:
+                print(f"\033[1mDano recebido:\033[m \033[31m{dano}\033[m")
+                aventureiro.vida -= dano
+                if aventureiro.vida <= 0:
+                    print("O aventureiro é lançado para trás com a força da onda de choque, seu corpo se contorcendo em agonia enquanto as sombras o envolvem e o arrastam para o abismo.")
+                    os.remove("aventureiro.pickle")
+                    exit()
+                print(f"\033[1mO boss se curou:\033[m \033[32m{dano}\033[m")
+                boss.vida += dano
+            elif dano_reduzido == 1:
+                dano = dano/2
+                print("Você consegue se defender do ataque, reduzindo drasticamente o dano do Boss.")
+                print(f"\033[1mDano recebido:\033[m \033[31m{dano}\033[m")
+                aventureiro.vida -= dano
+                if aventureiro.vida <= 0:
+                    print("O aventureiro é lançado para trás com a força da onda de choque, seu corpo se contorcendo em agonia enquanto as sombras o envolvem e o arrastam para o abismo.")
+                    os.remove("aventureiro.pickle")
+                    exit()
+                chances = ['contraAtacou', 'naoContraAtacou']
+                chance = random.choices(chances, weights = [contra_atacar, 100-contra_atacar])
+                if chance == 'contraAtacou':
+                    print(f"Após receber o ataque {ataque[0]}, você consegue pular para cima do Boss dando um contra-ataque poderoso.")
+                    print(f"\033[31mAtaque: {aventureiro.forca*1.25}\033[m")
+                    boss.vida -= aventureiro.forca*1.25
+                    if boss.vida <= 0:
+                        print("Uma explosão devastadora irrompeu do corpo do Abyssal Overlord, varrendo tudo e todos ao seu redor em uma onda de destruição impiedosa.")
+                        print("Você morreu, falhou em perfurar o coração do Boss.")
+                        os.remove("aventureiro.pickle")
+                        exit()
+                    pass
+                elif chance == 'naoContraAtacou':
+                    print(f"Você tentou contra-atacar, porém {boss.nome} reagiu mais rápdo do que o esperado.")
+                    pass
+            print(f"\033[1mVida atual:\033[m \033[32m{aventureiro.vida}\033[m")
 
 #função para salvar o aventureiro
 def salvarAventureiro(aventureiro):
@@ -811,7 +958,7 @@ while aventureiro.vida > 0:
  #sequência de escolha principal
  if escolha == 's' or escolha == "S":
      salvarAventureiro(aventureiro)
-     print(f"\nCASO {aventureiro.nome.upper()} MORRA O SAVE SERÁ APAGADO")
+     print(f"\nCASO {aventureiro.nome.upper()} MORRA, O SAVE SERÁ APAGADO!")
      print("""
      Deseja sair? 
         1 - Sim
@@ -937,7 +1084,7 @@ while aventureiro.vida > 0:
                print("\033[1mArmadura Encantada comprada com sucesso.\n\033[m")
                #aqui o código vai verificar se você já comprou o slot 4 ou o slot 5 e gerar um texto com base nisso
                while True:
-                    armaduraEncantada = {'Armadura Encantada': [1, 1, 1]}
+                    armaduraEncantada = {'Armadura Encantada': [500, 0, 50]}
                     if aventureiro.bool_slot4 == True and aventureiro.bool_slot5 == True:
                         texto = f"""
                         \033[1;37mVocê deseja equipar em qual slot?
@@ -1348,13 +1495,12 @@ while aventureiro.vida > 0:
      boss6 = Boss("Abyssal Overlord", 400, 1500, 999, 10000, loot6)
      #main
      print(f"""\033[34;1m
-     Enquanto você adentra a câmara final, a atmosfera se torna densa e opressiva. Seus sentidos são atingidos por um cheiro pútrido, e você ouve o som de garras afiadas raspando contra pedra. No centro da sala, em um trono macabro, está o Abyssal Overlord, um ser colossal de aparência monstruosa. Sua presença irradia um mal insondável, e seus olhos brilham com uma chama sinistra. 
+     \nEnquanto você adentra a câmara final, a atmosfera se torna densa e opressiva. Seus sentidos são atingidos por um cheiro pútrido, e você ouve o som de garras afiadas raspando contra pedra. No centro da sala, em um trono macabro, está o Abyssal Overlord, um ser colossal de aparência monstruosa. Sua presença irradia um mal insondável, e seus olhos brilham com uma chama sinistra. 
      Com uma voz grave e gutural, ele fala: '{aventureiro.nome.capitalize()} ousa me desafiar? Preparem-se para enfrentar a fúria do Abyssal Overlord, criatura das trevas que governa este reino com punho de ferro!'\033[m
      """)
      bossFInal(boss6)
      if contadorFuga == 1:
          continue
     
-     
  else:
      continue
