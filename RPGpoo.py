@@ -894,7 +894,7 @@ while aventureiro.vida > 0:
                print(f"\033[1mFaltam\033[m \033[33m{loja.preco_armaduraEncantada-aventureiro.ouro} p.o\033[m \033[1mpara comprar esse item\033[m ")
                continue
             else:
-                print("\033[1mEspada Encantada comprada com sucesso, onde deseja equipa-la?\033[m")
+                print("\033[1mArmadura Encantada comprada com sucesso, onde deseja equipa-la?\033[m")
        
        else:
            print("\033[1mConclua os requisitos para comprar esse slot\033[m")
