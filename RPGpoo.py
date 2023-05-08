@@ -10,7 +10,7 @@ class Aventureiro:
 
  def __init__(self, nome):
      self.nome = nome
-     self.forca = 600
+     self.forca = 1
      self.vida = 100
      self.ouro = 0
      self.velAtaque = 10
@@ -84,8 +84,8 @@ class Loja():
      self.preco_pocao_grande = 750
      self.preco_slot4 = 1700
      self.preco_slot5 = 3200
-     self.preco_espadaEncantada = 0
-     self.preco_armaduraEncantada = 0
+     self.preco_espadaEncantada = 5500
+     self.preco_armaduraEncantada = 5000
 
 
  def mostrarLoja(self, ouro, vida, slot1, slot2, slot3, slot4, slot5):
@@ -332,7 +332,7 @@ def batalhaBoss(boss):
                   potion = random.randint(25, 45)
                   textoPotion = 'média'
               else:
-                  potion = random.randint(100, 300)
+                  potion = random.randint(80, 200)
                   textoPotion = 'grande'
               print(f"\033[1mVocê encontou uma poção de vida {textoPotion}.\033[m")
               print(f"\033[1mVida recuperada:\033[m \033[1;32m{potion}\033[m")
@@ -1061,7 +1061,7 @@ while aventureiro.vida > 0:
                print(f"\033[1mFaltam\033[m \033[33m{loja.preco_espadaEncantada-aventureiro.ouro} p.o\033[m \033[1mpara comprar esse item\033[m ")
                continue
             else:
-               espadaEncantada = [1, 1, 1, 'Espada Encantada']
+               espadaEncantada = [500, 0, 99999, 'Espada Encantada']
                print(f"""\n\033[37;1mSTATUS\033[m
                   {espadaEncantada[3]}
                   \033[31mForça: +{espadaEncantada[0]}\033[m
@@ -1084,7 +1084,7 @@ while aventureiro.vida > 0:
                print("\033[1mArmadura Encantada comprada com sucesso.\n\033[m")
                #aqui o código vai verificar se você já comprou o slot 4 ou o slot 5 e gerar um texto com base nisso
                while True:
-                    armaduraEncantada = {'Armadura Encantada': [500, 0, 50]}
+                    armaduraEncantada = {'Armadura Encantada': [50, 1500, 0]}
                     if aventureiro.bool_slot4 == True and aventureiro.bool_slot5 == True:
                         texto = f"""
                         \033[1;37mVocê deseja equipar em qual slot?
@@ -1348,7 +1348,7 @@ while aventureiro.vida > 0:
              "\033[34;1mEspada Fantasma - lvl 3 (raro)\033[m": [25, 0, 10],
              "\033[34;1mAnel Espectral - lvl 3 (raro)\033[m": [0, 150, 5]}
      #(forca, vida=5, velAtaque, ouroDropado, loot)
-     boss3 = Boss("Astaroth, O Demônio Infernal", 25, 18, 80, 350, loot3)
+     boss3 = Boss("Astaroth, O Demônio Infernal", 25, 18, 80, 300, loot3)
 
      listaInstancia3 = [espectro, poltergeist, banshee, holandes]
 
@@ -1384,7 +1384,7 @@ while aventureiro.vida > 0:
  elif escolha == '4' and aventureiro.key >= 3:
      aventureiro.key_dungeon = 4
      marujo = Monstros("Marujo (lvl 4)", 45, 150, 20, 70, 30)
-     marinheiro = Monstros("Marinheiro (lvl 4)", 35, 220, 20, 72, 30)
+     marinheiro = Monstros("Marinheiro (lvl 4)", 35, 220, 200, 72, 30)
      bucaneiro = Monstros("Bucaneiro (lvl 5)", 60, 180, 1, 75, 34)
      barbaNegra = Monstros("Barba Negra (lvl 7)", 95, 220, 70, 250, 50)
 
@@ -1396,7 +1396,7 @@ while aventureiro.vida > 0:
              "\033[34;1mCimitarra Pirata - lvl 4 (raro)\033[m": [65, 0, 35],
              "\033[34;1mChapéu Pirata - lvl 4 (raro)\033[m": [0, 250, 5]}
      #(forca, vida=5, velAtaque, ouroDropado, loot)
-     boss4 = Boss("Kraken", 70, 320, 80, 450, loot4)
+     boss4 = Boss("Kraken", 90, 350, 80, 450, loot4)
 
      listaInstancia4 = [marujo, marinheiro, bucaneiro, barbaNegra]
 
@@ -1484,15 +1484,10 @@ while aventureiro.vida > 0:
      aventureiro.key_dungeon = 5
 
      #(forca, vida, velAtaque)
-     loot6 = {"\033[33;1mCoroa do Rei Destruído - lvl 5 (lendário)\033[m": [0, 1000, 10],
-             "\033[33;1mEspada do Rei Destruído - lvl 5 (lendário)\033[m": [320, 0, 20],
-             "\033[35;1mMachado dos Condenados - lvl 5 (épico)\033[m": [250, 0, 10],
-             "\033[35;1mPeitoral de Escamas Sombrias - lvl 5 (épico)\033[m": [0, 750, 0],
-             "\033[34;1mKatana Sombria - lvl 5 (raro)\033[m": [150, 0, 35],
-             "\033[34;1mManto das Trevas - lvl 5 (raro)\033[m": [20, 450, 0]}
+     loot6 = {}
 
      #(forca, vida, velAtaque, ouroDropado, loot)
-     boss6 = Boss("Abyssal Overlord", 400, 1500, 999, 10000, loot6)
+     boss6 = Boss("Abyssal Overlord", 400, 4000, 9999999999999, 10000, loot6)
      #main
      print(f"""\033[34;1m
      \nEnquanto você adentra a câmara final, a atmosfera se torna densa e opressiva. Seus sentidos são atingidos por um cheiro pútrido, e você ouve o som de garras afiadas raspando contra pedra. No centro da sala, em um trono macabro, está o Abyssal Overlord, um ser colossal de aparência monstruosa. Sua presença irradia um mal insondável, e seus olhos brilham com uma chama sinistra. 
