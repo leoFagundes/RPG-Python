@@ -1,4 +1,4 @@
-﻿# RPG em terminal - Python <i>(em andamento)</i>
+﻿# RPG em terminal - Python
 
 Este é um jogo de RPG simples e divertido, que pode ser jogado diretamente no terminal. 
 A ideia é que você explore diferentes dungeons, cada uma com um chefe e seus monstros, assumindo o papel de um aventureiro em busca de emoção e aventura.
